@@ -2,91 +2,100 @@
 
 ## Team Members
 
-# - Alejandro Pena Sanchez
-# - Michael Sookpaul
-# - Shayaan Bokhari
-# - Joseph Farah 
-# - Rory Anderson
-# - Jason Portillo-Marte
+- Alejandro Pena Sanchez
+- Michael Sookpaul
+- Shayaan Bokhari
+- Joseph Farah
+- Rory Anderson
+- Jason Portillo-Marte
 
 ## Application Type
-# Web Application
+Web Application
 
-## 1. Smart Bill Splitting Application
+## APPROVED PROJECT: xG Insight: Soccer Chance Quality Analytics
 
-# **Description:**  
-# A web application that allows groups to scan a restaurant receipt, assign purchased items to individuals, calculate each person’s share, and simplify repayment between friends or group members.
+**Status:** Approved by Prof. Moaath Alrajab
 
-# **Problem:**  
-# Splitting bills can become confusing when people order different items, share purchases, or need to figure out exactly how much each person owes. This application would reduce mistakes and make it easier for people to pay back the correct amount.
+**Description:**
+A web application that analyzes soccer shots and estimates how likely each shot was to result in a goal.
 
-# **Target Audience:**  
-# Friends, families, coworkers, teams, and other groups sharing restaurant or group expenses.
+**Problem:**
+Final scores do not always reflect which team created better scoring opportunities, and advanced expected-goals analytics can be difficult for casual users to access or understand.
 
-# **Five Epics:**
-# 1. Use OCR to extract items and prices from an uploaded receipt image.
-# 2. Allow users to assign or claim individual receipt items.
-# 3. Automatically calculate each person’s subtotal and share of the tip.
-# 4. Create shared sessions where multiple participants can join and claim items.
-# 5. Generate each participant’s final amount and provide payment-link options.
+**Target Audience:**
+Soccer fans, amateur and college coaches, students studying sports analytics, and players interested in match analysis.
 
-# **Technologies/Services:**  
-# Python, Reflex, SQLite, AWS Textract or another OCR service.
+**Five Epics:**
+1. Import and clean open soccer match and shot data.
+2. Build an expected-goals model using factors such as shot distance, angle, body part, and shot type.
+3. Display match shot maps and a timeline of expected-goals opportunities.
+4. Create player pages comparing actual goals with expected goals.
+5. Provide an interactive shot simulator that estimates scoring probability.
 
-# ---
+**Technologies/Services (confirmed course stack):**
+- Python
+- Django + Django REST Framework (backend/API)
+- MongoDB (database)
+- Figma (design/wireframing)
+- GitHub (version control)
+- Kanban via GitHub Projects (project management)
+- Frontend framework: team's choice (web or mobile)
+- AI/LLM-powered feature required by the course — not yet assigned to a specific epic; team needs to decide how it folds in (e.g., an LLM-generated natural-language match summary, or a Q&A feature answering questions about a team's stats)
 
-## 2. xG Insight: Soccer Chance Quality Analytics
+---
 
-# **Description:**  
-# A web application that analyzes soccer shots and estimates how likely each shot was to result in a goal.
+## Other Proposals Considered (Not Selected)
 
-# **Problem:**  
-# Final scores do not always reflect which team created better scoring opportunities, and advanced expected-goals analytics can be difficult for casual users to access or understand.
+### 1. Smart Bill Splitting Application
 
-# **Target Audience:**  
-# Soccer fans, amateur and college coaches, students studying sports analytics, and players interested in match analysis.
+**Description:**
+A web application that allows groups to scan a restaurant receipt, assign purchased items to individuals, calculate each person's share, and simplify repayment between friends or group members.
 
-# **Five Epics:**
-# 1. Import and clean open soccer match and shot data.
-# 2. Build an expected-goals model using factors such as shot distance, angle, body part, and shot type.
-# 3. Display match shot maps and a timeline of expected-goals opportunities.
-# 4. Create player pages comparing actual goals with expected goals.
-# 5. Provide an interactive shot simulator that estimates scoring probability.
+**Problem:**
+Splitting bills can become confusing when people order different items, share purchases, or need to figure out exactly how much each person owes. This application would reduce mistakes and make it easier for people to pay back the correct amount.
 
-# **Technologies/Services:**  
-# Python, pandas, scikit-learn, StatsBomb Open Data, Reflex or Django, SQLite, mplsoccer.
+**Target Audience:**
+Friends, families, coworkers, teams, and other groups sharing restaurant or group expenses.
 
-# ---
+**Five Epics:**
+1. Use OCR to extract items and prices from an uploaded receipt image.
+2. Allow users to assign or claim individual receipt items.
+3. Automatically calculate each person's subtotal and share of the tip.
+4. Create shared sessions where multiple participants can join and claim items.
+5. Generate each participant's final amount and provide payment-link options.
 
-## 3. Auto Repair Shop Finder & Review Platform
+**Technologies/Services:**
+Python, Reflex, SQLite, AWS Textract or another OCR service.
 
-# **Description:**  
-# A web application that helps drivers find and compare local repair shops based on services offered, vehicle specialization, price range, and customer ratings.
+### 2. Auto Repair Shop Finder & Review Platform
 
-# **Problem:**  
-# Drivers often struggle to determine which repair shops are trustworthy, affordable, and experienced with their specific vehicle or repair need.
+**Description:**
+A web application that helps drivers find and compare local repair shops based on services offered, vehicle specialization, price range, and customer ratings.
 
-# **Target Audience:**  
-# Car owners, especially students, first-time drivers, and people unfamiliar with local repair shops.
+**Problem:**
+Drivers often struggle to determine which repair shops are trustworthy, affordable, and experienced with their specific vehicle or repair need.
 
-# **Five Epics:**
-# 1. Search and filter shops by service type, location, price range, and vehicle make.
-# 2. View detailed shop profiles with services, specialties, contact information, and ratings.
-# 3. Submit reviews with separate ratings for honesty, price, quality, and turnaround time.
-# 4. Compare multiple repair shops side by side.
-# 5. Create user accounts and save favorite shops.
+**Target Audience:**
+Car owners, especially students, first-time drivers, and people unfamiliar with local repair shops.
 
-# **Technologies/Services:**  
-# Python, Reflex, SQLite, optional mapping/geocoding API.
+**Five Epics:**
+1. Search and filter shops by service type, location, price range, and vehicle make.
+2. View detailed shop profiles with services, specialties, contact information, and ratings.
+3. Submit reviews with separate ratings for honesty, price, quality, and turnaround time.
+4. Compare multiple repair shops side by side.
+5. Create user accounts and save favorite shops.
 
-# ---
+**Technologies/Services:**
+Python, Reflex, SQLite, optional mapping/geocoding API.
 
-## Preference Ranking
+---
 
-# 1. Smart Bill Splitting Application
-# 2. xG Insight: Soccer Chance Quality Analytics
-# 3. Auto Repair Shop Finder & Review Platform
+## Original Preference Ranking (as submitted)
 
-## Why Our First Choice Is Strongest
+1. Smart Bill Splitting Application
+2. xG Insight: Soccer Chance Quality Analytics
+3. Auto Repair Shop Finder & Review Platform
 
-# The Smart Bill Splitting Application is our first choice because it solves a common problem people experience when sharing expenses. It can be difficult to correctly calculate how much each person owes, especially when people order different items, share food, or split tips. The application would make the process more accurate and convenient by automatically calculating each person’s total and helping users determine the correct amount they need to pay back their friends. It also gives our group the opportunity to work with OCR, databases, shared sessions, and payment-related features while still being realistic to develop within one semester.
+## Why xG Insight Is Now the Project Moving Forward
+
+Although the Smart Bill Splitting Application was the team's original first choice, Prof. Alrajab approved xG Insight: Soccer Chance Quality Analytics, and that is the project the team is building for the remainder of the semester. xG Insight solves a real gap for amateur and college-level soccer programs that don't have access to professional-grade analytics, and the project scope, five epics, and course-mandated tech stack (Django/DRF, MongoDB) are already locked in and in active development.
