@@ -1,4 +1,4 @@
-MatchID,HomeTeam,AwayTeam,MatchDate,HomeScore,AwayScore,StadiumName,HomeTeamCountry,AwayTeamCountry,RefereeName
+MatchID,MatchDate,HomeScore,AwayScore,HomeTeamName,HomeTeamCountry,AwayTeamName,AwayTeamCountry,StadiumName,RefereeName
 18244,2017-06-03,1,4,Juventus,Italy,Real Madrid,Spain,Principality Stadium,Felix Brych
 3750201,2009-05-27,2,0,Barcelona,Spain,Manchester United,England,Estadio Olímpico,Massimo Busacca
 18241,2014-05-24,4,1,Real Madrid,Spain,Atlético Madrid,Spain,Estádio da Luz,Björn Kuipers
