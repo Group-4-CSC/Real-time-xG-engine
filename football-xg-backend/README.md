@@ -23,10 +23,22 @@ Set `MONGODB_URI` and `MONGODB_DATABASE` in `.env` to the values shared by the d
 
 ## API
 
-- `GET /api/health/` returns `{"status": "ok"}`.
+- `GET /api/health/` returns `{"status": "ok"}`. This checks that the API process is responding; it does not check MongoDB connectivity.
+- `POST /api/xg/calculate/` accepts a shot's distance, angle, and flags, then returns an xG estimate:
+
+	```json
+	{
+		"distance_to_goal_m": 14,
+		"angle_to_goal_deg": 25,
+		"is_header": false,
+		"is_penalty": false
+	}
+	```
+
+	The response includes `xg` (between 0 and 1) and the normalized input values. This calculation is a temporary placeholder, not the team's trained xG model; it does not save the shot or integrate Alejandro's analytics module yet.
 - Django admin is available at `/admin/` after creating a superuser with `python manage.py createsuperuser`.
 
-The health endpoint confirms the API process is responding; it does not check MongoDB connectivity. DRF endpoints require authentication by default, except for the public health endpoint.
+Both API endpoints are currently public. Authentication and role-based access are still to be agreed and implemented.
 
 ## Tests
 

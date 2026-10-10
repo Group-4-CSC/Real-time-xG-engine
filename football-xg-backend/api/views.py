@@ -14,6 +14,7 @@ def health(request):
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def calculate_xg(request):
+    """Temporary placeholder; replace with the team's analytics module."""
     distance = float(request.data.get("distance_to_goal_m", 0.0) or 0.0)
     angle = float(request.data.get("angle_to_goal_deg", 0.0) or 0.0)
     is_header = bool(request.data.get("is_header", False))
