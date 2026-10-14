@@ -63,7 +63,8 @@ match_df = match_df.drop(columns=['kick_off','match_status', 'match_status_360',
        'away_team.away_team_id', 'away_team.away_team_gender', 'away_team.away_team_group',
        'away_team.country.id', 'away_team.managers',
        'metadata.data_version', 'competition_stage.id',
-       'competition_stage.name', 'stadium.id', 'stadium.country.id', 'stadium.country.name', 'referee.id', 'referee.country.id', 'referee.country.name','metadata.shot_fidelity_version', 'metadata.xy_fidelity_version'])
+       'competition_stage.name', 'stadium.id', 'stadium.country.id', 'stadium.country.name', 'referee.id', 'referee.country.id', 
+       'referee.country.name','metadata.shot_fidelity_version', 'metadata.xy_fidelity_version'])
 
 print(match_df)
 
@@ -125,8 +126,8 @@ shot_df = pd.concat(shot_df, ignore_index = True)
 
 shot_df = shot_df[shot_df['type.name'] == 'Shot']
 
-
-
+#Removes Period 5 (Extra Time) and Period 6 (Penalty Shootout) from the data set. We only want to analyze shots taken during regulation time.
+shot_df = shot_df[(shot_df['period'] != 5) & (shot_df['period'] != 6)]
 
 shot_df = shot_df.drop( columns = ["index", 
                                      "possession", "duration", "type.id", "possession_team.id", "play_pattern.id", 
@@ -157,12 +158,11 @@ shot_df = shot_df.drop( columns = ["index",
 for x in (shot_df.columns):
     print(x)
 
-
 shot_df = shot_df.rename(columns={
     "id": "ShotID",
     "period": "Period",
     "timestamp": "TimeStamp",
-    "minute": "Minunte",
+    "Minute": "Minute",
     "second": "Second",
     "type.name": "TypeName",
     "possession_team.name": "PossessionTeamName",
@@ -201,7 +201,6 @@ shot_df = shot_df.rename(columns={
     "shot.redirect": "ShotRedirect",
     "shot.open_goal": "ShotOpenGoal",
     "block.save_block": "BlockSaveBlock"
-
     })
 
 
