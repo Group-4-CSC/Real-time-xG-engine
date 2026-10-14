@@ -1,0 +1,45 @@
+/* Styles for ShotMap and MatchSummary. Uses the app's existing CSS variables. */
+.viz-filters{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;margin-bottom:16px}
+.viz-filters label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);font-weight:600}
+.viz-filters select{height:42px;min-width:150px;padding:0 12px;border:1px solid var(--border);border-radius:8px;background:white;color:var(--navy);font:inherit;font-size:14px}
+.viz-filters .secondary{padding:10px 16px}
+.viz-layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(280px,1fr);gap:16px;align-items:start}
+.viz-pitch-wrap{position:relative}
+.viz-pitch-wrap svg{width:100%;height:auto;display:block}
+.viz-marker{cursor:pointer;outline:none}
+.viz-marker:focus-visible .viz-focus,.viz-marker:hover .viz-focus{stroke:#14223a;stroke-width:2;stroke-dasharray:3 3}
+.viz-focus{fill:transparent;stroke:transparent}
+.viz-tooltip{position:absolute;min-width:190px;max-width:240px;padding:12px 14px;background:white;border:1px solid var(--border);border-radius:10px;box-shadow:0 6px 20px rgba(20,34,58,.14);font-size:13px;line-height:1.5;pointer-events:none;z-index:2}
+.viz-tooltip strong{display:flex;align-items:center;gap:8px;font-size:13px}
+.viz-tooltip .muted{color:var(--muted);font-size:12px}
+.viz-swatch{display:inline-block;width:10px;height:10px;border-radius:2px;flex:none}
+.viz-legend{display:grid;gap:10px;margin-top:14px}
+.viz-legend-row{display:flex;align-items:center;gap:10px;font-size:14px}
+.viz-legend-row svg{width:26px;height:26px;flex:none}
+.viz-teams{display:flex;flex-wrap:wrap;gap:16px;margin-top:6px;font-size:14px}
+.viz-teams span{display:inline-flex;align-items:center;gap:8px}
+.viz-sizes{display:flex;align-items:flex-end;gap:22px;margin-top:10px}
+.viz-sizes div{text-align:center;font-size:12px;color:var(--muted)}
+.viz-empty{padding:40px 16px;text-align:center;color:var(--muted);font-size:14px}
+.viz-note{font-size:12px;color:var(--muted);margin-top:10px}
+.viz-score{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:20px;text-align:center}
+.viz-score .team{font-weight:700;font-size:19px;display:flex;align-items:center;justify-content:center;gap:10px;font-family:Manrope,'DM Sans',sans-serif}
+.viz-score .goals{font-size:64px;font-weight:700;line-height:1.1;font-family:Manrope,'DM Sans',sans-serif}
+.viz-score .dash{font-size:36px;color:var(--muted)}
+.viz-score small{display:block;color:var(--muted);font-size:12px}
+.viz-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:16px 0}
+.viz-kpi{border:1px solid var(--border);border-radius:14px;background:white;padding:20px 22px}
+.viz-kpi h3{margin:0 0 14px;font-size:14px;color:var(--muted);font-weight:600}
+.viz-kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.viz-kpi-row span{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted)}
+.viz-kpi-row strong{display:block;font-size:30px;margin-top:6px}
+.viz-xgd{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.viz-xgd .value{font-size:32px;font-weight:700;font-family:Manrope,'DM Sans',sans-serif}
+.viz-xgd p{flex:1;min-width:200px}
+.viz-xgd svg{width:min(100%,420px);height:40px}
+.viz-wide{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,1fr);gap:16px}
+.viz-timeline svg{width:100%;height:auto;display:block}
+.viz-pos{color:#21664a;font-weight:600}.viz-neg{color:#ab3f3f;font-weight:600}
+.viz-cell{display:inline-flex;align-items:center;gap:8px}
+@media(max-width:1000px){.viz-layout,.viz-wide{grid-template-columns:1fr}.viz-kpis{grid-template-columns:1fr}}
+@media(max-width:650px){.viz-score .goals{font-size:44px}}
