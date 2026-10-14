@@ -1,6 +1,7 @@
 from pathlib import Path
 import pandas as pd
 import json
+import ast
 
 #The data set has data for multiple competitions we filtered the data based on only Champions League games and found the season id for each season. With the season id we were able to find all final matches of each season. After cleaning the data and removing unecessary fields we convereted the dataframe into a CSV to import to MongoDB.
 
@@ -129,6 +130,8 @@ shot_df = shot_df[shot_df['type.name'] == 'Shot']
 #Removes Period 5 (Extra Time) and Period 6 (Penalty Shootout) from the data set. We only want to analyze shots taken during regulation time.
 shot_df = shot_df[(shot_df['period'] != 5) & (shot_df['period'] != 6)]
 
+
+
 shot_df = shot_df.drop( columns = ["index", 
                                      "possession", "duration", "type.id", "possession_team.id", "play_pattern.id", 
                                      "play_pattern.name", "team.id", "tactics.formation", "tactics.lineup", "related_events", "player.id", 
@@ -203,5 +206,32 @@ shot_df = shot_df.rename(columns={
     "block.save_block": "BlockSaveBlock"
     })
 
+#x = x/120x100 and y = y/80x100; 
+#df["col"] = df["col"].apply(ast.literal_eval)
+
+#Break location column into respective x y columns 
+shot_df["x"] = shot_df["Location"].apply(lambda x: x[0])
+shot_df["y"] = shot_df["Location"].apply(lambda x: x[1])
+
+#Converting StatsBomb's 120 × 80 coordinates into our standardized 0–100 coordinates.
+shot_df["x"] = shot_df["x"].apply(lambda x: (x / 120) * 100)
+shot_df["y"] = shot_df["y"].apply(lambda y: (y / 80) * 100)
+
+#Replacing values in the shotCollection dataframe to match our shot format.
+shot_df = shot_df.replace({
+
+     "Goal":"goal", 
+     "Saved": "saved", 
+     "Blocked": "blocked", 
+     "Off T" : "off_target", 
+     "Wayward":"off_target", 
+     "Post":"post", 
+     "Right Foot":"right_foot", 
+     "Left Foot":"left_foot", 
+     "Head":"head", 
+     "Other":"other",
+     "assist_type":"none"
+
+})
 
 shot_df.to_csv('Clean_Statsbomb_Data/shotCollection.csv', index = False)
