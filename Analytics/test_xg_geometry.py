@@ -98,8 +98,17 @@ class XGGeometryTests(unittest.TestCase):
 
         for post_y in (lower_post_y, upper_post_y):
             with self.subTest(post_y=post_y):
-                with self.assertRaises(ValueError):
-                    calculate_shot_angle(100, post_y)
+                self.assertIsNone(calculate_shot_angle(100, post_y))
+
+    def test_angles_near_either_goalpost_are_finite(self):
+        lower_post_y = (34 - 3.66) / 68 * 100
+        upper_post_y = (34 + 3.66) / 68 * 100
+
+        for post_y in (lower_post_y, upper_post_y):
+            with self.subTest(post_y=post_y):
+                angle = calculate_shot_angle(99.999999, post_y)
+                self.assertIsInstance(angle, float)
+                self.assertTrue(math.isfinite(angle))
 
     def test_distance_from_goalpost_is_half_goal_width(self):
         lower_post_y = (34 - 3.66) / 68 * 100

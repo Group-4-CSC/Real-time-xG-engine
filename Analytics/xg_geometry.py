@@ -70,8 +70,7 @@ def calculate_shot_angle(x, y):
 
     This calculation is defined for valid coordinates anywhere on the pitch,
     independently of penalty-area eligibility. At a goalpost, the vector to
-    that post has zero length, so the angle is undefined and ValueError is
-    raised.
+    that post has zero length, so the angle is undefined and None is returned.
     """
     x, y = _validated_coordinates(x, y)
     shot_x, shot_y = _to_meters(x, y)
@@ -84,8 +83,11 @@ def calculate_shot_angle(x, y):
     lower_vector = (lower_post[0] - shot_x, lower_post[1] - shot_y)
     upper_vector = (upper_post[0] - shot_x, upper_post[1] - shot_y)
 
-    if lower_vector == (0, 0) or upper_vector == (0, 0):
-        raise ValueError("shot angle is undefined at a goalpost")
+    if (
+        math.hypot(*lower_vector) <= 1e-12
+        or math.hypot(*upper_vector) <= 1e-12
+    ):
+        return None
 
     cross_product = (
         lower_vector[0] * upper_vector[1]
