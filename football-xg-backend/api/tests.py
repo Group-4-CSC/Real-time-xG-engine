@@ -10,6 +10,16 @@ class HealthEndpointTests(SimpleTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), {"status": "ok"})
 
+    def test_frontend_origin_is_allowed_by_cors(self):
+        response = APIClient().get(
+            "/api/health/", HTTP_ORIGIN="http://localhost:5173"
+        )
+
+        self.assertEqual(
+            response.headers["Access-Control-Allow-Origin"],
+            "http://localhost:5173",
+        )
+
 
 class XGEndpointTests(SimpleTestCase):
     def test_calculate_xg_from_shared_shot_format(self):
@@ -50,6 +60,36 @@ class XGEndpointTests(SimpleTestCase):
         )
         compute_xg.assert_called_once()
 
+    def test_shot_outside_penalty_area_is_unsupported(self):
+        response = APIClient().post(
+            "/api/xg/calculate/",
+            {"x": 80, "y": 50, "body_part": "right_foot", "outcome": "goal"},
+            format="json",
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.json(), {"xg": None, "xg_status": "unsupported"}
+        )
+
+    def test_shot_at_goalpost_is_unsupported(self):
+        lower_post_y = (34 - 3.66) / 68 * 100
+        response = APIClient().post(
+            "/api/xg/calculate/",
+            {
+                "x": 100,
+                "y": lower_post_y,
+                "body_part": "right_foot",
+                "outcome": "goal",
+            },
+            format="json",
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.json(), {"xg": None, "xg_status": "unsupported"}
+        )
+
     def test_rejects_missing_or_invalid_shot_fields(self):
         client = APIClient()
         invalid_shots = [
@@ -65,9 +105,9 @@ class XGEndpointTests(SimpleTestCase):
 
     def test_xg_uses_shot_features_but_not_outcome(self):
         client = APIClient()
-        near_shot = {"x": 85, "y": 50, "body_part": "right_foot", "outcome": "goal"}
+        near_shot = {"x": 97, "y": 50, "body_part": "right_foot", "outcome": "goal"}
         same_shot_saved = {**near_shot, "outcome": "saved"}
-        far_shot = {**near_shot, "x": 40}
+        far_shot = {**near_shot, "x": 85}
 
         goal_response = client.post("/api/xg/calculate/", near_shot, format="json")
         saved_response = client.post("/api/xg/calculate/", same_shot_saved, format="json")
