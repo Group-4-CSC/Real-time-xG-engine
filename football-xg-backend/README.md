@@ -24,18 +24,18 @@ Set `MONGODB_URI` and `MONGODB_DATABASE` in `.env` to the values shared by the d
 ## API
 
 - `GET /api/health/` returns `{"status": "ok"}`. This checks that the API process is responding; it does not check MongoDB connectivity.
-- `POST /api/xg/calculate/` accepts a shot's distance, angle, and flags, then returns an xG estimate:
+- `POST /api/xg/calculate/` accepts a shot in the shared format and returns an xG estimate:
 
 	```json
 	{
-		"distance_to_goal_m": 14,
-		"angle_to_goal_deg": 25,
-		"is_header": false,
-		"is_penalty": false
+		"x": 85,
+		"y": 50,
+		"body_part": "right_foot",
+		"outcome": "goal"
 	}
 	```
 
-	The response includes `xg` (between 0 and 1) and the normalized input values. This calculation is a temporary placeholder, not the team's trained xG model; it does not save the shot or integrate Alejandro's analytics module yet.
+	The response is `{"xg": 0.245}` with an xG value between 0 and 1. Coordinates must be between 0 and 100; `body_part` must be `left_foot`, `right_foot`, `head`, or `other`; and `outcome` must be `goal`, `saved`, `blocked`, `off_target`, or `post`. Invalid requests return HTTP 400. The current `compute_xg(shot)` is a temporary placeholder, ignores the outcome when estimating xG, and does not save the shot. It will be replaced by Alejandro's analytics implementation, which will calculate distance and angle from the shot location.
 - Django admin is available at `/admin/` after creating a superuser with `python manage.py createsuperuser`.
 
 Both API endpoints are currently public. Authentication and role-based access are still to be agreed and implemented.
