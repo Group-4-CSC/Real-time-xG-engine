@@ -29,4 +29,8 @@ def calculate_xg(request):
     serializer = ShotXGInputSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
 
-    return Response({"xg": round(compute_xg(serializer.validated_data), 4)})
+    xg = compute_xg(serializer.validated_data)
+    if xg is None:
+        return Response({"xg": None, "xg_status": "unsupported"})
+
+    return Response({"xg": round(xg, 4), "xg_status": "computed"})

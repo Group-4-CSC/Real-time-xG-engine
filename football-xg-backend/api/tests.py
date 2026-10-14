@@ -1,5 +1,6 @@
 from django.test import SimpleTestCase
 from rest_framework.test import APIClient
+from unittest.mock import patch
 
 
 class HealthEndpointTests(SimpleTestCase):
@@ -28,6 +29,26 @@ class XGEndpointTests(SimpleTestCase):
         self.assertIn("xg", data)
         self.assertGreaterEqual(data["xg"], 0.0)
         self.assertLessEqual(data["xg"], 1.0)
+        self.assertEqual(data["xg_status"], "computed")
+
+    @patch("api.views.compute_xg", return_value=None)
+    def test_unsupported_shot_returns_null_xg_without_crashing(self, compute_xg):
+        response = APIClient().post(
+            "/api/xg/calculate/",
+            {
+                "x": 85,
+                "y": 50,
+                "body_part": "right_foot",
+                "outcome": "goal",
+            },
+            format="json",
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.json(), {"xg": None, "xg_status": "unsupported"}
+        )
+        compute_xg.assert_called_once()
 
     def test_rejects_missing_or_invalid_shot_fields(self):
         client = APIClient()
