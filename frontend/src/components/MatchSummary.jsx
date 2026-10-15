@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import './viz.css'
 import { HALF_OPTIONS, formatSigned, formatXg, periodMatches, shotKey, statsFor, teamColors } from './vizShared.js'
 import Marker from './Marker.jsx'
+import AIMatchSummary from './AIMatchSummary.jsx'
 
 // Cumulative xG chart geometry
 const CW = 760, CH = 330, ML = 52, MR = 128, MT = 20, MB = 40
@@ -95,6 +96,8 @@ export default function MatchSummary({ shots, homeTeam, onOpenShotMap, onBack })
       {matchIds.length > 1 && <label>Match<select value={currentMatch} onChange={e => setMatchId(e.target.value)}>{matchIds.map(m => <option key={m} value={m}>{m}</option>)}</select></label>}
       <label>Half<select value={half} onChange={e => setHalf(e.target.value)}>{HALF_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}</select></label>
     </div></div>
+
+    <AIMatchSummary />
 
     <section className="card viz-score" aria-label="Final score">
       <div><div className="team"><i className="viz-swatch" style={{ background: colors[home] }} />{home}</div><div className="goals">{full.home.goals}</div></div>

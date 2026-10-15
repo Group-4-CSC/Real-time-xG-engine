@@ -30,3 +30,17 @@ def calculate_xg(request):
     serializer.is_valid(raise_exception=True)
 
     return Response({"xg": round(compute_xg(serializer.validated_data), 4)})
+
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def ai_match_summary(request):
+    return Response({
+        "summary": (
+            "Prototype AI Match Summary: "
+            "This match summary will highlight scoring opportunities, "
+            "expected goals (xG), and team performance. "
+            "AI-generated analysis will be added in a future update."
+        ),
+        "is_placeholder": True
+    })
