@@ -162,17 +162,14 @@ for x in (shot_df.columns):
     print(x)
 
 shot_df = shot_df.rename(columns={
-    "id": "ShotID",
-    "period": "Period",
-    "timestamp": "TimeStamp",
-    "Minute": "Minute",
-    "second": "Second",
-    "type.name": "TypeName",
-    "possession_team.name": "PossessionTeamName",
-    "team.name": "TeamName",
-    "location": "Location",
-    "player.name": "PlayerName",
-    "position.name": "PositionName",
+    
+    "Minute": "minute",
+    "type.name": "typename",
+    "possession_team.name": "possessionteamname",
+    "team.name": "team",
+    "location": "location",
+    "player.name": "player",
+    "position.name": "positionName",
     "pass.recipient.name": "PassRecipientName",
     "pass.length": "PassLength",
     "pass.angle": "PassAngle",
@@ -210,8 +207,8 @@ shot_df = shot_df.rename(columns={
 #df["col"] = df["col"].apply(ast.literal_eval)
 
 #Break location column into respective x y columns 
-shot_df["x"] = shot_df["Location"].apply(lambda x: x[0])
-shot_df["y"] = shot_df["Location"].apply(lambda x: x[1])
+shot_df["x"] = shot_df["location"].apply(lambda x: x[0])
+shot_df["y"] = shot_df["location"].apply(lambda x: x[1])
 
 #Converting StatsBomb's 120 × 80 coordinates into our standardized 0–100 coordinates.
 shot_df["x"] = shot_df["x"].apply(lambda x: (x / 120) * 100)
@@ -233,5 +230,11 @@ shot_df = shot_df.replace({
      "assist_type":"none"
 
 })
+# print(shot_df.columns)
+
+# for x in (shot_df.columns):
+    # print(x)
 
 shot_df.to_csv('Clean_Statsbomb_Data/shotCollection.csv', index = False)
+
+
