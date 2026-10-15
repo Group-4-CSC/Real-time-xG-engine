@@ -181,12 +181,12 @@ shot_df = shot_df.rename(columns={
     "dribble.outcome.name": "DribbleOutcomeName",
     "pass.cross": "PassCross",
     "pass.shot_assist": "PassShotAssist",
-    "shot.statsbomb_xg": "ShotStatsbombXG",
+    "shot.statsbomb_xg": "statsbomb_xg",
     "shot.end_location": "ShotEndLocation",
     "shot.type.name": "ShotTypeName",
-    "shot.outcome.name": "ShotOutcomeName",
+    "shot.outcome.name": "outcome",
     "shot.technique.name": "ShotTechniqueName",
-    "shot.body_part.name": "ShotBodyPartName",
+    "shot.body_part.name": "body_part",
     "goalkeeper.position.name": "GoalkeeperPositionName",
     "goalkeeper.technique.name": "GoalkeeperTechniqueName",
     "goalkeeper.type.name": "GoalkeeperTypeName",
@@ -196,7 +196,7 @@ shot_df = shot_df.rename(columns={
     "shot.deflected": "ShotDeflected",
     "shot.first_time": "ShotFirstTime",
     "goalkeeper.end_location": "GoalkeeperEndLocation",
-    "MatchID": "MatchID",
+    "MatchID": "match_id",
     "shot.one_on_one": "ShotOneOnOne",
     "shot.redirect": "ShotRedirect",
     "shot.open_goal": "ShotOpenGoal",
@@ -227,9 +227,11 @@ shot_df = shot_df.replace({
      "Left Foot":"left_foot", 
      "Head":"head", 
      "Other":"other",
-     "assist_type":"none"
 
 })
+
+shot_df["assist_type"] = None
+
 # print(shot_df.columns)
 
 # for x in (shot_df.columns):
