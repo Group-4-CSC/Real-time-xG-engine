@@ -127,10 +127,10 @@ shot_df = pd.concat(shot_df, ignore_index = True)
 
 shot_df = shot_df[shot_df['type.name'] == 'Shot']
 
-#Removes Period 5 (Extra Time) and Period 6 (Penalty Shootout) from the data set. We only want to analyze shots taken during regulation time.
-shot_df = shot_df[(shot_df['period'] != 5) & (shot_df['period'] != 6)]
 
 
+#Removes Period 5 (Penalty shootout) from the data set.
+shot_df = shot_df[(shot_df['period'] != 5)]
 
 shot_df = shot_df.drop( columns = ["index", 
                                      "possession", "duration", "type.id", "possession_team.id", "play_pattern.id", 
