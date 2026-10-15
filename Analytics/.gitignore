@@ -1,0 +1,5 @@
+#Raw_Statsbomb_Data
+.venv/gi
+__pycache__/
+*.pyc
+.DS_Store
