@@ -1,5 +1,5 @@
 #Raw_Statsbomb_Data
-.venv/gi
+.venv
 __pycache__/
 *.pyc
 .DS_Store

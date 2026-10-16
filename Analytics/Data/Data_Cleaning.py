@@ -238,5 +238,3 @@ shot_df["assist_type"] = None
     # print(x)
 
 shot_df.to_csv('Clean_Statsbomb_Data/shotCollection.csv', index = False)
-
-
