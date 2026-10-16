@@ -1,3 +1,4 @@
+from Analytics.xg_model import compute_xg as analytics_compute_xg
 from django.test import SimpleTestCase
 from rest_framework.test import APIClient
 from unittest.mock import patch
@@ -40,6 +41,20 @@ class XGEndpointTests(SimpleTestCase):
         self.assertGreaterEqual(data["xg"], 0.0)
         self.assertLessEqual(data["xg"], 1.0)
         self.assertEqual(data["xg_status"], "computed")
+        self.assertEqual(
+            data["xg"],
+            round(
+                analytics_compute_xg(
+                    {
+                        "x": 85,
+                        "y": 50,
+                        "body_part": "right_foot",
+                        "outcome": "goal",
+                    }
+                ),
+                4,
+            ),
+        )
 
     @patch("api.views.compute_xg", return_value=None)
     def test_unsupported_shot_returns_null_xg_without_crashing(self, compute_xg):
@@ -108,10 +123,15 @@ class XGEndpointTests(SimpleTestCase):
         near_shot = {"x": 97, "y": 50, "body_part": "right_foot", "outcome": "goal"}
         same_shot_saved = {**near_shot, "outcome": "saved"}
         far_shot = {**near_shot, "x": 85}
+        statsbomb_reference = {**near_shot, "statsbomb_xg": 0.99}
 
         goal_response = client.post("/api/xg/calculate/", near_shot, format="json")
         saved_response = client.post("/api/xg/calculate/", same_shot_saved, format="json")
         far_response = client.post("/api/xg/calculate/", far_shot, format="json")
+        reference_response = client.post(
+            "/api/xg/calculate/", statsbomb_reference, format="json"
+        )
 
         self.assertEqual(goal_response.json()["xg"], saved_response.json()["xg"])
+        self.assertEqual(goal_response.json()["xg"], reference_response.json()["xg"])
         self.assertGreater(goal_response.json()["xg"], far_response.json()["xg"])
