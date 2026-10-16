@@ -1,4 +1,4 @@
-export const columns = ['id', 'match_id', 'player', 'team', 'minute', 'period', 'x', 'y', 'outcome', 'body_part', 'assist_type', 'xg']
+export const columns = ['id', 'match_id', 'player', 'team', 'minute', 'period', 'x', 'y', 'outcome', 'body_part', 'assist_type']
 export const allowedOutcomes = ['goal', 'saved', 'blocked', 'off_target', 'post']
 
 // Supports quoted CSV fields, including commas inside quotes.
@@ -31,10 +31,13 @@ export function parseCsv(text) {
     }
     if (s.x < 0 || s.x > 100 || s.y < 0 || s.y > 100) throw new Error(`Coordinates must be 0–100 (row ${i + 2}).`)
     if (!allowedOutcomes.includes(s.outcome)) throw new Error(`Invalid outcome on row ${i + 2}.`)
-    if (s.xg === '') s.xg = null
-    else {
+    if (s.xg === undefined || s.xg === '') {
+      s.xg = null
+      s.xg_status = 'pending' // Local-only preview; backend will decide calculated vs outside_model.
+    } else {
       s.xg = Number(s.xg)
       if (!Number.isFinite(s.xg) || s.xg < 0 || s.xg > 1) throw new Error(`xg must be 0–1 or blank (row ${i + 2}).`)
+      s.xg_status = 'calculated'
     }
     return s
   })

@@ -1,7 +1,7 @@
 // Shared helpers for the Shot Map and Match Summary screens.
-// Shot format (agreed by the team): id, match_id, player, team, minute, period,
-// x, y, outcome, body_part, assist_type, xg. x and y run 0-100, every shot attacks toward x = 100.
-// xg may be null: the screens show "xG pending" instead of a number.
+// Shot format: id, match_id, player, team, minute, period, x, y,
+// outcome, body_part, assist_type, xg. Backend also returns xg_status.
+// Coordinates are 0–100 with attacks toward x=100.
 
 export const OUTCOMES = ['goal', 'saved', 'blocked', 'off_target', 'post']
 export const OUTCOME_LABELS = { goal: 'Goal', saved: 'Saved', blocked: 'Blocked', off_target: 'Off target', post: 'Hit the post' }
@@ -17,7 +17,6 @@ export const HALF_OPTIONS = [
 export const periodMatches = (period, half) =>
   half === 'all' || (half === 'et' ? period >= 3 : String(period) === half)
 
-// Team colors follow the team, never its rank: the home team is always blue.
 const TEAM_PALETTE = ['#2a78d6', '#eb6834', '#1baf7a', '#8a8984']
 export function teamColors(shots, homeTeam) {
   const names = [...new Set(shots.map(s => s.team))]
@@ -27,14 +26,18 @@ export function teamColors(shots, homeTeam) {
 
 export const shotKey = s => `${s.match_id}-${s.id}`
 
-// xg is null when any shot in the group is still pending.
+// Numeric xG only: shots outside the model do not contribute 0 and do not
+// invalidate the supported-shot total. Pending cases are tracked separately.
 export function statsFor(shots) {
+  const calculated = shots.filter(s => s.xg !== null && s.xg !== undefined && s.xg !== '' && Number.isFinite(Number(s.xg)))
   return {
     shots: shots.length,
     goals: shots.filter(s => s.outcome === 'goal').length,
-    xg: shots.some(s => s.xg === null || s.xg === undefined || s.xg === '')
-      ? null : shots.reduce((total, s) => total + Number(s.xg), 0),
+    xg: calculated.reduce((total, s) => total + Number(s.xg), 0),
+    calculatedShots: calculated.length,
+    outsideModelShots: shots.filter(s => s.xg_status === 'outside_model').length,
+    pendingShots: shots.filter(s => (s.xg === null || s.xg === undefined || s.xg === '') && s.xg_status !== 'outside_model').length,
   }
 }
-export const formatXg = v => (v === null || v === undefined ? 'xG pending' : v.toFixed(2))
-export const formatSigned = v => (v === null ? 'xG pending' : `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(2)}`)
+export const formatXg = v => (v === null || v === undefined ? 'xG unavailable' : v.toFixed(2))
+export const formatSigned = v => (v === null || v === undefined ? 'xG unavailable' : `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(2)}`)

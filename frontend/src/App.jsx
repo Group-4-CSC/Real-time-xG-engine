@@ -14,11 +14,12 @@ export default function App() {
   const [password, setPassword] = useState('')
   const [loginError, setLoginError] = useState('')
   const [shots, setShots] = useState(sampleShots)
+  const [team, setTeam] = useState('Farmingdale State')
   const [preview, setPreview] = useState(null)
   const [fileName, setFileName] = useState('')
   const [uploadError, setUploadError] = useState('')
   const [notice, setNotice] = useState('')
-  const team = 'Farmingdale State'
+  const teams = [...new Set(shots.map(s => s.team).filter(Boolean))]
 
   function navTo(target) { setNotice(''); setPage(target) }
   function login(e) {
@@ -37,7 +38,9 @@ export default function App() {
   }
   function importPreview() {
     if (!preview) return
-    setShots(preview); setNotice(`${preview.length} shots imported into this local demo.`)
+    setShots(preview)
+    if (!preview.some(s => s.team === team)) setTeam(preview[0]?.team || '')
+    setNotice(`${preview.length} shots imported into this local demo.`)
     setPage('dashboard')
   }
   function loadSample() {
@@ -54,7 +57,7 @@ export default function App() {
     <div className="workspace"><header><span>xG Insights › {{ upload: 'Upload CSV', matchsummary: 'Match Summary', shotmap: 'Shot Map' }[page] ?? 'Dashboard'}</span><strong>2026 SEASON</strong></header>
       {page === 'matchsummary' ? <MatchSummary shots={shots} homeTeam={team} onBack={() => navTo('dashboard')} onOpenShotMap={() => navTo('shotmap')} />
         : page === 'shotmap' ? <ShotMap shots={shots} homeTeam={team} onBack={() => navTo('dashboard')} />
-        : page === 'dashboard' ? <Dashboard shots={shots} team={team} notice={notice} onUpload={() => navTo('upload')} />
+        : page === 'dashboard' ? <Dashboard shots={shots} team={team} teams={teams} onTeamChange={setTeam} notice={notice} onUpload={() => navTo('upload')} />
         : <UploadCSV preview={preview} fileName={fileName} uploadError={uploadError}
             onBack={() => navTo('dashboard')} onFile={loadFile} onSample={loadSample} onImport={importPreview} />}
     </div>
