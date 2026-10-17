@@ -122,7 +122,7 @@ export default function ShotMap({ shots, homeTeam, onBack }) {
           <div className="viz-sizes" aria-label="Marker size scale">
             {[0.05, 0.15, 0.4].map(v => <div key={v}><svg width="48" height="48" viewBox="-24 -24 48 48" aria-hidden="true"><circle r={7 + Math.sqrt(v) * 20} fill="#8a8984" stroke="#fff" strokeWidth="2" /></svg>{v.toFixed(2)} xG</div>)}
           </div>
-          <p className="viz-note">Faded markers have no xG: either outside the xG model (not a penalty-area shot) or pending until the model runs.</p>
+          <p className="viz-note">Faded markers have no xG: either outside the xG model or pending until the model runs.</p>
         </section>
 
         <section className="card">
@@ -134,7 +134,7 @@ export default function ShotMap({ shots, homeTeam, onBack }) {
               <td>{s.minute}'</td>
               <td><span className="viz-cell"><i className="viz-swatch" style={{ background: colors[s.team] }} />{s.player}</span></td>
               <td>{outcomeLabel(s.outcome)}</td>
-              <td title={xgCellText(s) === '–' ? 'Outside the xG model (not a penalty-area shot)' : undefined}>{xgCellText(s)}</td>
+              <td title={xgCellText(s) === '–' ? 'Outside the xG model' : undefined}>{xgCellText(s)}</td>
             </tr>)}</tbody>
           </table></div>
         </section>

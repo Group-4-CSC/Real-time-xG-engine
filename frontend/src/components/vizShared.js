@@ -2,7 +2,7 @@
 // Shot format (agreed by the team): id, match_id, player, team, minute, period,
 // x, y, outcome, body_part, assist_type, xg. x and y run 0-100, every shot attacks toward x = 100.
 // xg may be null. The API also sends xg_status: 'calculated' | 'unsupported'.
-// null + 'unsupported' = outside the xG model (not a penalty-area shot): shown as "no xG", never as 0.
+// null + 'unsupported' = outside the xG model (shot not supported by the model): shown as "no xG", never as 0.
 // null with no status = the model has not run yet: shown as "xG pending".
 
 export const OUTCOMES = ['goal', 'saved', 'blocked', 'off_target', 'post']
@@ -74,6 +74,6 @@ export function coverageText(st) {
 // Label for a headline that mixes in partial totals. '' when every shot has an xG value.
 export function xgScopeLabel(...groups) {
   if (groups.every(g => g.calculated === g.shots)) return ''
-  return groups.some(g => g.unsupported > 0) ? 'penalty-area shots only' : 'some shots pending'
+  return groups.some(g => g.unsupported > 0) ? 'supported shots only' : 'some shots pending'
 }
 export const formatSigned = v => (v === null ? 'xG pending' : `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(2)}`)

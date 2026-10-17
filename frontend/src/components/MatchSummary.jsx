@@ -26,7 +26,7 @@ function Timeline({ shots, teams, colors }) {
   const sy = v => MT + IH - (v / yMax) * IH
   const ticks = Array.from({ length: Math.floor(yMax / 0.25) + 1 }, (_, i) => i * 0.25)
   const minutes = [0, 15, 30, 45, 60, 75, 90].filter(m => m <= lastMinute)
-  if (usable.length === 0) return <div className="viz-empty">{pending > 0 ? 'xG is pending for every shot, so the timeline will appear once the model has run.' : 'None of these shots are inside the xG model (penalty-area shots only), so there is no timeline.'}</div>
+  if (usable.length === 0) return <div className="viz-empty">{pending > 0 && unsupported > 0 ? `No shot here has an xG to plot: ${unsupported} outside the xG model and ${pending} pending until the model runs.` : pending > 0 ? 'xG is pending for every shot, so the timeline will appear once the model has run.' : 'None of these shots are inside the xG model, so there is no timeline.'}</div>
   // keep the two end labels from overlapping
   const labelY = series.map(s => sy(s.total) + 4)
   if (labelY.length === 2 && Math.abs(labelY[0] - labelY[1]) < 16) { const lower = labelY[0] > labelY[1] ? 0 : 1; labelY[lower] += 16 - Math.abs(labelY[0] - labelY[1]) }
@@ -47,7 +47,7 @@ function Timeline({ shots, teams, colors }) {
         <text x={ML + IW + 8} y={labelY[i]} fontSize="12" fontWeight="600" fill="#14223a">{s.name.split(' ')[0]} {s.total.toFixed(2)}</text>
       </g>)}
     </svg>
-    <p className="viz-note">Stars are goals. {unsupported + pending > 0 ? `Left out: ${[unsupported > 0 && `${unsupported} shot${unsupported > 1 ? 's' : ''} outside the model (not in the penalty area)`, pending > 0 && `${pending} with xG pending`].filter(Boolean).join(' and ')}.` : 'Each step is a shot.'}</p>
+    <p className="viz-note">Stars are goals. {unsupported + pending > 0 ? `Left out: ${[unsupported > 0 && `${unsupported} shot${unsupported > 1 ? 's' : ''} outside the xG model`, pending > 0 && `${pending} with xG pending`].filter(Boolean).join(' and ')}.` : 'Each step is a shot.'}</p>
   </>
 }
 
@@ -137,7 +137,7 @@ export default function MatchSummary({ shots, homeTeam, onOpenShotMap, onBack })
             const d = diff(p.goalsCalc, p.xg)
             return <tr key={`${p.team}-${p.name}`}>
               <td><span className="viz-cell"><i className="viz-swatch" style={{ background: colors[p.team] }} />{p.name}</span></td>
-              <td>{p.shots}</td><td title={p.xg === null && p.pending === 0 ? 'Outside the xG model (not a penalty-area shot)' : undefined}>{p.xg === null ? (p.pending > 0 ? 'pending' : '–') : p.xg.toFixed(2)}{p.xg !== null && p.calculated < p.shots && <small className="viz-pos" style={{ color: 'var(--muted)' }}> *</small>}</td>
+              <td>{p.shots}</td><td title={p.xg === null && p.pending === 0 ? 'Outside the xG model' : undefined}>{p.xg === null ? (p.pending > 0 ? 'pending' : '–') : p.xg.toFixed(2)}{p.xg !== null && p.calculated < p.shots && <small className="viz-pos" style={{ color: 'var(--muted)' }}> *</small>}</td>
               <td>{p.goals}{d !== null && d !== 0 && <small className={d > 0 ? 'viz-pos' : 'viz-neg'}> ({formatSigned(d)})</small>}</td>
             </tr>
           })}</tbody>
