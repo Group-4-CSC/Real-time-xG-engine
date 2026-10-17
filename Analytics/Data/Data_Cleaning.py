@@ -231,6 +231,7 @@ shot_df = shot_df.replace({
 })
 
 shot_df["assist_type"] = "none"
+shot_df["xg"] = ""
 
 # print(shot_df.columns)
 

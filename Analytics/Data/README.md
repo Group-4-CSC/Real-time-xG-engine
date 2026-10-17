@@ -12,7 +12,7 @@
 - Data_Cleaning.py is being used to prepare the data for the application
 - Before running the file you must install the required dependinces using the command pip install -r ../../requirements.txt
 - Before running Data_Cleaning.py you must run cd Analytics/Data
-- Run the application using the following command: python3 Data_Cleaning.py
+- Run the application using the following command: python3 Analytics/Data/Data_Cleaning.py
 - The raw statsbomb data is stored inside Analytics/Data/Raw_Statsbomb_Data/CL_Final_Match_Data and Analytics/Data/Raw_Statsbomb_Data/CL_Final_Shot_Data
 - The generated CSV files are outputted to Analytics/Data/Clean_Statsbomb_Data/
 
