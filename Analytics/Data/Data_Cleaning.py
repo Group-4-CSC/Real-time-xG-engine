@@ -230,7 +230,7 @@ shot_df = shot_df.replace({
 
 })
 
-shot_df["assist_type"] = None
+shot_df["assist_type"] = "none"
 
 # print(shot_df.columns)
 
