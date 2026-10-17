@@ -43,3 +43,13 @@
 .viz-cell{display:inline-flex;align-items:center;gap:8px}
 @media(max-width:1000px){.viz-layout,.viz-wide{grid-template-columns:1fr}.viz-kpis{grid-template-columns:1fr}}
 @media(max-width:650px){.viz-score .goals{font-size:44px}}
+
+/* xG coverage labels: partial totals and shots outside the model */
+.viz-scope{font-weight:400;color:var(--muted);font-size:12px}
+.viz-cover{display:block;color:var(--muted);font-size:11px;margin-top:4px;line-height:1.35}
+
+/* Long real-world player names: let names wrap so numeric columns never get pushed out of view */
+.viz-wide table th, .viz-wide table td, .viz-layout table th, .viz-layout table td { white-space: normal; padding: 10px 8px; vertical-align: top }
+.viz-wide table td:not(:first-child), .viz-layout table td:not(:nth-child(2)) { white-space: nowrap }
+.viz-cell { align-items: flex-start }
+.viz-cell .viz-swatch { margin-top: 5px; flex: none }

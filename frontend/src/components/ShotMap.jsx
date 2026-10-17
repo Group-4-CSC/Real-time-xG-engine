@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import './viz.css'
-import { HALF_OPTIONS, OUTCOMES, formatXg, outcomeLabel, periodMatches, prettify, shotKey, statsFor, teamColors } from './vizShared.js'
+import { HALF_OPTIONS, OUTCOMES, coverageText, outcomeLabel, periodMatches, prettify, shotKey, statsFor, teamColors, xgCellText, xgShotText, xgText } from './vizShared.js'
 import Marker from './Marker.jsx'
 
 // Half pitch, attacking goal at the top. Real pitch is about 105 m x 68 m, so
@@ -86,7 +86,7 @@ export default function ShotMap({ shots, homeTeam, onBack }) {
               <Pitch />
               {plotted.map(s => {
                 const cx = px(s.y), cy = py(s.x)
-                const label = `${s.player}, minute ${s.minute}, ${outcomeLabel(s.outcome)}, ${s.xg == null ? 'xG pending' : `xG ${s.xg.toFixed(2)}`}`
+                const label = `${s.player}, minute ${s.minute}, ${outcomeLabel(s.outcome)}, ${xgShotText(s)}`
                 return <g key={shotKey(s)} className="viz-marker" tabIndex={0} role="img" aria-label={label}
                   onMouseEnter={() => setActiveKey(shotKey(s))} onMouseLeave={() => setActiveKey(null)}
                   onFocus={() => setActiveKey(shotKey(s))} onBlur={() => setActiveKey(null)}>
@@ -100,7 +100,7 @@ export default function ShotMap({ shots, homeTeam, onBack }) {
               : { left: `${tipLeft + 4}%`, top: `${Math.min(tipTop, 70)}%` }}>
               <strong><span className="viz-swatch" style={{ background: colors[active.team] }} />{active.player} · {active.minute}'</strong>
               <div>{outcomeLabel(active.outcome)}</div>
-              <div>{active.xg == null ? 'xG pending' : `xG ${active.xg.toFixed(2)}`}</div>
+              <div>{xgShotText(active)}</div>
               <div className="muted">{prettify(active.body_part)}{active.assist_type && active.assist_type !== 'none' ? ` · ${prettify(active.assist_type)}` : ''} · half {active.period}</div>
               <div className="muted">x {active.x} · y {active.y}</div>
             </div>}
@@ -122,19 +122,19 @@ export default function ShotMap({ shots, homeTeam, onBack }) {
           <div className="viz-sizes" aria-label="Marker size scale">
             {[0.05, 0.15, 0.4].map(v => <div key={v}><svg width="48" height="48" viewBox="-24 -24 48 48" aria-hidden="true"><circle r={7 + Math.sqrt(v) * 20} fill="#8a8984" stroke="#fff" strokeWidth="2" /></svg>{v.toFixed(2)} xG</div>)}
           </div>
-          <p className="viz-note">Faded markers have xG pending.</p>
+          <p className="viz-note">Faded markers have no xG: either outside the xG model (not a penalty-area shot) or pending until the model runs.</p>
         </section>
 
         <section className="card">
           <h2>Shots in view ({visible.length})</h2>
-          <div className="viz-teams">{teams.map(t => { const st = statsFor(visible.filter(s => s.team === t)); return <span key={t}><i className="viz-swatch" style={{ background: colors[t] }} />{st.shots} shots · {st.goals} goals · {formatXg(st.xg)}{st.xg == null ? '' : ' xG'}</span> })}</div>
+          <div className="viz-teams">{teams.map(t => { const st = statsFor(visible.filter(s => s.team === t)); return <span key={t}><i className="viz-swatch" style={{ background: colors[t] }} />{st.shots} shots · {st.goals} goals · {xgText(st)}{st.xg == null ? '' : ' xG'}{coverageText(st) && <small className="viz-cover"> ({coverageText(st).replace(/ \(.*\)$/, '')})</small>}</span> })}</div>
           <div className="table-scroll"><table>
             <thead><tr><th>Min</th><th>Player</th><th>Outcome</th><th>xG</th></tr></thead>
             <tbody>{visible.map(s => <tr key={shotKey(s)}>
               <td>{s.minute}'</td>
               <td><span className="viz-cell"><i className="viz-swatch" style={{ background: colors[s.team] }} />{s.player}</span></td>
               <td>{outcomeLabel(s.outcome)}</td>
-              <td>{s.xg == null ? 'pending' : s.xg.toFixed(2)}</td>
+              <td title={xgCellText(s) === '–' ? 'Outside the xG model (not a penalty-area shot)' : undefined}>{xgCellText(s)}</td>
             </tr>)}</tbody>
           </table></div>
         </section>
