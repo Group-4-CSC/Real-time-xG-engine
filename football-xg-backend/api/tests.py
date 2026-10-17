@@ -44,13 +44,44 @@ class XGEndpointTests(SimpleTestCase):
 
     def test_xg_uses_shot_features_but_not_outcome(self):
         client = APIClient()
-        near_shot = {"x": 85, "y": 50, "body_part": "right_foot", "outcome": "goal"}
+        near_shot = {
+            "x": 85,
+            "y": 50,
+            "body_part": "right_foot",
+            "outcome": "goal",
+        }
         same_shot_saved = {**near_shot, "outcome": "saved"}
         far_shot = {**near_shot, "x": 40}
 
-        goal_response = client.post("/api/xg/calculate/", near_shot, format="json")
-        saved_response = client.post("/api/xg/calculate/", same_shot_saved, format="json")
-        far_response = client.post("/api/xg/calculate/", far_shot, format="json")
+        goal_response = client.post(
+            "/api/xg/calculate/", near_shot, format="json"
+        )
+        saved_response = client.post(
+            "/api/xg/calculate/", same_shot_saved, format="json"
+        )
+        far_response = client.post(
+            "/api/xg/calculate/", far_shot, format="json"
+        )
 
-        self.assertEqual(goal_response.json()["xg"], saved_response.json()["xg"])
-        self.assertGreater(goal_response.json()["xg"], far_response.json()["xg"])
+        self.assertEqual(
+            goal_response.json()["xg"],
+            saved_response.json()["xg"]
+        )
+        self.assertGreater(
+            goal_response.json()["xg"],
+            far_response.json()["xg"]
+        )
+
+
+class AIMatchSummaryEndpointTests(SimpleTestCase):
+    def test_ai_match_summary_returns_placeholder(self):
+        response = APIClient().get("/api/ai/match-summary/")
+
+        self.assertEqual(response.status_code, 200)
+
+        data = response.json()
+        self.assertIn("summary", data)
+        self.assertIn("Prototype AI Match Summary", data["summary"])
+        self.assertTrue(data["is_placeholder"])
+
+        
