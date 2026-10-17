@@ -40,3 +40,20 @@ def calculate_xg(request):
         return Response({"xg": None, "xg_status": "unsupported"})
 
     return Response({"xg": round(xg, 4), "xg_status": "computed"})
+
+
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def ai_match_summary(request):
+    return Response({
+        "summary": (
+            "Prototype AI Match Summary: "
+            "This match summary will highlight scoring opportunities, "
+            "expected goals (xG), and team performance. "
+            "AI-generated analysis will be added in a future update."
+        ),
+        "is_placeholder": True
+    })
+
+

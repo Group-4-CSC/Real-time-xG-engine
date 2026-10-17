@@ -1,7 +1,9 @@
+
+from unittest.mock import patch
+
 from Analytics.xg_model import compute_xg as analytics_compute_xg
 from django.test import SimpleTestCase
 from rest_framework.test import APIClient
-from unittest.mock import patch
 
 
 class HealthEndpointTests(SimpleTestCase):
@@ -135,3 +137,15 @@ class XGEndpointTests(SimpleTestCase):
         self.assertEqual(goal_response.json()["xg"], saved_response.json()["xg"])
         self.assertEqual(goal_response.json()["xg"], reference_response.json()["xg"])
         self.assertGreater(goal_response.json()["xg"], far_response.json()["xg"])
+
+
+class AIMatchSummaryEndpointTests(SimpleTestCase):
+    def test_ai_match_summary_returns_placeholder(self):
+        response = APIClient().get("/api/ai/match-summary/")
+
+        self.assertEqual(response.status_code, 200)
+
+        data = response.json()
+        self.assertIn("summary", data)
+        self.assertIn("Prototype AI Match Summary", data["summary"])
+        self.assertTrue(data["is_placeholder"])
