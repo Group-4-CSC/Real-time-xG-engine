@@ -99,3 +99,111 @@ Python, Reflex, SQLite, optional mapping/geocoding API.
 ## Why xG Insight Is Now the Project Moving Forward
 
 Although the Smart Bill Splitting Application was the team's original first choice, Prof. Alrajab approved xG Insight: Soccer Chance Quality Analytics, and that is the project the team is building for the remainder of the semester. xG Insight solves a real gap for amateur and college-level soccer programs that don't have access to professional-grade analytics, and the project scope, five epics, and course-mandated tech stack (Django/DRF, MongoDB) are already locked in and in active development.
+
+## Prototype
+
+**Product goal:** Help amateur and college soccer coaches evaluate the quality of their team's chances, not just the final score, by importing shot data and exploring match xG through clear summaries and shot maps.
+
+**Figma prototype:** [xG Insights - Coach Frontend (public view link)](https://www.figma.com/design/iqBBDFFMNrrJnjMWofFVD1/xG-Insights-%E2%80%93-Coach-Frontend?node-id=0-1&p=f)
+
+### Personas
+
+**Primary persona - Amateur or college coach**
+
+- **Context:** Reviews match performance after games, often with limited time and without a dedicated data-science staff.
+- **Goals:** Upload a match's shot data, see which team created better chances, and identify where high-quality shots came from.
+- **Pain points:** Scores alone hide chance quality; manually reviewing shot records is slow; professional analytics tools may be inaccessible or too complex.
+- **Product fit:** The dashboard, match summary, and shot map turn validated shot data into xG, xG differential, and visual patterns the coach can use in team review.
+
+**Secondary persona - Team analyst**
+
+- **Context:** Prepares or checks match data for a coach and investigates shot patterns in more detail.
+- **Goals:** Verify imported shot records, compare locations and outcomes, and explain why a shot is counted as supported or unsupported by the current model.
+- **Pain points:** CSV fields and coordinate conventions can be inconsistent; unsupported shots must not be mistaken for zero-probability chances.
+- **Product fit:** CSV validation, shot-level details, filters, and explicit xG status help the analyst check data quality and communicate the limits of the current heuristic.
+
+### Context Diagram
+
+The xG Insights system sits between its users, the match-data source, and the database. The diagram shows information crossing the system boundary; StatsBomb data is downloaded and prepared for import rather than fetched live by the application.
+
+```mermaid
+flowchart LR
+	Coach[Coach - primary user]
+	Analyst[Team analyst]
+	Player[Player]
+	Admin[System admin]
+	StatsBomb[StatsBomb Open Data]
+	Mongo[(MongoDB)]
+
+	System["xG Insights Web Application"]
+
+	Coach -->|Uploads match CSV; selects match and filters| System
+	System -->|Validation feedback, match xG, xGD and shot map| Coach
+	Analyst -->|Requests shot and match analysis| System
+	System -->|Shot details, outcomes and xG status| Analyst
+	Player -->|Requests personal shot history| System
+	System -->|Player shot and xG summaries| Player
+	Admin -->|Manages access and prepares imports| System
+	System -->|Import status and data validation results| Admin
+	StatsBomb -->|Downloadable raw match and shot data| Admin
+	System -->|Planned read/write of match and shot records| Mongo
+```
+
+### UI Screens
+
+The Figma design includes the key coach-facing screens: Login, Coach Dashboard, Upload CSV, Match Summary, and Shot Map. Together they support the primary user's path from importing match data to reviewing team chance quality. The upload flow includes a review step; the analysis screens present match/team metrics and let the user inspect shots by match, team, player, half, or outcome. Unsupported or pending xG is represented as unavailable, not as zero.
+
+### UX Flow - Coach Reviews a Match
+
+1. The coach opens **Coach Dashboard** and chooses **Upload match data**.
+2. On **Upload CSV**, the coach selects a file and reviews the parsed shot rows before importing.
+3. If required fields or values are invalid, the flow returns validation feedback so the coach can correct the CSV and retry. A valid import proceeds to the analysis screens.
+4. In **Match Summary**, the coach reviews the score, shots, team xG/xGD, and chance timeline, then filters by half.
+5. The coach opens **Shot Map**, filters by team, player, half, or outcome, and inspects individual shot details.
+6. The task is complete when the coach can explain whether the match score reflects the chances created and point to the shots behind that conclusion.
+
+Shots outside the current model's supported area, or with an undefined goal angle, remain visible with xG marked unavailable. This alternate state prevents the workflow from presenting unsupported predictions as zero. The Figma link above contains the related screens, personas, context diagram, and user-flow design.
+
+## Architecture
+
+The application uses a **client-server architecture with a layered backend**. The React client owns navigation, CSV preview, filters, and visualizations. It is designed to communicate with the Django REST Framework API over HTTP/JSON. The API validates requests and delegates xG calculation to the separate Analytics package. MongoDB is configured as the intended persistence layer for match and shot records.
+
+```mermaid
+flowchart LR
+	User[Coach or analyst]
+	Client[React and Vite client]
+	API[Django REST Framework API]
+	Analytics["Analytics Python package<br/>compute_xg and shot geometry"]
+	DB[(MongoDB)]
+
+	User -->|Uses screens and filters| Client
+	Client -->|HTTP JSON requests| API
+	API -->|Validated shot x, y, body_part, outcome| Analytics
+	Analytics -->|xG probability or unsupported None| API
+	API -->|Planned match and shot persistence| DB
+	API -->|JSON responses and xG status| Client
+```
+
+The backend currently exposes `GET /api/health/` and `POST /api/xg/calculate/`; CORS is configured for the local Vite client. The xG endpoint returns either a computed value or `xg: null` with `xg_status: "unsupported"`. Match CSV upload and persistent match retrieval are still being integrated, and the current frontend prototype uses local/mock data for its screens. The diagram shows the target interface between layers; persistence and the end-to-end client/API workflow must be verified as those pieces land.
+
+## Test Plan
+
+### Unit Tests - Analytics
+
+- **Scope:** Coordinate validation and normalization, penalty-area eligibility, shot distance/angle, and xG model behavior.
+- **Tools:** Python `unittest`.
+- **Cases and expected results:** A supported shot returns a finite xG in `[0, 1]`; changing outcome does not change the prediction; an outside-area shot or exact-goalpost shot returns `None`; invalid coordinates raise `ValueError`.
+- **Command from the repository root:** `py -m unittest discover -s Analytics -p "test_*.py"`.
+
+### API Integration Tests - Django REST Framework
+
+- **Scope:** Request validation, API-to-Analytics model integration, response serialization, unsupported-shot handling, and local frontend CORS.
+- **Tools:** Django test runner and DRF `APIClient`.
+- **Cases and expected results:** A valid shot returns the rounded Analytics model result and `xg_status: "computed"`; an unsupported result returns JSON `null` with `xg_status: "unsupported"`; invalid required fields return HTTP 400; changing `outcome` or `statsbomb_xg` does not change xG.
+- **Command from `football-xg-backend`:** `python manage.py test api`.
+
+### End-to-End Workflow Checks - Prototype
+
+- **Scope:** Verify the coach's complete CSV-to-analysis journey as CSV upload, storage, and frontend/API integration are completed.
+- **Tools:** Figma walkthrough and browser-based manual testing; the backend currently has automated API tests, but the complete upload-to-dashboard flow is not yet an automated test.
+- **Cases and expected results:** A valid CSV reaches Match Summary and Shot Map with consistent shots and xG; a malformed CSV displays validation feedback without importing invalid rows; unsupported shots remain visible with xG unavailable rather than zero.
