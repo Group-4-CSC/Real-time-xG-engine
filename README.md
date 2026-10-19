@@ -106,6 +106,8 @@ Although the Smart Bill Splitting Application was the team's original first choi
 
 **Figma prototype (public link):** [View the prototype in Figma](https://www.figma.com/design/iqBBDFFMNrrJnjMWofFVD1/xG-Insights-–-Coach-Frontend?node-id=0-1&p=f&t=iWBuF72z6uTGh0Od-0)
 
+**Clickable prototype:** [Try the clickable prototype](https://www.figma.com/proto/iqBBDFFMNrrJnjMWofFVD1/xG-Insights-–-Coach-Frontend?node-id=56-2&t=cB48CgzTJUxRwzqc-0&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1)
+
 The Figma file has the personas, context diagram, UI screens, and user journey below. Exported images are in `docs/prototype/`.
 
 ### Personas
@@ -145,7 +147,7 @@ All screens were designed in Figma and built in React with the same sidebar layo
 
 1. **Login:** demo sign-in for the prototype.
 2. **Coach Dashboard:** matches, goals, shots, xG, and a player table.
-3. **Upload CSV:** drop a file, see it validated, preview the rows, then import.
+3. **Upload CSV:** drop a file, see it validated, and preview the rows.
 4. **Match Summary:** score, each team's xG and xG difference, goals compared with xG, an xG timeline, and a player table.
 5. **Shot Map:** a half pitch with every shot. Shape shows the outcome, color shows the team, and size shows the xG. Filters for match, team, player, half, and outcome.
 
@@ -182,19 +184,19 @@ xG Insights is a client-server web application with a layered backend.
 - **Client:** a React + Vite single-page app in `frontend/`. It shows the screens, validates uploaded CSVs, and calculates filters and totals in the browser. All backend calls go through `frontend/src/api.js`.
 - **Server:** a Django REST Framework API in `football-xg-backend/`. It validates requests and returns JSON.
 - **Analytics package:** `Analytics/` holds the shot geometry (distance, angle, penalty-box check) and the xG model. It is plain Python with no Django dependency, so it can be tested on its own and replaced later without changing the API.
-- **Database:** MongoDB Atlas with two collections, `matchCollection` and `shotCollection`, linked by `match_id`.
+- **Database:** MongoDB Atlas with two collections, `matchCollection` and `shotCollection`, linked by `match_id`. The data is prepared and loaded manually for now; the API does not read from it yet.
 - **Data pipeline:** `Analytics/Data/Data_Cleaning.py` turns StatsBomb JSON into clean CSV files in the shared shot format. This runs offline, not as part of the web app.
 
-How a request flows: the React app sends a request to the Django API, the API calls the analytics package to calculate xG, and the result is stored in or read from MongoDB and returned to the browser as JSON.
+How a request flows today: the React app sends a shot to the Django API, which calls the analytics package to calculate xG and returns the result as JSON. Storing and reading matches in MongoDB through the API is planned.
 
-**Shared shot format:** `id, match_id, player, team, minute, period, x, y, outcome, body_part, assist_type, xg`. Coordinates `x` and `y` run from 0 to 100 and shots attack toward `x = 100`. `xg` is empty (null) for a shot outside the model, and the API adds an `xg_status` of `calculated` or `unsupported`.
+**Shared shot format:** `id, match_id, player, team, minute, period, x, y, outcome, body_part, assist_type, xg`. Coordinates `x` and `y` run from 0 to 100 and shots attack toward `x = 100`. `xg` is empty (null) for a shot outside the model, and the API adds an `xg_status` of `computed` or `unsupported`.
 
 **API endpoints:**
 - `GET /api/health/` checks that the API is running. Built.
 - `POST /api/xg/calculate/` validates a shot and returns its xG. Built.
 - `GET /api/ai/match-summary/` returns the match summary text. Placeholder text for now; the LLM call is planned.
-- `GET /api/matches/<id>/` returns a match with its shots. Built.
-- CSV upload endpoint that validates, calculates xG, and stores shots. Built.
+- `GET /api/matches/<id>/` returns a match with its shots. Planned.
+- CSV upload endpoint that validates, calculates xG, and stores shots. Planned. For now, the browser validates and previews uploaded CSVs and does not save them to the database.
 
 **Design decisions:**
 - Matches and shots are separate collections, which matches the data pipeline output and lets xG be updated per shot.
@@ -221,7 +223,7 @@ The project uses four categories of test. Each can be run from the command line.
 **4. System and acceptance tests (manual).** Check the whole workflow as a user would. The team runs these before each demo, using `PROTOTYPE_TESTING_CHECKLIST.md`.
 - Upload a CSV with a missing column: the error names the column and nothing is imported.
 - Upload a CSV with an invalid outcome: the error names the row and nothing is imported.
-- Upload the converted StatsBomb data (429 shots, 14 matches): 247 shots get an xG and 182 are marked outside the model.
+- Run the converted StatsBomb data (429 shots, 14 matches) through the xG model with the analytics script: 247 shots get an xG and 182 are marked outside the model.
 - Open Match Summary for a match with unsupported shots: totals are labeled "supported shots only" and no shot shows 0.00.
 - Shot Map: filter by player and half, then hover over a shot to see its player, minute, outcome, and xG.
 - Acceptance: a user acting as the coach persona completes upload, Match Summary, and Shot Map without help and can say which team created the better chances.
