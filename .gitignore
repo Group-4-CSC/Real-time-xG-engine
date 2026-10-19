@@ -1,0 +1,5 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+# Local Python 3.12 environment
+football-xg-backend/.venv312/

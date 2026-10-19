@@ -31,11 +31,12 @@ Set `MONGODB_URI` and `MONGODB_DATABASE` in `.env` to the values shared by the d
 		"x": 85,
 		"y": 50,
 		"body_part": "right_foot",
-		"outcome": "goal"
+		"outcome": "goal",
+		"statsbomb_xg": 0.12
 	}
 	```
 
-	The response is `{"xg": 0.4317}` with an xG value between 0 and 1. Coordinates must be between 0 and 100; `body_part` must be `left_foot`, `right_foot`, `head`, or `other`; and `outcome` must be `goal`, `saved`, `blocked`, `off_target`, or `post`. Invalid requests return HTTP 400. The current `compute_xg(shot)` is a temporary placeholder, ignores the outcome when estimating xG, and does not save the shot. It will be replaced by Alejandro's analytics implementation, which will calculate distance and angle from the shot location.
+	The backend calls `Analytics.xg_model.compute_xg(shot)` directly. The current analytics model is an untrained, uncalibrated heuristic; its estimates should not be interpreted as validated probabilities. The `shot` passed to the model contains `x`, `y`, `body_part`, and `outcome`; `statsbomb_xg` is accepted as a reference value but excluded from the model input. The response contains an xG value between 0 and 1 and `xg_status: "computed"`. Unsupported shots return `{"xg": null, "xg_status": "unsupported"}`; the frontend should use the `unsupported` status rather than inventing a separate `outside_model` status, and the backend does not convert them to zero. Coordinates must be between 0 and 100; `body_part` must be `left_foot`, `right_foot`, `head`, or `other`; and `outcome` must be `goal`, `saved`, `blocked`, `off_target`, or `post`. Invalid requests return HTTP 400. Running `pip install -r requirements.txt` from `football-xg-backend` installs the repository's Analytics package in editable mode.
 - Django admin is available at `/admin/` after creating a superuser with `python manage.py createsuperuser`.
 
 Both API endpoints are currently public. Authentication and role-based access are still to be agreed and implemented.

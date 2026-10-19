@@ -1,15 +1,17 @@
 import { useMemo, useState } from 'react'
 import './viz.css'
-import { HALF_OPTIONS, formatSigned, formatXg, periodMatches, shotKey, statsFor, teamColors } from './vizShared.js'
+import { HALF_OPTIONS, coverageText, formatSigned, formatXg, hasXg, periodMatches, shotKey, statsFor, teamColors, xgScopeLabel, xgStatus, xgText } from './vizShared.js'
 import Marker from './Marker.jsx'
+import AIMatchSummary from './AIMatchSummary.jsx'
 
 // Cumulative xG chart geometry
 const CW = 760, CH = 330, ML = 52, MR = 128, MT = 20, MB = 40
 const IW = CW - ML - MR, IH = CH - MT - MB
 
 function Timeline({ shots, teams, colors }) {
-  const usable = shots.filter(s => s.xg != null)
-  const pending = shots.length - usable.length
+  const usable = shots.filter(hasXg)
+  const unsupported = shots.filter(s => xgStatus(s) === 'unsupported').length
+  const pending = shots.filter(s => xgStatus(s) === 'pending').length
   const lastMinute = Math.max(90, ...shots.map(s => s.minute))
   const series = teams.map(name => {
     let total = 0
@@ -25,7 +27,7 @@ function Timeline({ shots, teams, colors }) {
   const sy = v => MT + IH - (v / yMax) * IH
   const ticks = Array.from({ length: Math.floor(yMax / 0.25) + 1 }, (_, i) => i * 0.25)
   const minutes = [0, 15, 30, 45, 60, 75, 90].filter(m => m <= lastMinute)
-  if (usable.length === 0) return <div className="viz-empty">xG pending for every shot, so the timeline will appear once the model has run.</div>
+  if (usable.length === 0) return <div className="viz-empty">{pending > 0 && unsupported > 0 ? `No shot here has an xG to plot: ${unsupported} outside the xG model and ${pending} pending until the model runs.` : pending > 0 ? 'xG is pending for every shot, so the timeline will appear once the model has run.' : 'None of these shots are inside the xG model, so there is no timeline.'}</div>
   // keep the two end labels from overlapping
   const labelY = series.map(s => sy(s.total) + 4)
   if (labelY.length === 2 && Math.abs(labelY[0] - labelY[1]) < 16) { const lower = labelY[0] > labelY[1] ? 0 : 1; labelY[lower] += 16 - Math.abs(labelY[0] - labelY[1]) }
@@ -46,7 +48,7 @@ function Timeline({ shots, teams, colors }) {
         <text x={ML + IW + 8} y={labelY[i]} fontSize="12" fontWeight="600" fill="#14223a">{s.name.split(' ')[0]} {s.total.toFixed(2)}</text>
       </g>)}
     </svg>
-    <p className="viz-note">Stars are goals. {pending > 0 ? `${pending} shot${pending > 1 ? 's have' : ' has'} xG pending and ${pending > 1 ? 'are' : 'is'} left out of the timeline.` : 'Each step is a shot.'}</p>
+    <p className="viz-note">Stars are goals. {unsupported + pending > 0 ? `Left out: ${[unsupported > 0 && `${unsupported} shot${unsupported > 1 ? 's' : ''} outside the xG model`, pending > 0 && `${pending} with xG pending`].filter(Boolean).join(' and ')}.` : 'Each step is a shot.'}</p>
   </>
 }
 
@@ -67,6 +69,7 @@ export default function MatchSummary({ shots, homeTeam, onOpenShotMap, onBack })
   const a = statsFor(filtered.filter(s => s.team === away))
   const xgd = h.xg === null || a.xg === null ? null : h.xg - a.xg
   const diff = (goals, xg) => (xg === null ? null : goals - xg)
+  const scope = xgScopeLabel(h, a)
 
   const players = useMemo(() => {
     const names = [...new Set(filtered.map(s => `${s.team}|${s.player}`))]
@@ -96,6 +99,8 @@ export default function MatchSummary({ shots, homeTeam, onOpenShotMap, onBack })
       <label>Half<select value={half} onChange={e => setHalf(e.target.value)}>{HALF_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}</select></label>
     </div></div>
 
+    <AIMatchSummary />
+
     <section className="card viz-score" aria-label="Final score">
       <div><div className="team"><i className="viz-swatch" style={{ background: colors[home] }} />{home}</div><div className="goals">{full.home.goals}</div></div>
       <div className="dash">–</div>
@@ -103,16 +108,16 @@ export default function MatchSummary({ shots, homeTeam, onOpenShotMap, onBack })
     </section>
 
     <div className="viz-kpis">
-      <article className="viz-kpi"><h3>Expected goals (xG)</h3><div className="viz-kpi-row"><div><span><i className="viz-swatch" style={{ background: colors[home] }} />{home}</span><strong>{formatXg(h.xg)}</strong></div><div><span>{away && <i className="viz-swatch" style={{ background: colors[away] }} />}{away ?? 'Opponent'}</span><strong>{formatXg(a.xg)}</strong></div></div></article>
+      <article className="viz-kpi"><h3>Expected goals (xG){scope && <small className="viz-scope"> · {scope}</small>}</h3><div className="viz-kpi-row"><div><span><i className="viz-swatch" style={{ background: colors[home] }} />{home}</span><strong>{xgText(h)}</strong>{coverageText(h) && <small className="viz-cover">{coverageText(h)}</small>}</div><div><span>{away && <i className="viz-swatch" style={{ background: colors[away] }} />}{away ?? 'Opponent'}</span><strong>{xgText(a)}</strong>{coverageText(a) && <small className="viz-cover">{coverageText(a)}</small>}</div></div></article>
       <article className="viz-kpi"><h3>Shots</h3><div className="viz-kpi-row"><div><span><i className="viz-swatch" style={{ background: colors[home] }} />{home}</span><strong>{h.shots}</strong></div><div><span>{away && <i className="viz-swatch" style={{ background: colors[away] }} />}{away ?? 'Opponent'}</span><strong>{a.shots}</strong></div></div></article>
-      <article className="viz-kpi"><h3>Goals minus xG</h3><div className="viz-kpi-row"><div><span><i className="viz-swatch" style={{ background: colors[home] }} />{home}</span><strong>{formatSigned(diff(h.goals, h.xg))}</strong></div><div><span>{away && <i className="viz-swatch" style={{ background: colors[away] }} />}{away ?? 'Opponent'}</span><strong>{formatSigned(diff(a.goals, a.xg))}</strong></div></div></article>
+      <article className="viz-kpi"><h3>Goals minus xG{scope && <small className="viz-scope"> · {scope}</small>}</h3><div className="viz-kpi-row"><div><span><i className="viz-swatch" style={{ background: colors[home] }} />{home}</span><strong>{formatSigned(diff(h.goalsCalc, h.xg))}</strong></div><div><span>{away && <i className="viz-swatch" style={{ background: colors[away] }} />}{away ?? 'Opponent'}</span><strong>{formatSigned(diff(a.goalsCalc, a.xg))}</strong></div></div></article>
     </div>
 
     <section className="card">
-      <h2>xG differential (xGD)</h2>
+      <h2>xG differential (xGD){scope && <small className="viz-scope"> · {scope}</small>}</h2>
       <div className="viz-xgd">
         <div className="value">{formatSigned(xgd)}</div>
-        <p>{xgd === null ? 'xGD will appear once every shot has an xG value.' : `${better} xGD is ${home}'s xG minus ${away ?? 'the opponent'}'s xG.`}</p>
+        <p>{xgd === null ? 'xGD needs an xG value for at least one shot from each team.' : `${better} xGD is ${home}'s xG minus ${away ?? 'the opponent'}'s xG.`}</p>
         {xgd !== null && <svg viewBox="0 0 320 40" role="img" aria-label={`xGD ${formatSigned(xgd)}, favoring ${xgd >= 0 ? home : away}`}>
           <line x1="160" x2="160" y1="4" y2="36" stroke="#8a8984" strokeWidth="1.5" />
           <rect x={xgd >= 0 ? 160 : 160 - barLen} y="10" width={barLen} height="20" rx="4" fill={colors[xgd >= 0 ? home : away] ?? '#2a78d6'} />
@@ -132,15 +137,15 @@ export default function MatchSummary({ shots, homeTeam, onOpenShotMap, onBack })
         <div className="table-scroll"><table>
           <thead><tr><th>Player</th><th>Shots</th><th>xG</th><th>Goals</th></tr></thead>
           <tbody>{players.map(p => {
-            const d = diff(p.goals, p.xg)
+            const d = diff(p.goalsCalc, p.xg)
             return <tr key={`${p.team}-${p.name}`}>
               <td><span className="viz-cell"><i className="viz-swatch" style={{ background: colors[p.team] }} />{p.name}</span></td>
-              <td>{p.shots}</td><td>{p.xg === null ? 'pending' : p.xg.toFixed(2)}</td>
+              <td>{p.shots}</td><td title={p.xg === null && p.pending === 0 ? 'Outside the xG model' : undefined}>{p.xg === null ? (p.pending > 0 ? 'pending' : '–') : p.xg.toFixed(2)}{p.xg !== null && p.calculated < p.shots && <small className="viz-pos" style={{ color: 'var(--muted)' }}> *</small>}</td>
               <td>{p.goals}{d !== null && d !== 0 && <small className={d > 0 ? 'viz-pos' : 'viz-neg'}> ({formatSigned(d)})</small>}</td>
             </tr>
           })}</tbody>
         </table></div>
-        <p className="viz-note">The number in brackets is goals minus xG: positive means scoring more than the chances suggest.</p>
+        <p className="viz-note">The number in brackets is goals minus xG: positive means scoring more than the chances suggest.{players.some(p => p.unsupported > 0) ? ' A dash means the shots are outside the xG model; * means some of the player\u2019s shots are.' : ''}</p>
         <button className="secondary" style={{ width: '100%', marginTop: 16 }} onClick={onOpenShotMap}>View full shot map →</button>
       </section>
     </div>

@@ -1,8 +1,9 @@
-
- // Shared helpers for the Shot Map and Match Summary screens.
- // Shot format: id, match_id, player, team, minute, period, x, y,
- // outcome, body_part, assist_type, xg. Backend also returns xg_status.
- // Coordinates are 0–100 with attacks toward x=100.
+// Shared helpers for the Shot Map and Match Summary screens.
+// Shot format (agreed by the team): id, match_id, player, team, minute, period,
+// x, y, outcome, body_part, assist_type, xg. x and y run 0-100, every shot attacks toward x = 100.
+// xg may be null. The API also sends xg_status: 'calculated' | 'unsupported'.
+// null + 'unsupported' = outside the xG model (shot not supported by the model): shown as "no xG", never as 0.
+// null with no status = the model has not run yet: shown as "xG pending".
 
 export const OUTCOMES = ['goal', 'saved', 'blocked', 'off_target', 'post']
 
@@ -43,79 +44,52 @@ export function teamColors(shots, homeTeam) {
 
 export const shotKey = s => `${s.match_id}-${s.id}`
 
-// Normalize backend and frontend xG statuses.
-export function getXgStatus(shot) {
-  const status = shot.xg_status
-
-  if (status === 'unsupported' || status === 'outside_model') {
-    return 'outside_model'
-  }
-
-  if (status === 'computed' || status === 'calculated') {
-    return 'calculated'
-  }
-
-  if (
-    shot.xg !== null &&
-    shot.xg !== undefined &&
-    shot.xg !== '' &&
-    Number.isFinite(Number(shot.xg))
-  ) {
-    return 'calculated'
-  }
-
+// 'calculated' (has a number), 'unsupported' (outside the model) or 'pending' (model not run yet).
+// 'outside_model' is accepted as an older name for 'unsupported'.
+export function xgStatus(s) {
+  if (typeof s.xg === 'number' && Number.isFinite(s.xg)) return 'calculated'
+  if (s.xg_status === 'unsupported' || s.xg_status === 'outside_model') return 'unsupported'
   return 'pending'
 }
+export const hasXg = s => xgStatus(s) === 'calculated'
+export function xgShotText(s) {
+  const st = xgStatus(s)
+  return st === 'calculated' ? `xG ${s.xg.toFixed(2)}` : st === 'unsupported' ? 'No xG (outside the model)' : 'xG pending'
+}
+export function xgCellText(s) {
+  const st = xgStatus(s)
+  return st === 'calculated' ? s.xg.toFixed(2) : st === 'unsupported' ? '–' : 'pending'
+}
 
-// Use numeric xG only for shots with calculated values.
-// Unsupported shots do not count as zero predictions.
-// Pending shots are tracked separately.
+// xg is the sum over shots that have an xG value (null if none do). goalsCalc counts goals among
+// those same shots, so "goals minus xG" compares like with like. calculated < shots means partial.
 export function statsFor(shots) {
-  const calculated = shots.filter(
-    s =>
-      getXgStatus(s) === 'calculated' &&
-      s.xg !== null &&
-      s.xg !== undefined &&
-      s.xg !== '' &&
-      Number.isFinite(Number(s.xg))
-  )
-
+  const calc = shots.filter(hasXg)
   return {
     shots: shots.length,
 
     goals: shots.filter(s => s.outcome === 'goal').length,
-
-    xg: calculated.reduce(
-      (total, s) => total + Number(s.xg),
-      0
-    ),
-
-    calculatedShots: calculated.length,
-
-    outsideModelShots: shots.filter(
-      s => getXgStatus(s) === 'outside_model'
-    ).length,
-
-    pendingShots: shots.filter(
-      s =>
-        getXgStatus(s) === 'pending' ||
-        (
-          getXgStatus(s) === 'calculated' &&
-          (s.xg === null ||
-            s.xg === undefined ||
-            s.xg === '' ||
-            !Number.isFinite(Number(s.xg)))
-        )
-    ).length,
+    calculated: calc.length,
+    unsupported: shots.filter(s => xgStatus(s) === 'unsupported').length,
+    pending: shots.filter(s => xgStatus(s) === 'pending').length,
+    goalsCalc: calc.filter(s => s.outcome === 'goal').length,
+    xg: calc.length ? calc.reduce((total, s) => total + s.xg, 0) : null,
   }
 }
-
-export const formatXg = v =>
-  v === null || v === undefined
-    ? 'xG unavailable'
-    : v.toFixed(2)
-
-export const formatSigned = v =>
-  v === null || v === undefined
-    ? 'xG unavailable'
-    : `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(2)}`
+export const formatXg = v => (v === null || v === undefined ? 'xG pending' : v.toFixed(2))
+// Headline text for a group's xG: a number, or why there is none.
+export const xgText = st => (st.xg !== null ? st.xg.toFixed(2) : st.pending > 0 ? 'xG pending' : st.unsupported > 0 ? 'No xG' : '–')
+// Short note under a partial total, e.g. "xG from 12 of 20 shots".
+export function coverageText(st) {
+  if (st.shots === 0 || st.calculated === st.shots) return ''
+  const parts = []
+  if (st.unsupported > 0) parts.push(`${st.unsupported} outside the model`)
+  if (st.pending > 0) parts.push(`${st.pending} pending`)
+  return `xG from ${st.calculated} of ${st.shots} shots (${parts.join(', ')})`
+}
+// Label for a headline that mixes in partial totals. '' when every shot has an xG value.
+export function xgScopeLabel(...groups) {
+  if (groups.every(g => g.calculated === g.shots)) return ''
+  return groups.some(g => g.unsupported > 0) ? 'supported shots only' : 'some shots pending'
+}
+export const formatSigned = v => (v === null ? 'xG pending' : `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(2)}`)
