@@ -106,7 +106,7 @@ Although the Smart Bill Splitting Application was the team's original first choi
 
 **Figma prototype (public link):** [View the prototype in Figma](https://www.figma.com/design/iqBBDFFMNrrJnjMWofFVD1/xG-Insights-–-Coach-Frontend?node-id=0-1&p=f&t=iWBuF72z6uTGh0Od-0)
 
-**Clickable prototype:** [Try the clickable prototype](https://www.figma.com/proto/iqBBDFFMNrrJnjMWofFVD1/xG-Insights-–-Coach-Frontend?node-id=56-2&t=cB48CgzTJUxRwzqc-0&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1)
+**Clickable prototype:** [Try the clickable prototype]([https://www.figma.com/proto/iqBBDFFMNrrJnjMWofFVD1/xG-Insights-–-Coach-Frontend?node-id=56-2&t=cB48CgzTJUxRwzqc-0&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1](https://www.figma.com/proto/iqBBDFFMNrrJnjMWofFVD1/xG-Insights-%E2%80%93-Coach-Frontend?node-id=6-87&amp;t=GI0EI4XA9EnrBKld-1&amp;scaling=min-zoom&amp;content-scaling=fixed&amp;page-id=0%3A1))
 
 The Figma file has the personas, context diagram, UI screens, and user journey below. Exported images are in `docs/prototype/`.
 
