@@ -1,0 +1,6 @@
+export default function Login({ email, setEmail, password, setPassword, loginError, onLogin, onDemo }) {
+  return <div className="login">
+    <div className="login-brand"><div className="brand bright">◉ xG <strong>Insights</strong></div><div className="login-message"><span className="eyebrow">BUILT FOR THE TOUCHLINE</span><h1>Turn every shot into a smarter decision.</h1><p>One workspace for expected goals, player trends, and match-day insights.</p><div className="pitch">⚽  ─ ─ ─  ⚽  ─ ─ ─  ⚽</div></div><small>THE COACH'S ANALYTICS WORKSPACE</small></div>
+    <div className="login-form"><form onSubmit={onLogin}><span className="eyebrow">WELCOME BACK</span><h2>Log in to xG Insights</h2><p>Access your team's match and player analytics.</p><label>Email address<input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="coach@club.com" /></label><label>Password<input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter your password" /></label>{loginError && <p className="error">{loginError}</p>}<button className="primary">Log In →</button><button className="demo" type="button" onClick={onDemo}>Explore the demo workspace →<small>No account required</small></button><p className="hint">Demo only — no real authentication.</p></form></div>
+  </div>
+}
