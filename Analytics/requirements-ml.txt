@@ -1,0 +1,4 @@
+# Experimental training only; the heuristic and Django API do not require these.
+numpy==2.5.4
+scipy==1.18.1
+scikit-learn==1.9.1
