@@ -1,0 +1,592 @@
+{
+  "dataset_sha256": "d96b5b877e7ed5ace53686e705ecf4eeaa32587abe5a83dd59f535dafe363e5c",
+  "sklearn_version": "1.9.1",
+  "seed": 42,
+  "test_size": 0.3,
+  "feature_names": [
+    "distance_m",
+    "angle_degrees",
+    "body_part"
+  ],
+  "total_shots": 429,
+  "supported_shots": 247,
+  "excluded_shots": 182,
+  "train_match_ids": [
+    "18236",
+    "18237",
+    "18240",
+    "18241",
+    "18243",
+    "18244",
+    "18245",
+    "2302764",
+    "3752619"
+  ],
+  "test_match_ids": [
+    "18235",
+    "18242",
+    "22912",
+    "3750200",
+    "3750201"
+  ],
+  "train_shots": 169,
+  "test_shots": 78,
+  "train_goals": 28,
+  "test_goals": 13,
+  "logistic": {
+    "brier_score": 0.12942915452577824,
+    "log_loss": 0.41107117824269096
+  },
+  "heuristic": {
+    "brier_score": 0.12616171717463479,
+    "log_loss": 0.40539300980608994
+  },
+  "predictions": [
+    {
+      "shot_id": "8fc1aeff-79bd-4456-81fe-de5068c6c30b",
+      "match_id": "3750201",
+      "goal": 0,
+      "logistic_xg": 0.39214552688061777,
+      "heuristic_xg": 0.2646662782246754
+    },
+    {
+      "shot_id": "1e573054-3265-4627-beab-08f452936a16",
+      "match_id": "3750201",
+      "goal": 0,
+      "logistic_xg": 0.05229849522178114,
+      "heuristic_xg": 0.038511159582340734
+    },
+    {
+      "shot_id": "370d6a4c-c5f9-46df-b9b9-5184fffdfe60",
+      "match_id": "3750201",
+      "goal": 1,
+      "logistic_xg": 0.19314789427723328,
+      "heuristic_xg": 0.07516904895678168
+    },
+    {
+      "shot_id": "573c9610-33f6-4dfa-8f7d-5f719d562c97",
+      "match_id": "3750201",
+      "goal": 0,
+      "logistic_xg": 0.10846004614883188,
+      "heuristic_xg": 0.09459207324721072
+    },
+    {
+      "shot_id": "bdc9b5af-6b7f-4d09-9005-9c4d34c5bef0",
+      "match_id": "3750201",
+      "goal": 0,
+      "logistic_xg": 0.25553329452201584,
+      "heuristic_xg": 0.11185875089180329
+    },
+    {
+      "shot_id": "6dca9d76-f30d-473c-be83-0d6edc753198",
+      "match_id": "3750201",
+      "goal": 0,
+      "logistic_xg": 0.03763800630989111,
+      "heuristic_xg": 0.02629092341655364
+    },
+    {
+      "shot_id": "bc51838b-e9eb-422f-8e73-c8409f40b5b4",
+      "match_id": "3750201",
+      "goal": 1,
+      "logistic_xg": 0.18020000007958825,
+      "heuristic_xg": 0.1938616999321667
+    },
+    {
+      "shot_id": "58372877-a11f-4602-9a60-bfd55757e1f9",
+      "match_id": "3750201",
+      "goal": 0,
+      "logistic_xg": 0.31181918956556437,
+      "heuristic_xg": 0.18205629750709326
+    },
+    {
+      "shot_id": "3ecbc280-9317-49be-b091-e946a5c7e3da",
+      "match_id": "3750201",
+      "goal": 0,
+      "logistic_xg": 0.3829629624126878,
+      "heuristic_xg": 0.23321397975959615
+    },
+    {
+      "shot_id": "966e642a-6bf6-4cde-8a6a-63807d1a8b5e",
+      "match_id": "3750201",
+      "goal": 0,
+      "logistic_xg": 0.27368785634094217,
+      "heuristic_xg": 0.12394125757697882
+    },
+    {
+      "shot_id": "ea14f2b6-43cd-4d42-8126-bca240263cac",
+      "match_id": "3750201",
+      "goal": 0,
+      "logistic_xg": 0.15835501659561613,
+      "heuristic_xg": 0.16198522699038886
+    },
+    {
+      "shot_id": "d8f21b1d-d753-4baa-a48b-13f4b4b4fcdd",
+      "match_id": "3750201",
+      "goal": 0,
+      "logistic_xg": 0.12227040858921072,
+      "heuristic_xg": 0.04644180176008293
+    },
+    {
+      "shot_id": "f281ea0a-5a29-4d47-b2db-4cad38dd958a",
+      "match_id": "3750201",
+      "goal": 0,
+      "logistic_xg": 0.23650063672789184,
+      "heuristic_xg": 0.10456338218236351
+    },
+    {
+      "shot_id": "a3f6a771-4899-4d85-83b2-81a214923891",
+      "match_id": "3750201",
+      "goal": 0,
+      "logistic_xg": 0.12796186892455783,
+      "heuristic_xg": 0.11896487395451431
+    },
+    {
+      "shot_id": "04948584-8217-48d0-9853-dcf4d7143860",
+      "match_id": "3750200",
+      "goal": 0,
+      "logistic_xg": 0.13521912988742368,
+      "heuristic_xg": 0.04901542888271536
+    },
+    {
+      "shot_id": "b6849131-b60e-454e-850b-3f1aea317bd5",
+      "match_id": "3750200",
+      "goal": 0,
+      "logistic_xg": 0.09306043592159605,
+      "heuristic_xg": 0.03475217730904949
+    },
+    {
+      "shot_id": "9738a2a4-39b1-40de-84e2-582d8c94d594",
+      "match_id": "3750200",
+      "goal": 0,
+      "logistic_xg": 0.21665329210860074,
+      "heuristic_xg": 0.10537416509382151
+    },
+    {
+      "shot_id": "afb3e917-b271-41a8-add7-88edca0f96c9",
+      "match_id": "3750200",
+      "goal": 1,
+      "logistic_xg": 0.1610603055687986,
+      "heuristic_xg": 0.1447795528843027
+    },
+    {
+      "shot_id": "7d50c4a9-be2e-4cf1-9b59-aa47d3cf4a3e",
+      "match_id": "3750200",
+      "goal": 0,
+      "logistic_xg": 0.100322629953972,
+      "heuristic_xg": 0.07973312844398084
+    },
+    {
+      "shot_id": "986f47db-df93-488c-a8e9-6cca0379fd51",
+      "match_id": "3750200",
+      "goal": 0,
+      "logistic_xg": 0.18159678155310868,
+      "heuristic_xg": 0.07292419264780908
+    },
+    {
+      "shot_id": "82017a86-dd1d-4792-83f9-9ed4ccd42445",
+      "match_id": "3750200",
+      "goal": 1,
+      "logistic_xg": 0.18318556028311217,
+      "heuristic_xg": 0.06724020492614673
+    },
+    {
+      "shot_id": "e0493116-eea1-4386-98f0-2b8d75d44b3c",
+      "match_id": "3750200",
+      "goal": 0,
+      "logistic_xg": 0.08626964417991832,
+      "heuristic_xg": 0.06499274476838307
+    },
+    {
+      "shot_id": "4969dea5-a145-44f6-ae0d-74df36be7458",
+      "match_id": "3750200",
+      "goal": 1,
+      "logistic_xg": 0.22610457702382208,
+      "heuristic_xg": 0.26851243436305916
+    },
+    {
+      "shot_id": "ea96e2b2-af1e-4157-a700-5919a9c075dc",
+      "match_id": "22912",
+      "goal": 1,
+      "logistic_xg": 0.14752346809798506,
+      "heuristic_xg": 0.14639278414304482
+    },
+    {
+      "shot_id": "4004264d-14a1-4e0d-b01d-a5d025e26c17",
+      "match_id": "22912",
+      "goal": 0,
+      "logistic_xg": 0.04855342435612923,
+      "heuristic_xg": 0.03207259777866382
+    },
+    {
+      "shot_id": "88e73cb6-8cde-4fab-95f6-9a7d7d9b1234",
+      "match_id": "22912",
+      "goal": 0,
+      "logistic_xg": 0.08446493373216055,
+      "heuristic_xg": 0.06504852084892115
+    },
+    {
+      "shot_id": "a8b0c66e-51f0-4b76-a991-2fe3f4a8c48e",
+      "match_id": "22912",
+      "goal": 0,
+      "logistic_xg": 0.2246928831984702,
+      "heuristic_xg": 0.10119378764708864
+    },
+    {
+      "shot_id": "dfffee9b-6c44-40b2-aa8b-408ffb592951",
+      "match_id": "22912",
+      "goal": 0,
+      "logistic_xg": 0.03902187255978438,
+      "heuristic_xg": 0.0289661235908257
+    },
+    {
+      "shot_id": "e3ae0a6b-4b2d-4738-8c67-61fe693430a4",
+      "match_id": "22912",
+      "goal": 0,
+      "logistic_xg": 0.06840914975080364,
+      "heuristic_xg": 0.046677424620703394
+    },
+    {
+      "shot_id": "40332dc4-d7f9-4716-8e44-1d3f75ff685b",
+      "match_id": "22912",
+      "goal": 0,
+      "logistic_xg": 0.07252723962530352,
+      "heuristic_xg": 0.06038596042899141
+    },
+    {
+      "shot_id": "89bcf4f1-7cdd-4cc0-95e7-60ed13ccec3a",
+      "match_id": "22912",
+      "goal": 0,
+      "logistic_xg": 0.12589284057805358,
+      "heuristic_xg": 0.04825461694515055
+    },
+    {
+      "shot_id": "834c48aa-ba51-481c-a5b4-3f91f87b1db4",
+      "match_id": "22912",
+      "goal": 0,
+      "logistic_xg": 0.17687050568069768,
+      "heuristic_xg": 0.1895463071236754
+    },
+    {
+      "shot_id": "2d031ac5-91ad-4e51-92c5-3a36b4ed1143",
+      "match_id": "22912",
+      "goal": 0,
+      "logistic_xg": 0.21947895759069053,
+      "heuristic_xg": 0.10717534386105948
+    },
+    {
+      "shot_id": "7af96bd6-9fe3-4de3-9b91-c000e7a36eca",
+      "match_id": "22912",
+      "goal": 0,
+      "logistic_xg": 0.04825340798577932,
+      "heuristic_xg": 0.015701467050928206
+    },
+    {
+      "shot_id": "697d9519-480f-4b5c-8e6f-26519eea34e7",
+      "match_id": "22912",
+      "goal": 0,
+      "logistic_xg": 0.3951773636115519,
+      "heuristic_xg": 0.270942971173042
+    },
+    {
+      "shot_id": "b59370eb-a6e7-47e6-abc1-0f8f15d33b47",
+      "match_id": "22912",
+      "goal": 0,
+      "logistic_xg": 0.2156924237127667,
+      "heuristic_xg": 0.10463843087392842
+    },
+    {
+      "shot_id": "cca34ecd-9dbc-44a1-94db-f244aba90b2f",
+      "match_id": "22912",
+      "goal": 1,
+      "logistic_xg": 0.08641668225976727,
+      "heuristic_xg": 0.07232708133835995
+    },
+    {
+      "shot_id": "56488ac2-014c-46f8-a2f6-3e20f2e74d48",
+      "match_id": "22912",
+      "goal": 0,
+      "logistic_xg": 0.0464057527698079,
+      "heuristic_xg": 0.034291800041615264
+    },
+    {
+      "shot_id": "39be210f-9f22-4c0e-bdc1-aedba8e16911",
+      "match_id": "22912",
+      "goal": 0,
+      "logistic_xg": 0.04467514194158239,
+      "heuristic_xg": 0.03295954669113753
+    },
+    {
+      "shot_id": "b028efbb-c5d9-4f82-9b3f-6afb32ebda0b",
+      "match_id": "18242",
+      "goal": 0,
+      "logistic_xg": 0.0874390071352546,
+      "heuristic_xg": 0.07038904377414285
+    },
+    {
+      "shot_id": "6ff7a431-2cf4-4f5a-8348-256c6dc44dad",
+      "match_id": "18242",
+      "goal": 1,
+      "logistic_xg": 0.22728061714408668,
+      "heuristic_xg": 0.2616683039766321
+    },
+    {
+      "shot_id": "15d1aa41-9064-4c15-ab88-157fc9140369",
+      "match_id": "18242",
+      "goal": 0,
+      "logistic_xg": 0.12413102007612262,
+      "heuristic_xg": 0.05009498233057582
+    },
+    {
+      "shot_id": "b9e652ca-be91-40c1-80fb-9e02ae64f8dd",
+      "match_id": "18242",
+      "goal": 0,
+      "logistic_xg": 0.1890663101988598,
+      "heuristic_xg": 0.08543426643835941
+    },
+    {
+      "shot_id": "969f2ed8-b6cd-4214-bf3d-fddcf301f5b2",
+      "match_id": "18242",
+      "goal": 0,
+      "logistic_xg": 0.09879311415946997,
+      "heuristic_xg": 0.08185695297700948
+    },
+    {
+      "shot_id": "5694fb32-bc7d-4cf3-a4da-7e02ba721764",
+      "match_id": "18242",
+      "goal": 0,
+      "logistic_xg": 0.07221174591679491,
+      "heuristic_xg": 0.059267466735469836
+    },
+    {
+      "shot_id": "5fc64041-7054-4c1a-8302-291444f68662",
+      "match_id": "18242",
+      "goal": 0,
+      "logistic_xg": 0.09964447271108227,
+      "heuristic_xg": 0.0362718664748457
+    },
+    {
+      "shot_id": "230b02e5-9f93-4bd6-9110-6a633e3b013b",
+      "match_id": "18242",
+      "goal": 0,
+      "logistic_xg": 0.09275538055608594,
+      "heuristic_xg": 0.03360538479555106
+    },
+    {
+      "shot_id": "96c49ca0-fe8a-4960-84fe-5166436bda01",
+      "match_id": "18242",
+      "goal": 0,
+      "logistic_xg": 0.09964447271108227,
+      "heuristic_xg": 0.0362718664748457
+    },
+    {
+      "shot_id": "968cbe39-7bff-43cd-89b8-852c89e7a084",
+      "match_id": "18242",
+      "goal": 0,
+      "logistic_xg": 0.14207342150473545,
+      "heuristic_xg": 0.05490863104605302
+    },
+    {
+      "shot_id": "466ddafe-c119-4f94-950e-c7fa0d155a13",
+      "match_id": "18242",
+      "goal": 0,
+      "logistic_xg": 0.13348975537181473,
+      "heuristic_xg": 0.04704218889098978
+    },
+    {
+      "shot_id": "3be90160-9abe-4039-9a90-77b25496dfe8",
+      "match_id": "18242",
+      "goal": 0,
+      "logistic_xg": 0.06041699364822547,
+      "heuristic_xg": 0.047396393307447854
+    },
+    {
+      "shot_id": "a345546f-3a5b-474d-b1ad-84a450e9b034",
+      "match_id": "18242",
+      "goal": 0,
+      "logistic_xg": 0.13235805735876263,
+      "heuristic_xg": 0.12553300124594144
+    },
+    {
+      "shot_id": "d8de9c17-e485-4624-938f-a340318ba58d",
+      "match_id": "18242",
+      "goal": 1,
+      "logistic_xg": 0.45901559175865153,
+      "heuristic_xg": 0.34875347996117584
+    },
+    {
+      "shot_id": "7a60ac0c-9f72-437f-aede-36f6db6ba9a2",
+      "match_id": "18242",
+      "goal": 0,
+      "logistic_xg": 0.11151706660170423,
+      "heuristic_xg": 0.09719043684832956
+    },
+    {
+      "shot_id": "07630473-e001-407c-b626-013beac8331c",
+      "match_id": "18242",
+      "goal": 0,
+      "logistic_xg": 0.14151469477912312,
+      "heuristic_xg": 0.05987366984442528
+    },
+    {
+      "shot_id": "7047fb08-8a84-4196-af84-196ccee7c64d",
+      "match_id": "18242",
+      "goal": 0,
+      "logistic_xg": 0.05333035793202883,
+      "heuristic_xg": 0.04176759397213623
+    },
+    {
+      "shot_id": "344acb91-8f9e-499d-ae65-39d7305e39ad",
+      "match_id": "18242",
+      "goal": 1,
+      "logistic_xg": 0.45031637138948244,
+      "heuristic_xg": 0.34136497731760124
+    },
+    {
+      "shot_id": "6fe934d6-0306-4158-9518-54c63135f4d3",
+      "match_id": "18242",
+      "goal": 0,
+      "logistic_xg": 0.13409793354423383,
+      "heuristic_xg": 0.1082667604027535
+    },
+    {
+      "shot_id": "7652b938-e1ce-47ad-835c-c24d4abc2381",
+      "match_id": "18242",
+      "goal": 0,
+      "logistic_xg": 0.3569134025117406,
+      "heuristic_xg": 0.22277764870997244
+    },
+    {
+      "shot_id": "80e60ccc-bf8d-4c78-af73-07d1a7d2827c",
+      "match_id": "18242",
+      "goal": 0,
+      "logistic_xg": 0.24905196999216317,
+      "heuristic_xg": 0.11606313006199678
+    },
+    {
+      "shot_id": "ba1c4125-87d8-4b31-aacb-d15fdce97e8d",
+      "match_id": "18242",
+      "goal": 0,
+      "logistic_xg": 0.10251434827238233,
+      "heuristic_xg": 0.08946230929538586
+    },
+    {
+      "shot_id": "b09ba265-78b8-4bc6-af24-eb3c4047c8e3",
+      "match_id": "18242",
+      "goal": 1,
+      "logistic_xg": 0.10705206635671212,
+      "heuristic_xg": 0.09126839388788287
+    },
+    {
+      "shot_id": "ab2792f1-6fab-4126-8836-f45840b70f81",
+      "match_id": "18235",
+      "goal": 0,
+      "logistic_xg": 0.30056508971851054,
+      "heuristic_xg": 0.15196105413807276
+    },
+    {
+      "shot_id": "966edbca-dc57-40ea-9bbf-af3f1d97f321",
+      "match_id": "18235",
+      "goal": 0,
+      "logistic_xg": 0.1190728043146537,
+      "heuristic_xg": 0.10764195839064579
+    },
+    {
+      "shot_id": "1a4e6346-f2d2-4c77-8bee-089731d17a8c",
+      "match_id": "18235",
+      "goal": 0,
+      "logistic_xg": 0.24007166854200104,
+      "heuristic_xg": 0.1220456291011141
+    },
+    {
+      "shot_id": "50e30164-0502-43a7-ac09-063262e3af00",
+      "match_id": "18235",
+      "goal": 0,
+      "logistic_xg": 0.09020106983141317,
+      "heuristic_xg": 0.07922219483019198
+    },
+    {
+      "shot_id": "1cd7cf67-b9d6-49ac-b784-db976284bc9f",
+      "match_id": "18235",
+      "goal": 0,
+      "logistic_xg": 0.19941002545831887,
+      "heuristic_xg": 0.08371988842035266
+    },
+    {
+      "shot_id": "13810a7a-3159-4157-980d-a9874abe61fe",
+      "match_id": "18235",
+      "goal": 1,
+      "logistic_xg": 0.20724513050993051,
+      "heuristic_xg": 0.09653915515055106
+    },
+    {
+      "shot_id": "f602d17b-045c-46b4-b8e4-aa8a3865f503",
+      "match_id": "18235",
+      "goal": 0,
+      "logistic_xg": 0.10229892512315863,
+      "heuristic_xg": 0.09082367083499834
+    },
+    {
+      "shot_id": "be4fb0d9-130d-4412-bcdd-88313049cbc2",
+      "match_id": "18235",
+      "goal": 0,
+      "logistic_xg": 0.21641624642194165,
+      "heuristic_xg": 0.10330421140608721
+    },
+    {
+      "shot_id": "40bb4712-0865-4590-a59f-69e9707958d1",
+      "match_id": "18235",
+      "goal": 0,
+      "logistic_xg": 0.037716691093578454,
+      "heuristic_xg": 0.024356001603458403
+    },
+    {
+      "shot_id": "98f04be6-52e9-4a31-a014-1db56e6ea007",
+      "match_id": "18235",
+      "goal": 0,
+      "logistic_xg": 0.07965444876299325,
+      "heuristic_xg": 0.06621345929754081
+    },
+    {
+      "shot_id": "00852696-33bd-4784-83c2-d1e60a0eb7b9",
+      "match_id": "18235",
+      "goal": 0,
+      "logistic_xg": 0.12407516459404086,
+      "heuristic_xg": 0.047341048706866416
+    },
+    {
+      "shot_id": "f64416c9-23df-438e-8e77-898c44179b69",
+      "match_id": "18235",
+      "goal": 0,
+      "logistic_xg": 0.0874390071352546,
+      "heuristic_xg": 0.07038904377414285
+    },
+    {
+      "shot_id": "015f7fe7-76fe-4ed4-b5b0-5ab9cac27478",
+      "match_id": "18235",
+      "goal": 0,
+      "logistic_xg": 0.21332986350754812,
+      "heuristic_xg": 0.10284230137732847
+    },
+    {
+      "shot_id": "9cf3f422-d174-4d8a-b62f-3946e87109b7",
+      "match_id": "18235",
+      "goal": 0,
+      "logistic_xg": 0.02944239910972758,
+      "heuristic_xg": 0.020346129202447587
+    },
+    {
+      "shot_id": "80f874c2-9cfe-4486-8eaa-0ed8d3fd7fb7",
+      "match_id": "18235",
+      "goal": 0,
+      "logistic_xg": 0.13601448982054523,
+      "heuristic_xg": 0.12516844703626823
+    },
+    {
+      "shot_id": "e36e2002-90fc-4b23-be49-1ff9b042258b",
+      "match_id": "18235",
+      "goal": 1,
+      "logistic_xg": 0.1757822405135605,
+      "heuristic_xg": 0.07534705121487086
+    }
+  ]
+}
