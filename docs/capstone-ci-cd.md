@@ -14,9 +14,14 @@ Anonymous GitHub HTML verifies the repository is public. Its Issues, PR, Actions
 and Projects pages were inspected without login. The API returns `Forbidden`
 for repository metadata, branch protection, rulesets, issues, PRs, and Actions
 runs. Therefore live protection settings are **unknown**, not assumed absent.
-No administrative settings were modified. The public Actions page displayed its
+No administrative settings were modified. The GitHub PR-creation GraphQL
+request was also denied (`Forbidden`). The feature branch was pushed; create
+the PR manually using the summary/evidence in this guide (Codex also prepared a PR body outside
+the checkout). The branch compare page
+is https://github.com/Group-4-CSC/Real-time-xG-engine/compare/main...ci/capstone-pipeline-and-evidence?expand=1 . The public Actions page displayed its
 getting-started screen and PR #31's Checks page displayed no historical checks.
-There is no verified historical successful `Test` check for the stories below.
+There is no verified historical successful `Test` check on the old story PRs.
+The new feature-branch workflow run below has now created a successful Test check.
 
 Existing PR #23, **Refactor React Frontend and Add API Module**, is open. Its
 proposed `frontend/src/api.js` is not in main and was not recreated here. Existing
@@ -32,7 +37,12 @@ The team must confirm this grouping with the instructor and represent it on
 the board. The geometry story is extracted from the analytics owner's stated
 responsibility and existing PR #20; a separate linked issue still needs creation.
 
-For every row: **new required Test check = not yet verified on GitHub**. The
+For every row: the **current combined implementation passed Test** in
+[run #1](https://github.com/Group-4-CSC/Real-time-xG-engine/actions/runs/42522809150),
+commit `7f6cd5587f54fecc5ff74d5765512290b8483abc`. The
+[Test job](https://github.com/Group-4-CSC/Real-time-xG-engine/actions/runs/42522809150/job/128860050078)
+publicly reports **succeeded**. This does not retroactively add a passing check
+to each historical PR or prove completion of missing functionality. The
 public issue Development panels for #1, #2, #3, #4, #6, #11, and #12 say
 “No branches or pull requests.” The PRs below are verified related implementations,
 not invented formal issue/PR links. Add explicit references in issue comments or
@@ -59,8 +69,15 @@ PR descriptions; a merged PR alone does not prove that acceptance criteria passe
 Other original stories (#5 history, #7 comparison, #8 PDF, #9 roles, #10 secure
 login) remain outside this delivery grouping and are not claimed implemented.
 Team approval evidence above was read on public PR conversation pages, separately
-from Git merge messages. Merged state and approvals are verified; a successful
-required CI check is not. Do not manufacture retroactive workflow evidence.
+from Git merge messages. Merged state and approvals are verified. The new feature-branch Test passed;
+the old PRs have no verified historical required check. Do not manufacture
+retroactive workflow evidence.
+
+Manual board action: create two parent epic issues using the grouping titles above,
+create a GEO-1 issue with the two geometry acceptance scenarios, and link the eight
+story rows as sub-issues or explicit issue references. Attach the related PR links
+and acceptance evidence. Keep partial stories open and mark missing CI/review proof
+honestly; PR #31 alone is not evidence for unrelated frontend stories.
 
 ## Required GitHub settings
 
@@ -114,7 +131,9 @@ A production full-stack host and secure database/service setup are future work.
 Gitleaks **8.24.3** was downloaded from its official release, with SHA-256
 verification retained. The script pins the validated archive checksum. The scan
 covered the non-shallow checkout's reachable history with `--all --full-history`
-(Gitleaks reports 47 patch-bearing commits; Git counts 70 including merges),
+(initially 47 patch-bearing commits / 70 Git commits including merges). After
+fetching all 17 remote branch heads, the expanded scan passed over 53
+patch-bearing commits / 77 reachable Git commits, including this feature branch,
 and tracked/unignored files in the working tree, excluding ignored caches.
 It does not establish that deleted/unreachable server-side objects or external
 services contain no secrets.
@@ -124,7 +143,9 @@ matches. Every match was individually classified from its source line: public
 StatsBomb `key_pass_id` UUID event references in the raw shot JSON files. No
 values were printed. `.gitleaks.toml` retains all default rules and adds one
 AND-scoped exception: that specific field/UUID format, the raw shot-data path,
-and only the generic-api-key rule. No dataset directories were excluded.
+and only the generic-api-key rule. No dataset directories were excluded. A synthetic detector control confirmed
+that the exception permits a correctly formatted event UUID while default rules
+still flag a generic credential-like value elsewhere; it was not a real credential.
 With that reviewed configuration, both history and source scans passed with zero
 remaining findings. This is a scoped scan result, not a guarantee that no secret
 can exist. No real credential was identified and no credential rotation is
@@ -153,7 +174,12 @@ Local Linux validation on this feature branch:
   Django because tests use `SimpleTestCase`, not a MongoDB integration claim.
 - Frontend Node helper suite: **4 passed**; lint and production Pages-base build passed.
 - Dataset smoke: **429 processed, 247 numeric, 182 unsupported, zero errors**.
-- `actionlint` validated the workflow; this is not execution on GitHub's runner.
+- `actionlint` validated the workflow. GitHub workflow run #1 also completed
+  successfully in 1m 31s; its Test job succeeded in 30s. Deploy was skipped as
+  designed on a feature push. The public job page reports a nonblocking Node 20
+  deprecation warning for the pinned action runtimes; GitHub ran them on Node 24.
+- Live development WSGI requests passed for health, numeric xG, and unsupported
+  API null. This still does not establish database readiness.
 - Chromium browser smoke against the production build passed: Pages-base asset
   loading, demo entry, dashboard, summary, expected API-unavailable fallback, map
   filter selection/reset, invalid CSV rejection, and sample import. No browser
@@ -173,9 +199,11 @@ acceptance for every story, and Windows execution remain unverified.
 - [ ] Updated root README published on main (URL exists, but this branch's new
   contents are not yet merged):
   https://github.com/Group-4-CSC/Real-time-xG-engine/blob/main/README.md
-- [ ] Green Actions run: record the actual successful run URL after branch/PR CI
-  completes. The Actions index is not a run URL:
-  https://github.com/Group-4-CSC/Real-time-xG-engine/actions
+- [x] Green feature-push Actions run, verified on its public summary and Test
+  job page:
+  https://github.com/Group-4-CSC/Real-time-xG-engine/actions/runs/42522809150
+  Test succeeded; Deploy correctly skipped. A green main run/deployment and a
+  PR-associated check on the final revision still require the steps below.
 - [ ] Merged PR with teammate approval **and passing new Test check**: still
   required. Historical [PR #31](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/31)
   is merged and approved by anderc1-debug, but its Checks page has no successful
@@ -188,7 +216,8 @@ acceptance for every story, and Windows execution remain unverified.
   environment. The default Pages hostname could not be reached from this cloud
   environment (proxy 403); publication is **not verified**. Do not submit a
   guessed URL as a working deployment.
-- [ ] Main protection verified after Test has first succeeded.
+- [ ] Main protection verified after Test has first succeeded. Test has now
+  succeeded in run #1, so an administrator can select it as a required check.
 - [ ] Eight story rows reconciled with issue/PR links, acceptance criteria,
   teammate reviews, and actual CI results; incomplete stories remain disclosed.
 - [ ] Three-minute video recorded and its sharing permissions tested signed out.

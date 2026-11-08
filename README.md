@@ -136,7 +136,10 @@ run has first created and successfully completed it.** An administrator must
 configure main's PR-only rule, one approval, Test check, and no bypasses; exact
 settings and the activation order are in [the administration guide](docs/capstone-ci-cd.md#required-github-settings).
 The existing protection settings could not be read through this environment's
-GitHub API, so they are not claimed to be enabled.
+GitHub API, so they are not claimed to be enabled. The first feature-branch
+[GitHub run](https://github.com/Group-4-CSC/Real-time-xG-engine/actions/runs/42522809150)
+has now succeeded, including Test, so an administrator can now select that check.
+Deploy correctly skipped; main deployment remains pending approval and merge.
 
 Store hosting/backend credentials only in GitHub Actions/environment Secrets
 (**Settings → Secrets and variables → Actions**), with production environments
