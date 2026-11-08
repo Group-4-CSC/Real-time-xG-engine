@@ -1,3 +1,183 @@
+# xG Insights — development and CI/CD
+
+React/Vite demo, Django REST API, and Python shot analytics. The existing
+heuristic remains the application's xG model; the logistic-regression experiment
+is offline and is not deployed. The original proposal, personas, and design
+history are preserved below.
+
+## Install and run locally
+
+Prerequisites: **Python 3.12**, **Node.js 24**, npm, and Git. From the repository
+root (Bash):
+
+```bash
+python -m venv Analytics/.venv
+source Analytics/.venv/bin/activate
+cd football-xg-backend
+python -m pip install -r requirements.txt -r ../requirements.txt -r ../Analytics/requirements-ml.txt
+cd ../frontend
+npm ci
+npm run dev
+```
+
+Open the local Vite address printed by the command. Choose **Explore the demo
+workspace**; no real account is needed. Match Summary, Shot Map, filters, and CSV
+preview/import run in browser memory using sample or uploaded data. Refreshing
+resets the demo. Imported xG values are displayed; the frontend does not calculate
+new xG or persist records to MongoDB. Demo login is not secure authentication.
+
+For Windows PowerShell, run `py -3.12 -m venv Analytics/.venv`, then call
+`.\Analytics\.venv\Scripts\python.exe` instead of activating the environment.
+From the repository root, install with:
+
+```powershell
+Push-Location football-xg-backend
+..\Analytics\.venv\Scripts\python.exe -m pip install -r requirements.txt -r ../requirements.txt -r ../Analytics/requirements-ml.txt
+Pop-Location
+Push-Location frontend
+npm ci
+npm run dev
+Pop-Location
+```
+
+To run the API, use another terminal with the virtual environment active. The
+normal Django development server requires a compatible local MongoDB instance
+or your team's usable MongoDB URI for its migration check. Copy the backend's
+`.env.example` to an ignored `.env` and configure it locally; never commit real
+credentials. With MongoDB available:
+
+```bash
+cd football-xg-backend
+python manage.py migrate
+python manage.py runserver 127.0.0.1:8000
+```
+
+Database migration/Atlas connectivity is not established by the CI tests: the
+current API tests use `SimpleTestCase` and do not require a database. For just the
+currently stateless endpoints, a development-only server can run without MongoDB:
+
+```bash
+cd football-xg-backend
+python -m django check --settings=config.settings
+python -c 'from wsgiref.simple_server import make_server; from config.wsgi import application; make_server("127.0.0.1", 8000, application).serve_forever()'
+```
+
+Vite proxies `/api` to port 8000 locally. Check `GET /api/health/` and
+`POST /api/xg/calculate/` with JSON
+`{"x":85,"y":50,"body_part":"right_foot","outcome":"goal"}`. Health returns
+`{"status":"ok"}`; the calculation returns numeric xG and `xg_status: "computed"`.
+The AI summary is a placeholder; it is not a live LLM service.
+
+## Automated checks
+
+With the Python environment active, from the repository root:
+
+```bash
+python -m unittest discover -s Analytics -p 'test_*.py' -v
+python -m Analytics.data_smoke_check
+cd football-xg-backend
+python manage.py check
+python manage.py test api --verbosity 2
+cd ../frontend
+npm run test
+npm run lint
+npm run build -- --base=/Real-time-xG-engine/
+```
+
+Local validation: **51 analytics tests, 9 API tests, and 4 frontend helper tests
+passed**, with no skipped tests. Lint/build passed. The data smoke check processed
+429 shots: 247 numeric predictions, 182 outside-model shots, zero errors.
+The new analytics acceptance scenarios in `Analytics/test_acceptance.py` cover
+physical distance/angle, invalid coordinates, numeric xG, label/provider-xG
+independence, and unsupported shots returning missing values rather than zero.
+The frontend tests exercise existing visualization helpers, not full browser
+acceptance. See the [story evidence and submission checklist](docs/capstone-ci-cd.md)
+for verified PR approvals, remaining gaps, and the browser smoke-check scope.
+
+## CI/CD and deployment
+
+One workflow, [`.github/workflows/ci-cd.yml`](.github/workflows/ci-cd.yml), runs on
+**every push** and **every pull request targeting main**. Its four jobs are:
+
+1. **Setup** — select Python 3.12/Node 24 and verify manifests.
+2. **Dependencies** — install/check Python dependencies and run frozen `npm ci`.
+3. **Test** — install its own dependencies, scan secrets/history, run analytics
+   acceptance/unit tests, dataset smoke check, Django tests, frontend helper
+   tests/lint, and a Pages-compatible build. No failing command is ignored.
+   Prerequisite failure also fails this required check instead of skipping it.
+4. **Deploy** — only a successful **push to main** deploys the exact tested
+   frontend artifact to GitHub Pages. Feature pushes and all PRs skip deployment.
+
+Jobs run on separate machines: dependency caches save download time, but the
+Test job still installs its dependencies. Ordinary jobs have read-only contents
+permissions; only Deploy receives `pages: write` and `id-token: write`. Actions
+are pinned to inspected commit SHAs. The workflow never uses `pull_request_target`
+and never supplies production credentials to PR code.
+
+**Pages hosts only the React demo. It does not host Django, MongoDB, Python xG
+inference, or a real AI service.** The summary's unavailable message is expected
+on Pages; sample data, map, dashboard, and CSV interaction remain functional.
+No custom hosting token is required: deployment uses GitHub's short-lived
+`GITHUB_TOKEN`/OIDC credentials, scoped to the Deploy job.
+
+Administrator: enable Actions and set **Settings → Pages → Build and deployment →
+Source: GitHub Actions**. After approved merge, the main push deploys the artifact.
+Read the verified public URL from the Deploy job's `github-pages` environment and
+test it while signed out before submitting. **No public deployment URL has been
+verified yet.** For a local preview of the Pages build, run
+`npm run preview -- --base=/Real-time-xG-engine/` in `frontend/` and open `/Real-time-xG-engine/` on that server.
+
+## Branch protection, secrets, and team workflow
+
+Work in a feature branch, open a PR linked to its story issues, request a teammate
+review, and require the successful **Test** check before merging. Do not directly
+push to main or bypass protection. **Do not require Test until a real workflow
+run has first created and successfully completed it.** An administrator must
+configure main's PR-only rule, one approval, Test check, and no bypasses; exact
+settings and the activation order are in [the administration guide](docs/capstone-ci-cd.md#required-github-settings).
+The existing protection settings could not be read through this environment's
+GitHub API, so they are not claimed to be enabled. The first feature-branch
+[GitHub run](https://github.com/Group-4-CSC/Real-time-xG-engine/actions/runs/42522809150)
+has now succeeded, including Test, so an administrator can now select that check.
+Deploy correctly skipped; main deployment remains pending approval and merge.
+
+Store hosting/backend credentials only in GitHub Actions/environment Secrets
+(**Settings → Secrets and variables → Actions**), with production environments
+restricted to main. Never place credentials in source, `VITE_*` variables, build
+artifacts, screenshots, or PR logs. Everything embedded into a frontend build is
+public. Local `.env` files remain ignored.
+
+Run `bash scripts/scan-secrets.sh` on Linux x86_64 to install checksum-verified
+Gitleaks 8.24.3 and scan reachable Git history plus tracked/unignored source.
+It prints fully redacted findings and fails when a finding is detected. The
+checked-in config retains default rules and permits only the raw StatsBomb
+`key_pass_id` event-UUID format for the generic-key rule. See the audit in the
+submission guide. If a real credential is found, revoke/rotate it immediately,
+replace it with a secure secret binding, and coordinate history cleanup; deleting
+a file or making a new commit does not revoke a leaked credential.
+
+## AI assistance and personal verification
+
+Codex assisted with this workflow, acceptance/helper tests, documentation, and
+repository/evidence inspection. Earlier ML work also used Codex; the existing
+analytics README records earlier Copilot/ChatGPT assistance. Actual mistakes
+identified and corrected include the original experiment's output path being
+able to overwrite its dataset and accepting padded match IDs that could defeat
+match grouping. Regression tests for both were added before PR #31. The root
+README had stale counts (29 analytics/8 API tests) and referred to an unmerged
+frontend API module as if present; those statements are corrected here. Initial
+Gitleaks detections of event UUIDs were investigated rather than reported as real
+credential leaks or suppressed by excluding all data files. Browser validation also caught an incorrect local preview command
+that omitted the build base path; the documented preview command now includes it.
+
+The student must personally review/explain the code, reproduce tests locally,
+verify course AI-disclosure rules, obtain genuine teammate approval, inspect the
+remote CI run, test the public deployment and Kanban access while signed out, and
+record the demonstration. Locally passing checks are not evidence of a green
+GitHub Actions run or of completed database integration.
+
+---
+
 # CSC 325 Capstone Project Proposals
 
 ## Team Members
@@ -181,10 +361,10 @@ Priya follows a shorter path: she opens a stored match, reads the Match Summary,
 
 xG Insights is a client-server web application with a layered backend.
 
-- **Client:** a React + Vite single-page app in `frontend/`. It shows the screens, validates uploaded CSVs, and calculates filters and totals in the browser. Backend calls are being moved into `frontend/src/api.js`. The AI match summary component (`AIMatchSummary.jsx`) currently fetches its endpoint directly.
+- **Client:** a React + Vite single-page app in `frontend/`. It shows the screens, validates uploaded CSVs, and calculates filters and totals in the browser. PR #23 proposes a frontend API module but is still open; `frontend/src/api.js` is not in this checkout. The AI match summary component (`AIMatchSummary.jsx`) currently fetches its endpoint directly.
 - **Server:** a Django REST Framework API in `football-xg-backend/`. It validates requests and returns JSON.
 - **Analytics package:** `Analytics/` holds the shot geometry (distance, angle, penalty-box check) and the xG model. It is plain Python with no Django dependency, so it can be tested on its own and replaced later without changing the API.
-- **Database:** MongoDB Atlas with two collections, `matchCollection` and `shotCollection`, linked by `match_id`. The collections are defined, but the cleaned CSVs have not been imported into Atlas yet.
+- **Database:** MongoDB Atlas with two collections, `matchCollection` and `shotCollection`, linked by `match_id`. The CSVs define the intended records; this checkout does not provide an ingestion endpoint, and live Atlas contents/connectivity have not been verified.
 - **Data pipeline:** `Analytics/Data/Data_Cleaning.py` turns StatsBomb JSON into clean CSV files in the shared shot format. This runs offline, not as part of the web app.
 
 **Current flow:** the React app works on local CSV data. The Django API can calculate xG for a shot through `POST /api/xg/calculate/`, but the React app does not send shots to it yet.
@@ -210,17 +390,17 @@ xG Insights is a client-server web application with a layered backend.
 
 The project uses four categories of test. Each can be run from the command line.
 
-**1. Unit tests.** Check single functions in the analytics package: input checks, distance, angle, penalty-box check, and the xG model. There are 29 tests, all passing.
+**1. Unit tests.** Check single functions in the analytics package: input checks, distance, angle, penalty-box check, and the xG model. There are now 51 analytics tests; see the current validation and acceptance evidence above.
 - Run: `py -m unittest discover -s Analytics -p "test_*.py"`
 - Examples: a shot at the penalty spot gives a distance of 11.0 m and an angle of about 36.8 degrees; a shot outside the box returns `None`, not 0; `x = 101` raises an error; the same shot as a goal or a save gets the same xG.
 
-**2. Integration tests.** Check the API together with the analytics code: input validation, status codes, and xG returned or null. There are 8 tests, all passing.
+**2. Integration tests.** Check the API together with the analytics code: input validation, status codes, and xG returned or null. There are 9 API tests; see the current validation above.
 - Run: `cd football-xg-backend` then `python manage.py test api`
 - Examples: `POST /api/xg/calculate/` with `x = 101` returns HTTP 400; a valid in-box shot returns HTTP 200 with an `xg` between 0 and 1.
 
 **3. Build and lint checks (frontend).** Check that the frontend compiles and has no lint errors.
 - Run: `cd frontend` then `npm run lint` and `npm run build`
-- The frontend has no automated unit tests yet, so the screens are covered by these checks and by category 4.
+- Four automated visualization-helper tests now run with `npm run test`; full browser acceptance remains separate from these helper tests.
 
 **4. System and acceptance tests (manual).** Check the whole workflow as a user would. The team runs these before each demo, using `PROTOTYPE_TESTING_CHECKLIST.md`.
 - Upload a CSV with a missing column: the error names the column and nothing is imported.
