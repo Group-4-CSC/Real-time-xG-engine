@@ -1,0 +1,13 @@
+[extend]
+useDefault = true
+
+# Public StatsBomb event references, not authentication credentials.
+# Limit this exception to one field format, one rule, and the raw shot-data path.
+[[rules]]
+id = "generic-api-key"
+[[rules.allowlists]]
+description = "StatsBomb key_pass_id event UUID"
+condition = "AND"
+regexTarget = "match"
+paths = ['''(?:^|/)Analytics/Data/Raw_Statsbomb_Data/CL_Final_Shot_Data/[^/]+\.json$''']
+regexes = ['''key_pass_id"\s*:\s*"[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}"''']
