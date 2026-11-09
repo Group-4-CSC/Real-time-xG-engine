@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { coverageText, periodMatches, statsFor, teamColors, xgCellText, xgScopeLabel, xgStatus } from './vizShared.js'
+import { coverageText, formatSigned, periodMatches, statsFor, teamColors, xgCellText, xgScopeLabel, xgStatus } from './vizShared.js'
 
 test('US-2.2: supported team xG totals disclose unsupported shots', () => {
   const stats = statsFor([
@@ -35,4 +35,13 @@ test('US-6.1 helper: home-team color is stable across shot ordering', () => {
   const reversed = teamColors([{ team: 'Home' }, { team: 'Away' }], 'Home')
   assert.deepEqual(first, reversed)
   assert.notEqual(first.Home, first.Away)
+})
+
+test('US-4.3: match summary compares goals and xG by team', () => {
+  const home = statsFor([{ outcome: 'goal', xg: 0.4 }, { outcome: 'saved', xg: 0.1 }])
+  const away = statsFor([{ outcome: 'goal', xg: 0.2 }, { outcome: 'goal', xg: 0.1 }])
+  assert.equal(home.goals, 1)
+  assert.equal(away.goals, 2)
+  assert.equal(formatSigned(home.xg - away.xg), '+0.20')
+  assert.equal(formatSigned(null), 'xG pending')
 })
