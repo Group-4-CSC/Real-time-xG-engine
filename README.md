@@ -143,15 +143,11 @@ For a local preview of the Pages build, run
 
 Work in a feature branch, open a PR linked to its story issues, request a teammate
 review, and require the successful **Test** check before merging. Do not directly
-push to main or bypass protection. **Do not require Test until a real workflow
-run has first created and successfully completed it.** An administrator must
-configure main's PR-only rule, one approval, Test check, and no bypasses; exact
-settings and the activation order are in [the administration guide](docs/capstone-ci-cd.md#required-github-settings).
-The existing protection settings could not be read through this environment's
-GitHub API, so they are not claimed to be enabled. The first feature-branch
-[GitHub run](https://github.com/Group-4-CSC/Real-time-xG-engine/actions/runs/42522809150)
-has now succeeded, including Test, so an administrator can now select that check.
-Deploy correctly skipped; main deployment remains pending approval and merge.
+push to main or bypass protection.  The `main` branch is protected by an active GitHub ruleset requiring pull requests, at least one approving review, and a successful `Test` check before merging. Direct pushes, force pushes, and branch deletion are restricted.
+
+The CI/CD workflow successfully completed all four stages (Setup, Dependencies, Test, and Deploy) after merging PR #39 into `main`.
+
+**Verified successful workflow:** https://github.com/Group-4-CSC/Real-time-xG-engine/actions/runs/42563067576
 
 Store hosting/backend credentials only in GitHub Actions/environment Secrets
 (**Settings → Secrets and variables → Actions**), with production environments
