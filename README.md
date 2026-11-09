@@ -123,8 +123,20 @@ No custom hosting token is required: deployment uses GitHub's short-lived
 Administrator: enable Actions and set **Settings → Pages → Build and deployment →
 Source: GitHub Actions**. After approved merge, the main push deploys the artifact.
 Read the verified public URL from the Deploy job's `github-pages` environment and
-test it while signed out before submitting. **No public deployment URL has been
-verified yet.** For a local preview of the Pages build, run
+test it while signed out before submitting. 
+### Verified Deployment (November 8, 2026)**
+
+The GitHub Actions workflow successfully completed all four stages: Setup, Dependencies, Test, and Deploy, following the merge of pull request #23 into main.
+
+**Live website:** https://group-4-csc.github.io/Real-time-xG-engine/
+
+The deployed React application was tested without signing into GitHub. The demo workspace successfully loaded the Coach Dashboard, displaying match statistics, goals, shots, expected goals (xG), match comparisons, and player performance.
+
+The Shot Map was also tested successfully. Filtering by Farmingdale State reduced the displayed shots from 8 to 4, with 2 goals and 0.84 xG.
+
+GitHub Pages hosts the React frontend demo only. The Django backend, MongoDB database, and live AI functionality are not included in this deployment. 
+
+For a local preview of the Pages build, run
 `npm run preview -- --base=/Real-time-xG-engine/` in `frontend/` and open `/Real-time-xG-engine/` on that server.
 
 ## Branch protection, secrets, and team workflow
