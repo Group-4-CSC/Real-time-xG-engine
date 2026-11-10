@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { coverageText, formatSigned, periodMatches, statsFor, teamColors, xgCellText, xgScopeLabel, xgStatus } from './vizShared.js'
+import { coverageText, formatSigned, outcomeLabel, periodMatches, shotKey, statsFor, teamColors, xgCellText, xgScopeLabel, xgStatus } from './vizShared.js'
 
 test('US-2.2: supported team xG totals disclose unsupported shots', () => {
   const stats = statsFor([
@@ -61,4 +61,16 @@ test('US-4.3: match summary excludes unsupported shots from xG but still counts 
   assert.equal(home.goalsCalc, 1)
   assert.equal(coverageText(home), 'xG from 2 of 3 shots (1 outside the model)')
   assert.equal(xgScopeLabel(home, away), 'supported shots only')
+})
+
+test('US-6.1: shot map labels every outcome type', () => {
+  assert.equal(outcomeLabel('goal'), 'Goal')
+  assert.equal(outcomeLabel('off_target'), 'Off target')
+  assert.equal(outcomeLabel('post'), 'Hit the post')
+  assert.equal(outcomeLabel('unknown_outcome'), 'unknown_outcome')
+})
+
+test('US-6.1: shot map gives each shot a unique key within its match', () => {
+  assert.equal(shotKey({ match_id: 18245, id: 7 }), '18245-7')
+  assert.notEqual(shotKey({ match_id: 18245, id: 7 }), shotKey({ match_id: 18245, id: 8 }))
 })
