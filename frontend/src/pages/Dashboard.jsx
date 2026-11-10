@@ -1,23 +1,12 @@
 
 import { useMemo } from 'react'
-import { statsFor, xgText } from '../components/vizShared.js'
+import { xgText } from '../components/vizShared.js'
+import { dashboardMetrics } from '../utils/dashboardMetrics.js'
 
 export default function Dashboard({ shots, team, teams, onTeamChange, notice, onUpload }) {
-  const own = useMemo(() => shots.filter(s => s.team === team), [shots, team])
-  const opponent = useMemo(() => shots.filter(s => s.team !== team), [shots, team])
-
-  const homeStats = statsFor(own)
-  const awayStats = statsFor(opponent)
-
-  const playerStats = useMemo(
-    () => [...new Set(own.map(s => s.player))].map(name => ({
-      name,
-      ...statsFor(own.filter(s => s.player === name)),
-    })),
-    [own]
+  const { matches, homeStats, awayStats, playerStats } = useMemo(
+    () => dashboardMetrics(shots, team), [shots, team]
   )
-
-  const matches = new Set(shots.map(s => s.match_id)).size
 
   return (
     <main>
@@ -76,12 +65,12 @@ export default function Dashboard({ shots, team, teams, onTeamChange, notice, on
             <div>
               <span>{team}</span>
               <strong>{homeStats.goals} goals</strong>
-              <b>{xgText(homeStats)} xG (box shots)</b>
+              <b>{xgText(homeStats)}{homeStats.xg !== null ? ' xG (box shots)' : ''}</b>
             </div>
             <div>
               <span>Opponent teams</span>
               <strong>{awayStats.goals} goals</strong>
-              <b>{xgText(awayStats)} xG (box shots)</b>
+              <b>{xgText(awayStats)}{awayStats.xg !== null ? ' xG (box shots)' : ''}</b>
             </div>
           </div>
 
