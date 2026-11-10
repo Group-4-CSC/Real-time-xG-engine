@@ -3,128 +3,61 @@
 Deadline supplied by the assignment: **November 9, 2026, 11:59 PM Eastern**.
 Do not claim local checks as GitHub checks or merge without the owner's approval.
 
-## Inspection and existing work
+## Current repository and delivery verification (November 9, 2026, Eastern)
 
-Inspection started at `a21c675b28465a9531dd8086d613b7c2fd5d79be` on main.
-The complete non-shallow checkout had 70 reachable commits, existing analytics,
-Django API, React demo, dataset, and the merged experimental ML pipeline.
-There was no `.github/workflows/` directory. Git fetch/remote reads work.
+This is the current, independently checked GitHub status, replacing the original pre-CI inspection narrative. Historical PRs and earlier validation results remain documented below; do not mistake old checklists for the current submission state.
 
-Anonymous GitHub HTML verifies the repository is public. Its Issues, PR, Actions,
-and Projects pages were inspected without login. The API returns `Forbidden`
-for repository metadata, branch protection, rulesets, issues, PRs, and Actions
-runs. Therefore live protection settings are **unknown**, not assumed absent.
-No administrative settings were modified. The GitHub PR-creation GraphQL
-request was also denied (`Forbidden`). The feature branch was pushed; create
-the PR manually using the summary/evidence in this guide (Codex also prepared a PR body outside
-the checkout). The branch compare page
-is https://github.com/Group-4-CSC/Real-time-xG-engine/compare/main...ci/capstone-pipeline-and-evidence?expand=1 . The public Actions page displayed its
-getting-started screen and PR #31's Checks page displayed no historical checks.
-There is no verified historical successful `Test` check on the old story PRs.
-The new feature-branch workflow run below has now created a successful Test check.
+- **Repository:** [Group-4-CSC/Real-time-xG-engine](https://github.com/Group-4-CSC/Real-time-xG-engine) is public; the updated root [README](https://github.com/Group-4-CSC/Real-time-xG-engine/blob/main/README.md) is published.
+- **Workflow:** [`.github/workflows/ci-cd.yml`](https://github.com/Group-4-CSC/Real-time-xG-engine/blob/main/.github/workflows/ci-cd.yml) runs on every push and every pull request to `main`. Four named jobs run in order: **Setup → Dependencies → Test → Deploy**. Deploy runs only after a successful push to `main`.
+- **Latest verified successful `main` run:** [42749156649](https://github.com/Group-4-CSC/Real-time-xG-engine/actions/runs/42749156649) after [PR #45](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/45) was approved and merged. Setup, Dependencies, Test, and Deploy all concluded **success**.
+- **Test job evidence:** [Test in run 42749156649](https://github.com/Group-4-CSC/Real-time-xG-engine/actions/runs/42749156649/job/129608668359) reports **51 analytics Python tests**, **9 Django API tests**, and **17 frontend Node tests**, all passing; frontend lint/build and the dataset smoke check completed. The smoke check processed **429 shots**. These are CI-run checks of the current combined code; they are not retroactive checks on older PRs.
+- **Deployment:** [Deploy job](https://github.com/Group-4-CSC/Real-time-xG-engine/actions/runs/42749156649/job/129608972317) reported success and emitted [the GitHub Pages URL](https://group-4-csc.github.io/Real-time-xG-engine/). GitHub Pages serves **the React static demo only**—not Django, MongoDB, a live AI service, or live Python inference. A person must still open the URL in a signed-out/private browser to confirm public access and exercise the UI.
+- **Protection:** The active `main-review-and-ci` ruleset (GitHub ruleset ID 26821342) targets the default branch; it has **no bypass actors**, requires a PR with **one approving review** and the GitHub Actions **Test** status check, dismisses stale approvals on new pushes, and disallows force pushes and branch deletion. Direct pushes to `main` are blocked by the required-PR rule.
+- **Reviewed/merged PR evidence:** [#32—CI/CD and analytics acceptance tests](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/32) was approved by Rory with passing PR CI; [#38—Match Summary](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/38) and [#45—Shot Map tests](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/45) were approved by Alejandro; [#43—CSV preview](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/43) and [#44—Coach Dashboard](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/44) were approved by Rory. All are merged, with green PR Test checks.
+- **Known verification gap:** A successful Pages deployment does not prove the entire full-stack app is hosted. Public Kanban visibility, browser behavior, and an unlisted video sharing link need manual signed-out checks before submission.
 
-Existing PR #23, **Refactor React Frontend and Add API Module**, is open. Its
-proposed `frontend/src/api.js` is not in main and was not recreated here. Existing
-PRs #18–#22 and #27–#31 already implement much of the assignment's functionality;
-this change adds CI, tests, and evidence instead of duplicating those features.
+## Two GitHub delivery epics and nine tracked user stories
 
-## Two delivery epics and eight story evidence rows
+The live epic issues are [#33—Soccer Data Processing & xG Analytics](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/33) and [#34—Coach Dashboard & Match Visualization](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/34). Together their currently described deliverables map to **nine story issues**, grouped four and five. The older eight-story planning snapshot is superseded by this map. Open issues are not automatically failures, and closed issues do not on their own establish that every original acceptance criterion was met.
 
-These are **assignment delivery groupings**, not a claim that two new GitHub
-Epic records or eight completed stories already exist. The original broader
-project epics in the root README and the existing issue IDs are preserved.
-The team must confirm this grouping with the instructor and represent it on
-the board. The geometry story is extracted from the analytics owner's stated
-responsibility and existing PR #20; a separate linked issue still needs creation.
+### Epic #33 — Soccer Data Processing & xG Analytics (four stories)
 
-For every row: the **current combined implementation passed Test** in
-[run #1](https://github.com/Group-4-CSC/Real-time-xG-engine/actions/runs/42522809150),
-commit `7f6cd5587f54fecc5ff74d5765512290b8483abc`. The
-[Test job](https://github.com/Group-4-CSC/Real-time-xG-engine/actions/runs/42522809150/job/128860050078)
-publicly reports **succeeded**. This does not retroactively add a passing check
-to each historical PR or prove completion of missing functionality. The
-public issue Development panels for #1, #2, #3, #4, #6, #11, and #12 say
-“No branches or pull requests.” The PRs below are verified related implementations,
-not invented formal issue/PR links. Add explicit references in issue comments or
-PR descriptions; a merged PR alone does not prove that acceptance criteria passed.
+| Story and GitHub status | Implemented code / related PR | Automated acceptance proof and remaining gap |
+| --- | --- | --- |
+| [#35: Shot distance and angle](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/35) — **open** | [PR #20](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/20), approved and merged | `Analytics/test_acceptance.py` — `GeometryStoryAcceptanceTests` checks penalty-spot distance/angle and invalid positions; Alejandro added issue evidence comment. Close after teammate verifies criteria and board mapping. |
+| [#3: Calculate shot xG and handle unsupported shots](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/3) — **closed** | [PR #22](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/22), [PR #28 API integration](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/28) | `XGStoryAcceptanceTests` plus API numeric/null/invalid-input tests; unsupported outside-model shots yield missing xG, not zero. **Original issue's database-persistence and every-shot wording is not fully implemented**; model covers supported penalty-area shots. |
+| [#36: Convert StatsBomb data to shot CSV](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/36) — **closed** | Earlier team data import work, including [PR #18](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/18); exact issue-to-PR linkage needs confirmation | Dataset smoke processes 429 shot records, but a dedicated acceptance test explicitly proving every required export column and blank xG on unsupported rows was **not independently verified**. Ask the data owner to link the converter and test evidence. |
+| [#2: Validate uploaded data](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/2) — **closed** | Existing frontend and backend validation in [PR #19](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/19) / [PR #28](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/28); [PR #43](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/43) tests local CSV validation for related story #41 | API tests reject invalid data; frontend tests reject malformed or invalid input. **Original criterion for a report listing each error is not fully demonstrated**; do not equate UI-first-error handling with a complete error report. |
 
-### Epic A — trustworthy shot data and chance calculation
+### Epic #34 — Coach Dashboard & Match Visualization (five stories)
 
-| Story | Functionality now | Related branch / PR and verified teammate approval | Acceptance evidence and gap |
-| --- | --- | --- | --- |
-| [US-1.1 / #1: CSV upload](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/1) | Partial: browser parses/previews/imports; no backend upload or persistent match storage | `feature/team-player-dashboard`, [PR #19](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/19), approved by anderc1-debug Oct 14 | Local browser smoke covers sample import; full issue criterion (stored shots linked to match) is not met. Formal issue/PR link missing. |
-| [US-1.2 / #2: reject invalid data](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/2) | Partial: frontend rejects invalid file; API validates fields; offline ML loader validates IDs | PR #19 (above); `feature/football-xg-backend`, [PR #28](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/28), approved by alejops2005 Oct 17 | Browser smoke rejects missing columns; API `test_rejects_missing_or_invalid_shot_fields`; ML input-safety tests. Issue asks for a report listing each error; current browser stops at the first error. Formal link missing. |
-| GEO-1: physical shot distance and angle (analytics owner) | Implemented: reused geometry in meters/degrees and input validation | `feature/xg-feature-engineering`, [PR #20](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/20), approved by anderc1-debug Oct 14 | Automated `GeometryStoryAcceptanceTests` in `Analytics/test_acceptance.py`: penalty-spot distance/angle and invalid coordinates; existing boundary/symmetry/goalpost tests retained. Separate story issue/link missing. |
-| [US-2.1 / #3: xG and unsupported shots](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/3) | Implemented heuristic/API with missing unsupported values; offline logistic experiment. Partial against original issue's “every shot” and database-save criterion | `feature/xg-feature-engineering`, [PR #22](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/22), approved by anderc1-debug Oct 15; PR #28 API integration; `analytics/experimental-logistic-xg`, [PR #31](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/31), approved by anderc1-debug Nov 2 | Automated `XGStoryAcceptanceTests` plus API numeric/null/invalid-input tests. Issue is closed, but database persistence is not implemented and model scope is penalty-area only. Reconcile acceptance wording with team; do not claim full original criterion. Formal link missing. |
+| Story and GitHub status | Implemented code / related PR | Automated acceptance proof and remaining gap |
+| --- | --- | --- |
+| [#41: CSV validation and preview (local demo)](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/41) — **closed** | [PR #43](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/43), teammate-approved and merged | `frontend/src/utils/csv.test.js` checks valid previews, optional xG, quoted names and invalid rows. Browser-local data only, not database storage. |
+| [#42: Coach Dashboard metrics](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/42) — **closed** | [PR #44](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/44), teammate-approved and merged | `frontend/src/utils/dashboardMetrics.test.js` checks team/match/player totals, switching, missing and unsupported xG; no persistent player history is claimed. |
+| [#11: Interactive shot map](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/11) — **closed** | [PR #21](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/21) and [PR #45](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/45), teammate-approved and merged | `frontend/src/components/vizShared.test.js` checks outcome labels, unique shot keys and team colors. These are **helper tests**, not complete rendered-map/browser acceptance proof; confirm the map visually. |
+| [#12: Player/half filters](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/12) — **open** | [PR #21](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/21) implements map filters | `vizShared.test.js` checks period matching; browser validation is needed to confirm markers actually respond to selected player and half filters. Close only after acceptance sign-off. |
+| [#37: Match Summary compares goals and xG](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/37) — **closed** | [PR #38](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/38), approved by Alejandro and merged | `vizShared.test.js` checks team goals, differential, excluded unsupported xG, partial coverage and pending display. A helper-level test is not a claim of a complete rendered-browser test. |
 
-### Epic B — explain match and player performance
+### Legacy issues and scope honesty
 
-| Story | Functionality now | Related branch / PR and verified teammate approval | Acceptance evidence and gap |
-| --- | --- | --- | --- |
-| [US-2.2 / #4: team xG and xGD](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/4) | Implemented partial/supported totals in Match Summary; offline smoke totals; dashboard uses its own pending-total behavior | `feature/shot-map-match-summary`, [PR #21](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/21), approved by alejops2005 Oct 14; `feature/analytics-data-validation`, [PR #27](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/27), approved by anderc1-debug and jpor12 Oct 17 | New Node helper test verifies supported totals/coverage; dataset smoke checks team/match sums. Browser summary visited; full visual xGD acceptance still needs teammate sign-off. Formal issue/PR link missing. |
-| [US-6.1 / #11: interactive shot map](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/11) | Implemented with team colors, outcome markers, details, and match selection | PR #21 (above) | New Node test covers stable team colors; browser smoke opens map. Hover/keyboard details still need complete manual acceptance. Formal link missing. |
-| [US-6.2 / #12: player/half filters](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/12) | Implemented in Shot Map, with reset | PR #21 (above) | New Node test covers period selection; browser smoke exercises filter selections/reset. Helper tests are not full rendered-map assertions; teammate should confirm only matching markers remain. Formal link missing. |
-| [US-3.2 / #6: player xG ranking](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/6) | Partial: dashboard player totals and summary sorting exist; required selected-date-range ranking is missing | PR #19 (above); PR #21 (above); PR #23 remains open and must not be counted as merged | No full acceptance test for date-range ranking. Do not mark the issue complete. Formal link missing. |
+- [#1: Full CSV upload and match-record storage](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/1) is **closed**, but GitHub Pages only supports browser-local CSV import/preview. A Django/MongoDB persistence workflow is not verified; #41 is explicitly narrower.
+- [#4: Team aggregate xG / xGD](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/4) is **open**; calculations and visuals exist, but reconcile the story acceptance evidence and actual completion before closure.
+- The original broader backlog (#5–#10 and other older work) is not claimed complete merely because the two current delivery epics focus on nine selected stories.
+- Historical implementation PRs generally predate the new required CI workflow. They establish reviewed code history, **not** retroactively passing required Test checks. The current combined implementation passes CI, and new story PRs have separate genuine approval and Test evidence.
+- The coach demo is not a full production deployment. No secure live login, hosted MongoDB, backend persistence, or real hosted AI response should be claimed.
 
-Other original stories (#5 history, #7 comparison, #8 PDF, #9 roles, #10 secure
-login) remain outside this delivery grouping and are not claimed implemented.
-Team approval evidence above was read on public PR conversation pages, separately
-from Git merge messages. Merged state and approvals are verified. The new feature-branch Test passed;
-the old PRs have no verified historical required check. Do not manufacture
-retroactive workflow evidence.
+## GitHub workflow, branch protection, and security configuration
 
-Manual board action: create two parent epic issues using the grouping titles above,
-create a GEO-1 issue with the two geometry acceptance scenarios, and link the eight
-story rows as sub-issues or explicit issue references. Attach the related PR links
-and acceptance evidence. Keep partial stories open and mark missing CI/review proof
-honestly; PR #31 alone is not evidence for unrelated frontend stories.
+The course's required infrastructure settings are **verified active**, not pending administrator setup:
 
-## Required GitHub settings
+1. A single workflow named **xG Insights CI/CD** runs on all pushes and PRs to `main`; the four jobs are Setup, Dependencies, Test, and Deploy. The Test job fails on failed prerequisites and does not silently ignore test failures.
+2. The active `main-review-and-ci` ruleset protects the default branch. It requires a pull request, at least one teammate approval, an up-to-date **Test** check from GitHub Actions, and no bypass actors. Force pushes and deletion are blocked; the broad restrict-updates rule is not enabled.
+3. GitHub Pages is enabled with deployment through GitHub Actions. Deploy receives only Pages/OIDC write permissions and runs on successful trusted pushes to `main`. PR jobs have read-only permissions and do not deploy or receive production credentials.
+4. The workflow scans accessible Git history and files using the pinned/scoped Gitleaks setup documented below. Secret-scan success does not prove that every external service is credential-free. Real secrets must be kept in Actions/environment secrets or ignored local configuration, never in the frontend build.
+5. A reviewer should verify each new PR has a genuine approval and successful Test check **before** merging. Do not bypass the ruleset to rush submission.
 
-An administrator must perform these steps because the API cannot inspect or
-modify them from this environment. Preserve existing stronger rules.
-
-1. **Settings → Actions → General:** enable Actions and permit the pinned GitHub
-   actions used in `.github/workflows/ci-cd.yml`. Keep default workflow token
-   permissions read-only; Deploy explicitly requests only Pages/OIDC permissions.
-2. Push this feature branch and open a PR targeting main. The workflow runs for
-   the branch push and main-targeting PR. In **Actions**, open **xG Insights CI/CD**
-   and wait for **Test** to succeed. Save the actual run URL. If the job fails,
-   fix it and rerun; do not add a nonexistent/unproven required status check.
-3. **Settings → Rules → Rulesets → New branch ruleset:** name it `main-review-and-ci`,
-   target `main`, set enforcement **Active**, and leave the bypass list empty.
-   Enable **Require a pull request before merging**, require **1 approval**,
-   dismiss stale approvals on new commits, require resolved conversations,
-   block force pushes, and restrict deletions. Requiring PRs without bypasses
-   blocks ordinary direct pushes. Do not enable “Restrict updates” for everybody,
-   which can also prevent normal PR merges.
-4. **Only after step 2 has produced a successful Test check**, enable **Require
-   status checks to pass**, select **Test** from the GitHub Actions app, and
-   require branches to be up to date. Save the rule and verify it on a PR.
-   If using classic **Settings → Branches → Add branch protection rule** instead,
-   target `main`, choose the equivalent settings, check **Do not allow bypassing
-   the above settings** (including administrators), and leave force pushes and
-   deletions disabled. Have a teammate verify that direct pushes are blocked.
-5. **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-   Configure the `github-pages` environment to allow only main deployments.
-   PR jobs never receive deployment permissions or secrets. No personal token
-   is required for Pages; GitHub supplies a short-lived token/OIDC identity.
-6. Get a real teammate review of the final PR revision. Merge only after the
-   project owner explicitly approves merging and all required checks pass.
-   The merge's main push runs all four jobs and publishes the tested demo artifact.
-   Open the actual Deploy environment URL while signed out and exercise the demo.
-
-The workflow installs dependencies again in Test because jobs do not share
-installed environments. `needs` orders Setup → Dependencies → Test → Deploy.
-Test also runs after a failed/cancelled Dependencies job so its first gate fails
-instead of allowing a skipped required check. Each automated command preserves
-its failure exit status. Deploy is limited to successful pushes to main and
-uses the artifact created by that same run's Test job; no PR artifact is deployed.
-
-Pages is a static demo, not the full stack. No Django, MongoDB, AI provider,
-authentication service, or Python prediction server is deployed. On Pages the
-AI summary reports unavailability; no API credential should be embedded in Vite.
-A production full-stack host and secure database/service setup are future work.
+GitHub Pages URL verified from the latest Deploy job: https://group-4-csc.github.io/Real-time-xG-engine/ . Public browser loading must still be checked separately.
 
 ## Secret-scan audit
 
@@ -166,61 +99,31 @@ replace revocation. Never bypass the scan merely to obtain a green check.
 
 ## Validation and remaining proof
 
-Local Linux validation on this feature branch:
+### Latest remote CI — verified after PR #45 merge
 
-- Python 3.12 / Node 24 dependencies installed; `pip check` passed.
-- Analytics suite: **51 passed**, including five new story acceptance scenarios.
-- Django `check` and API suite: **9 passed**; unused database setup skipped by
-  Django because tests use `SimpleTestCase`, not a MongoDB integration claim.
-- Frontend Node helper suite: **4 passed**; lint and production Pages-base build passed.
-- Dataset smoke: **429 processed, 247 numeric, 182 unsupported, zero errors**.
-- `actionlint` validated the workflow. GitHub workflow run #1 also completed
-  successfully in 1m 31s; its Test job succeeded in 30s. Deploy was skipped as
-  designed on a feature push. The public job page reports a nonblocking Node 20
-  deprecation warning for the pinned action runtimes; GitHub ran them on Node 24.
-- Live development WSGI requests passed for health, numeric xG, and unsupported
-  API null. This still does not establish database readiness.
-- Chromium browser smoke against the production build passed: Pages-base asset
-  loading, demo entry, dashboard, summary, expected API-unavailable fallback, map
-  filter selection/reset, invalid CSV rejection, and sample import. No browser
-  JavaScript errors occurred. This is not proof that Pages has been published.
-  The local preview command must pass the same base path as the build; omitting
-  it initially caused missing JavaScript assets and was corrected.
+- [Latest green `main` run #42749156649](https://github.com/Group-4-CSC/Real-time-xG-engine/actions/runs/42749156649): **Setup, Dependencies, Test and Deploy passed**.
+- The [Test job](https://github.com/Group-4-CSC/Real-time-xG-engine/actions/runs/42749156649/job/129608668359) reports **51 Python analytics tests**, **9 Django API tests**, and **17 frontend Node tests** passing (**77 total**). Lint and build succeeded; the real-data smoke check processed **429 shots**.
+- The [Deploy job](https://github.com/Group-4-CSC/Real-time-xG-engine/actions/runs/42749156649/job/129608972317) reports successful GitHub Pages publication at https://group-4-csc.github.io/Real-time-xG-engine/ .
+- [PR #45](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/45) was approved by a teammate, passed its [PR workflow](https://github.com/Group-4-CSC/Real-time-xG-engine/actions/runs/42748371448), and was merged before this `main` run. [PR #32](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/32) is also approved/merged with a passing PR Test check.
+- CI checks are **unit/helper/API acceptance checks**, not a complete end-to-end test of hosted database storage, authentication, browser UI, or hosted LLM integration. No MongoDB deployment/integration claim is made.
+- Some old pre-CI PRs were approved and merged before GitHub Actions existed; the new workflow cannot manufacture historical Test checks for them.
+- Manual items outstanding: open the Pages site and the Kanban project signed out, validate relevant browser UI behaviors, reconcile story statuses/links on the board, and verify the demonstration video link and length.
 
-The historical `PROTOTYPE_TESTING_CHECKLIST.md` records earlier results and
-unchecked database/UI items. It is preserved as history, not presented as a
-fresh acceptance sign-off. Full database migration/Atlas tests, rendered UI
-acceptance for every story, and Windows execution remain unverified.
+## Submission checklist — current status
 
-## Submission checklist
+- [x] **Public GitHub repository:** https://github.com/Group-4-CSC/Real-time-xG-engine .
+- [x] **Updated root README published on main:** https://github.com/Group-4-CSC/Real-time-xG-engine/blob/main/README.md . A cosmetic extra `**` remains in the Verified Deployment heading; this does not invalidate the repository link.
+- [x] **Successful four-stage CI/CD on `main`:** https://github.com/Group-4-CSC/Real-time-xG-engine/actions/runs/42749156649 . All four jobs passed; 77 automated tests passed.
+- [x] **Merged PR with genuine teammate approval and passing PR Test:** https://github.com/Group-4-CSC/Real-time-xG-engine/pull/45 . Its successful [PR-associated workflow is here](https://github.com/Group-4-CSC/Real-time-xG-engine/actions/runs/42748371448). Additional example: [#32](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/32).
+- [x] **Branch-protection ruleset:** `main-review-and-ci` is **Active**, targets `main`, requires one approval and passing `Test`, and has no bypass actors.
+- [x] **Successful GitHub Pages deployment:** https://group-4-csc.github.io/Real-time-xG-engine/ — confirmed by the Deploy job logs. **Frontend-only**; not a deployed backend/database/LLM.
+- [x] **Two epic issues and nine mapped story issues exist:** [Epic #33](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/33) and [Epic #34](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/34). This document links stories, implementation PRs, and test evidence while honestly naming partial criteria.
+- [ ] **Kanban visibility and status:** https://github.com/orgs/Group-4-CSC/projects/1 — board was reported public in prior inspection, but the team should open it signed out and confirm all nine story items, assignments, and statuses are visible.
+- [ ] **Resolve outstanding acceptance/status gaps:** issues [#35](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/35), [#12](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/12), and [#4](https://github.com/Group-4-CSC/Real-time-xG-engine/issues/4) are open. Confirm tests and sign-off before marking any done. Also reconcile original closed issues #1/#2/#3 with their unimplemented full criteria.
+- [ ] **Public demo smoke check:** open the deployed website in a signed-out browser and exercise demo entry, dashboard, map, filters, CSV validation and match summary. Do not substitute green Deploy for a live-browser check.
+- [ ] **Three-minute video:** record, upload to YouTube as **unlisted**, confirm length is at most three minutes, and obtain the actual URL. No verified video URL was found in repository documentation during this audit.
+- [ ] **Submission accessibility:** check the repository/README, green workflow, reviewed/merged PR, Kanban board, and unlisted video links from a signed-out browser; submit the required URLs before the deadline.
 
-- [x] Public repository verified anonymously:
-  https://github.com/Group-4-CSC/Real-time-xG-engine
-- [ ] Updated root README published on main (URL exists, but this branch's new
-  contents are not yet merged):
-  https://github.com/Group-4-CSC/Real-time-xG-engine/blob/main/README.md
-- [x] Green feature-push Actions run, verified on its public summary and Test
-  job page:
-  https://github.com/Group-4-CSC/Real-time-xG-engine/actions/runs/42522809150
-  Test succeeded; Deploy correctly skipped. A green main run/deployment and a
-  PR-associated check on the final revision still require the steps below.
-- [ ] Merged PR with teammate approval **and passing new Test check**: still
-  required. Historical [PR #31](https://github.com/Group-4-CSC/Real-time-xG-engine/pull/31)
-  is merged and approved by anderc1-debug, but its Checks page has no successful
-  required Test result, so it does not satisfy the combined requirement.
-- [x] Public Kanban board loaded anonymously with story records:
-  https://github.com/orgs/Group-4-CSC/projects/1
-  (The older linked personal board is also public:
-  https://github.com/users/anderc1-debug/projects/4.)
-- [ ] Public deployment URL: obtain from the actual successful Deploy job's
-  environment. The default Pages hostname could not be reached from this cloud
-  environment (proxy 403); publication is **not verified**. Do not submit a
-  guessed URL as a working deployment.
-- [ ] Main protection verified after Test has first succeeded. Test has now
-  succeeded in run #1, so an administrator can select it as a required check.
-- [ ] Eight story rows reconciled with issue/PR links, acceptance criteria,
-  teammate reviews, and actual CI results; incomplete stories remain disclosed.
-- [ ] Three-minute video recorded and its sharing permissions tested signed out.
 
 ### Three-minute demonstration plan
 
