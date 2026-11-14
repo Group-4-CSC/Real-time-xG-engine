@@ -3,3 +3,7 @@ __pycache__/
 *.egg-info/
 # Local Python 3.12 environment
 football-xg-backend/.venv312/
+
+# Playwright generated test results
+frontend/test-results/
+frontend/playwright-report/
