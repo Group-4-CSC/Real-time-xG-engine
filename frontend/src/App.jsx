@@ -8,7 +8,7 @@ import ShotMap from './components/ShotMap.jsx'
 import { sampleShots } from './data/mockShots.js'
 import { parseCsvWithErrors } from './utils/csv.js'
 import { getMatches } from './api.js'
-import { shotsFromMatches } from './utils/matchData.js'
+import { loadMatchShots } from './utils/matchLoader.js'
 
 export default function App() {
   const [page, setPage] = useState('login')
@@ -35,23 +35,13 @@ export default function App() {
     async function loadMatches() {
       setMatchesLoading(true)
       setMatchesError('')
-      try {
-        const matches = await getMatches({ useMock: !useLiveMatches })
-        const nextShots = shotsFromMatches(matches)
-        if (active && !importedCsv.current) {
-          setShots(nextShots)
-          setTeam(current => nextShots.some(s => s.team === current) ? current : nextShots[0]?.team || '')
-          setDataSource(useLiveMatches ? 'api' : 'demo')
-        }
-      } catch (error) {
-        if (active && !importedCsv.current) {
-          setMatchesError(`Could not load matches from the API: ${error.message}. Showing sample data instead.`)
-          setShots(sampleShots)
-          setDataSource('demo')
-        }
-      } finally {
-        if (active) setMatchesLoading(false)
-      }
+      const result = await loadMatchShots({ useLiveMatches, fetchMatches: getMatches })
+      if (!active || importedCsv.current) return
+      setShots(result.shots)
+      setMatchesError(result.error)
+      setDataSource(result.source)
+      setTeam(current => result.shots.some(shot => shot.team === current) ? current : result.shots[0]?.team || '')
+      setMatchesLoading(false)
     }
     loadMatches()
     return () => { active = false }
@@ -81,6 +71,7 @@ export default function App() {
     importedCsv.current = true
     setShots(preview)
     setDataSource('csv')
+    setMatchesLoading(false)
     setMatchesError('')
     if (!preview.some(s => s.team === team)) setTeam(preview[0]?.team || '')
     setNotice(`${preview.length} shots imported into this local demo.`)
