@@ -419,3 +419,29 @@ The project uses four categories of test. Each can be run from the command line.
 - Acceptance: a user acting as the coach persona completes upload, Match Summary, and Shot Map without help and can say which team created the better chances.
 
 **Done means:** the unit and integration tests pass, `npm run lint` and `npm run build` pass, and the manual checks are run and recorded as pass or fail before the demo.
+
+## Shot Type Filter and Playwright Testing
+
+The Shot Map includes a Shot Type dropdown that lets users filter shots by body part, such as left foot, right foot, or head, when those values are available in the match data.
+
+The Reset button clears the selected filters and restores the original shot count.
+
+### Automated Browser Test
+
+A Playwright test verifies that:
+- The demo workspace opens successfully.
+- The Shot Map and Shot Type dropdown are accessible.
+- A shot type can be selected.
+- The Reset button restores the default selection and original shot count.
+
+To run the test, start the frontend development server at http://localhost:5173, then open another terminal:
+
+```sh
+cd frontend
+npx playwright test tests/shot-map.spec.js
+```
+
+Local verification:
+- Playwright: 1 test passed.
+- Vite production build: passed.
+- npm audit: 0 vulnerabilities.
