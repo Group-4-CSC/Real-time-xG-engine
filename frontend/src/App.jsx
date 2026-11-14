@@ -6,7 +6,7 @@ import UploadCSV from './pages/UploadCSV.jsx'
 import MatchSummary from './components/MatchSummary.jsx'
 import ShotMap from './components/ShotMap.jsx'
 import { sampleShots } from './data/mockShots.js'
-import { parseCsv } from './utils/csv.js'
+import { parseCsvWithErrors } from './utils/csv.js'
 import { getMatches } from './api.js'
 import { shotsFromMatches } from './utils/matchData.js'
 
@@ -25,6 +25,7 @@ export default function App() {
   const [preview, setPreview] = useState(null)
   const [fileName, setFileName] = useState('')
   const [uploadError, setUploadError] = useState('')
+  const [uploadRowErrors, setUploadRowErrors] = useState([])
   const [notice, setNotice] = useState('')
   const teams = [...new Set(shots.map(s => s.team).filter(Boolean))]
   const useLiveMatches = import.meta.env.VITE_MATCHES_SOURCE === 'api'
@@ -65,11 +66,15 @@ export default function App() {
   }
   async function loadFile(file) {
     if (!file) return
-    setUploadError(''); setPreview(null)
+    setUploadError(''); setUploadRowErrors([]); setPreview(null)
     if (!file.name.toLowerCase().endsWith('.csv')) return setUploadError('Please choose a .csv file.')
     if (file.size > 10 * 1024 * 1024) return setUploadError('File must be under 10 MB.')
-    try { setPreview(parseCsv(await file.text())); setFileName(file.name) }
-    catch (e) { setUploadError(e.message) }
+    try {
+      const { shots: validShots, errors } = parseCsvWithErrors(await file.text())
+      setFileName(file.name)
+      setUploadRowErrors(errors)
+      if (!errors.length) setPreview(validShots)
+    } catch (e) { setUploadError(e.message) }
   }
   function importPreview() {
     if (!preview) return
@@ -82,7 +87,7 @@ export default function App() {
     setPage('dashboard')
   }
   function loadSample() {
-    setPreview(sampleShots); setFileName('sample_shots.csv'); setUploadError('')
+    setPreview(sampleShots); setFileName('sample_shots.csv'); setUploadError(''); setUploadRowErrors([])
   }
 
   if (page === 'login') return <Login
@@ -101,7 +106,7 @@ export default function App() {
       {page === 'matchsummary' ? <MatchSummary shots={shots} homeTeam={team} onBack={() => navTo('dashboard')} onOpenShotMap={() => navTo('shotmap')} />
         : page === 'shotmap' ? <ShotMap shots={shots} homeTeam={team} onBack={() => navTo('dashboard')} />
         : page === 'dashboard' ? <Dashboard shots={shots} team={team} teams={teams} dataSource={dataSource} onTeamChange={setTeam} notice={notice} onUpload={() => navTo('upload')} />
-        : <UploadCSV preview={preview} fileName={fileName} uploadError={uploadError}
+        : <UploadCSV preview={preview} fileName={fileName} uploadError={uploadError} uploadRowErrors={uploadRowErrors}
             onBack={() => navTo('dashboard')} onFile={loadFile} onSample={loadSample} onImport={importPreview} />}
     </div>
   </div>
