@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { parseCsv } from './csv.js'
+import { parseCsv, parseCsvWithErrors } from './csv.js'
 
 const headers = 'id,match_id,player,team,minute,period,x,y,outcome,body_part,assist_type'
 const row = (overrides = {}) => {
@@ -55,4 +55,32 @@ test('CSV Upload: malformed rows, xG conflicts, and unclosed quotes are rejected
     /xg_status conflicts with numeric xG/,
   )
   assert.throws(() => parseCsv(headers + '\n"unterminated'), /unclosed quotation mark/)
+})
+
+test('CSV Upload: reports every invalid CSV row without losing row numbers', () => {
+  const csv = headers + '\n' +
+    row({ x: '101' }) + '\n' +
+    row({ outcome: 'unknown' }) + '\n' +
+    row({ minute: 'oops' }) + '\n' +
+    row({ id: 'S4' })
+  const result = parseCsvWithErrors(csv)
+  assert.equal(result.shots.length, 1)
+  assert.equal(result.shots[0].id, 'S4')
+  assert.deepEqual(result.errors.map(e => e.row), [2, 3, 4])
+  assert.match(result.errors[0].message, /Coordinates must be 0–100/)
+  assert.match(result.errors[1].message, /Invalid outcome/)
+  assert.match(result.errors[2].message, /Invalid minute/)
+  assert.throws(() => parseCsv(csv), /row 2/)
+})
+
+test('CSV Upload: valid files return no row errors', () => {
+  const result = parseCsvWithErrors(headers + '\n' + row())
+  assert.equal(result.errors.length, 0)
+  assert.equal(result.shots.length, 1)
+})
+
+test('CSV Upload: column-count errors do not hide errors from later rows', () => {
+  const result = parseCsvWithErrors(headers + '\nS1,M1\n' + row({ x: 'bad' }))
+  assert.deepEqual(result.errors.map(e => e.row), [2, 3])
+  assert.equal(result.shots.length, 0)
 })

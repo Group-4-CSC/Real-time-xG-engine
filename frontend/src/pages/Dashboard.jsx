@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import { xgText } from '../components/vizShared.js'
 import { dashboardMetrics } from '../utils/dashboardMetrics.js'
 
-export default function Dashboard({ shots, team, teams, onTeamChange, notice, onUpload }) {
+export default function Dashboard({ shots, team, teams, onTeamChange, notice, onUpload, dataSource = 'demo' }) {
   const { matches, homeStats, awayStats, playerStats } = useMemo(
     () => dashboardMetrics(shots, team), [shots, team]
   )
@@ -14,7 +14,7 @@ export default function Dashboard({ shots, team, teams, onTeamChange, notice, on
         <div>
           <span className="eyebrow">TEAM OVERVIEW</span>
           <h1>Coach Dashboard</h1>
-          <p>{team} • Local demo analytics</p>
+          <p>{team} • {dataSource === 'api' ? 'Backend match analytics' : dataSource === 'csv' ? 'Uploaded CSV analytics' : 'Local demo analytics'}</p>
         </div>
         <div>
           <label>
@@ -59,7 +59,7 @@ export default function Dashboard({ shots, team, teams, onTeamChange, notice, on
       <div className="two-col">
         <section className="card">
           <h2>Match comparison</h2>
-          <p>{team} vs. opponents (demo data)</p>
+          <p>{team} vs. opponents ({dataSource === 'api' ? 'API data' : dataSource === 'csv' ? 'uploaded CSV' : 'demo data'})</p>
 
           <div className="comparison">
             <div>
