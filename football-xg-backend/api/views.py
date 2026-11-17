@@ -3,6 +3,8 @@ from rest_framework import serializers
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from .ai_summary import SummaryInputSerializer, generate_summary
+from rest_framework import status
 
 
 class ShotXGInputSerializer(serializers.Serializer):
@@ -43,17 +45,27 @@ def calculate_xg(request):
 
 
 
-@api_view(["GET"])
+@api_view(["POST"])
 @permission_classes([AllowAny])
 def ai_match_summary(request):
-    return Response({
-        "summary": (
-            "Prototype AI Match Summary: "
-            "This match summary will highlight scoring opportunities, "
-            "expected goals (xG), and team performance. "
-            "AI-generated analysis will be added in a future update."
-        ),
-        "is_placeholder": True
-    })
+    serializer = SummaryInputSerializer(data=request.data)
 
+    if not serializer.is_valid():
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    try:
+        summary = generate_summary(serializer.validated_data)
+    except RuntimeError:
+        return Response(
+            {"error": "AI summary is temporarily unavailable."},
+            status=status.HTTP_503_SERVICE_UNAVAILABLE
+        )
+
+    return Response({
+        "summary": summary,
+        "is_placeholder": False
+    })
 

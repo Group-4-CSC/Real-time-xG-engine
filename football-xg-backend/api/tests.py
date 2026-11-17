@@ -140,12 +140,45 @@ class XGEndpointTests(SimpleTestCase):
 
 
 class AIMatchSummaryEndpointTests(SimpleTestCase):
-    def test_ai_match_summary_returns_placeholder(self):
-        response = APIClient().get("/api/ai/match-summary/")
+    @patch("api.views.generate_summary")
+    def test_ai_match_summary_returns_generated_summary(self, mock_generate):
+        mock_generate.return_value = (
+            "The home team created more chances. "
+            "The away team defended well. "
+            "Both teams had scoring opportunities."
+        )
+
+        response = APIClient().post(
+            "/api/ai/match-summary/",
+            {
+                "match_id": "match-1",
+                "half": "all",
+                "teams": [
+                    {
+                        "name": "Home",
+                        "shots": 5,
+                        "goals": 1,
+                        "xg": 0.8,
+                        "xg_calculated_shots": 5,
+                        "xg_missing_shots": 0
+                    },
+                    {
+                        "name": "Away",
+                        "shots": 3,
+                        "goals": 0,
+                        "xg": 0.4,
+                        "xg_calculated_shots": 3,
+                        "xg_missing_shots": 0
+                    }
+                ]
+            },
+            format="json"
+        )
 
         self.assertEqual(response.status_code, 200)
-
-        data = response.json()
-        self.assertIn("summary", data)
-        self.assertIn("Prototype AI Match Summary", data["summary"])
-        self.assertTrue(data["is_placeholder"])
+        self.assertEqual(
+            response.json()["summary"],
+            mock_generate.return_value
+        )
+        self.assertFalse(response.json()["is_placeholder"])
+        mock_generate.assert_called_once()
