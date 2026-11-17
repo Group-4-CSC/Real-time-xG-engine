@@ -9,7 +9,7 @@ export const allowedOutcomes = [
 ]
 
 // Supports quoted CSV fields, including commas inside quotes.
-export function parseCsv(text) {
+export function parseCsvWithErrors(text) {
   const rows = []
   let row = [], field = '', quoted = false
 
@@ -55,7 +55,10 @@ export function parseCsv(text) {
     throw new Error(`Missing required columns: ${missing.join(', ')}`)
   }
 
-  const shots = rows.slice(1).map((values, i) => {
+  const shots = []
+  const errors = []
+  rows.slice(1).forEach((values, i) => {
+    try {
     if (values.length !== headers.length) {
       throw new Error(`Row ${i + 2} has the wrong number of columns.`)
     }
@@ -122,8 +125,18 @@ export function parseCsv(text) {
       s.xg_status = 'calculated'
     }
 
-    return s
+    shots.push(s)
+    } catch (error) {
+      errors.push({ row: i + 2, message: error.message })
+    }
   })
 
+  return { shots, errors }
+}
+
+// Preserve the existing fail-fast parser for callers that need valid shots only.
+export function parseCsv(text) {
+  const { shots, errors } = parseCsvWithErrors(text)
+  if (errors.length) throw new Error(errors[0].message)
   return shots
 }
