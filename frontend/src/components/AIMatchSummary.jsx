@@ -1,15 +1,18 @@
 
 import { useEffect, useState } from 'react'
 
-export default function AIMatchSummary({ matchId, half, teams }) {
-  const [summary, setSummary] = useState('Generating AI match summary...')
+const LOADING = 'Generating AI match summary...'
+const UNAVAILABLE = 'AI summary is temporarily unavailable.'
 
+export default function AIMatchSummary({ matchId, half, teams }) {
   const teamsKey = JSON.stringify(teams)
+  const requestKey = JSON.stringify([matchId, half, teamsKey])
+  const valid = Boolean(matchId && Array.isArray(teams) && teams.length === 2)
+
+  const [result, setResult] = useState(null)
 
   useEffect(() => {
-    if (!matchId || !teams || teams.length !== 2) return
-
-    setSummary('Generating AI match summary...')
+    if (!valid) return
 
     const controller = new AbortController()
 
@@ -19,7 +22,7 @@ export default function AIMatchSummary({ matchId, half, teams }) {
       signal: controller.signal,
       body: JSON.stringify({
         match_id: matchId,
-        half: half,
+        half,
         teams: JSON.parse(teamsKey)
       })
     })
@@ -27,15 +30,25 @@ export default function AIMatchSummary({ matchId, half, teams }) {
         if (!response.ok) throw new Error('Summary request failed')
         return response.json()
       })
-      .then(data => setSummary(data.summary))
+      .then(data => {
+        if (!controller.signal.aborted) {
+          setResult({ key: requestKey, text: data.summary })
+        }
+      })
       .catch(error => {
-        if (error.name !== 'AbortError') {
-          setSummary('AI summary is temporarily unavailable.')
+        if (error.name !== 'AbortError' && !controller.signal.aborted) {
+          setResult({ key: requestKey, text: UNAVAILABLE })
         }
       })
 
     return () => controller.abort()
-  }, [matchId, half, teamsKey])
+  }, [matchId, half, teamsKey, requestKey, valid])
+
+  const summary = !valid
+    ? UNAVAILABLE
+    : result?.key === requestKey
+      ? result.text
+      : LOADING
 
   return (
     <section className="card">
