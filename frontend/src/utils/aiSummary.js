@@ -4,7 +4,7 @@ function teamLine(team) {
     ? ` Only ${team.xg_calculated_shots} of ${team.shots} shots have xG.`
     : ''
   const xg = team.xg == null ? 'xG unavailable' : `${Number(team.xg).toFixed(2)} xG`
-  return `${team.name}: ${team.goals} goals, ${team.shots} shots, ${xg}.${coverage}`
+  return `${team.name}: ${team.goals} ${team.goals === 1 ? 'goal' : 'goals'}, ${team.shots} ${team.shots === 1 ? 'shot' : 'shots'}, ${xg}.${coverage}`
 }
 
 export function fallbackText(payload) {
