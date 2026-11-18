@@ -30,7 +30,7 @@ test('explicit backend fallback must not be labeled AI-generated', async () => {
 test('provider failure displays deterministic statistics with missing xG disclosed', async () => {
   const result = await loadAiSummary(stats, async () => { throw new Error('503') })
   assert.equal(result.mode, 'fallback')
-  assert.match(result.text, /Home: 1 goals, 5 shots, 0.80 xG/)
+  assert.match(result.text, /Home: 1 goal, 5 shots, 0.80 xG/)
   assert.match(result.text, /Away: 0 goals, 3 shots, xG unavailable/)
   assert.match(result.text, /Only 4 of 5 shots have xG/)
 })
