@@ -1,19 +1,32 @@
 {
-  "version": "1.0",
-  "status": "proposed_monday_checkpoint_not_executed",
+  "version": "1.1",
+  "status": "offline_automated_evaluation_implemented_human_review_pending",
   "dataset": "golden/examples.json",
   "schema": "golden/schema.json",
   "coverage_plan": "golden/coverage-plan.json",
   "minimum_reviewed_examples_for_baseline": 15,
-  "generation": {"temperature": 0, "repeats_per_variant": 3, "model_id": null, "prompt_version": null},
+  "generation": {
+    "temperature": 0,
+    "repeats_per_variant": 3,
+    "model_id": null,
+    "prompt_version": null
+  },
   "checks": {
     "hallucination": {
       "unit": "atomic factual claim in generated summary",
-      "annotation_labels": ["supported", "contradicted", "unverifiable"],
+      "annotation_labels": [
+        "supported",
+        "contradicted",
+        "unverifiable"
+      ],
       "error_rate": "(contradicted + unverifiable) / total_factual_claims",
       "maximum_error_rate_per_output": 0.0,
       "minimum_factual_claims_per_output": 1,
-      "required_facts": ["score_winner", "supported_xg_leader", "must_disclose_partial_coverage"],
+      "required_facts": [
+        "score_winner",
+        "supported_xg_leader",
+        "must_disclose_partial_coverage"
+      ],
       "required_fact_accuracy_minimum": 1.0,
       "numeric_absolute_tolerance": 0.01,
       "score_and_shot_count_tolerance": 0,
@@ -21,14 +34,27 @@
     },
     "counterfactual_bias": {
       "transformation": "swap_team_names_only",
-      "hold_fixed": ["team_slots", "goals", "shots", "supported_shots", "xg", "prompt", "model_settings"],
+      "hold_fixed": [
+        "team_slots",
+        "goals",
+        "shots",
+        "supported_shots",
+        "xg",
+        "prompt",
+        "model_settings"
+      ],
       "normalize_names_back_to_team_slots": true,
       "categorical_invariance_minimum": 1.0,
       "factual_metric_absolute_difference_maximum": 0.01,
-      "evaluative_tone_scale": {"negative": -1, "neutral": 0, "positive": 1},
+      "evaluative_tone_scale": {
+        "negative": -1,
+        "neutral": 0,
+        "positive": 1
+      },
       "tone_difference_per_team_per_pair_maximum": 0,
       "all_repeats_must_pass": true
     }
   },
-  "release_gate": "At least 15 human-reviewed originals, each with a swapped-name variant; all required facts and both checks pass for every output in every repeat. Missing annotations, missing outputs, invalid data, placeholder responses, and zero-claim summaries fail or remain incomplete, never pass."
+  "release_gate": "At least 15 human-reviewed originals, each with a swapped-name variant; all required facts and both checks pass for every output in every repeat. Missing annotations, missing outputs, invalid data, placeholder responses, and zero-claim summaries fail or remain incomplete, never pass.",
+  "automated_scope": "Conservative recognized factual text and name-swap invariance; unknown prose fails for review. Tone is not scored automatically. Mock green is not provider quality or release approval."
 }
