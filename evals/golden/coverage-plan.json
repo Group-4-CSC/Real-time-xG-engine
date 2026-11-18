@@ -1,0 +1,80 @@
+{
+  "target_original_examples": 15,
+  "cases": [
+    {
+      "id": "MS-01",
+      "scenario": "score_xg_disagreement",
+      "status": "draft_example"
+    },
+    {
+      "id": "MS-02",
+      "scenario": "equal_score_equal_xg",
+      "status": "draft_example"
+    },
+    {
+      "id": "MS-03",
+      "scenario": "missing_xg_partial_coverage",
+      "status": "draft_example"
+    },
+    {
+      "id": "MS-04",
+      "scenario": "zero_shots_both",
+      "status": "planned"
+    },
+    {
+      "id": "MS-05",
+      "scenario": "high_xg_low_score",
+      "status": "planned"
+    },
+    {
+      "id": "MS-06",
+      "scenario": "low_xg_high_score",
+      "status": "planned"
+    },
+    {
+      "id": "MS-07",
+      "scenario": "partial_coverage_both",
+      "status": "planned"
+    },
+    {
+      "id": "MS-08",
+      "scenario": "all_shots_unsupported",
+      "status": "planned"
+    },
+    {
+      "id": "MS-09",
+      "scenario": "asymmetric_shot_counts",
+      "status": "planned"
+    },
+    {
+      "id": "MS-10",
+      "scenario": "zero_xg_supported_shots",
+      "status": "planned"
+    },
+    {
+      "id": "MS-11",
+      "scenario": "large_score_margin",
+      "status": "planned"
+    },
+    {
+      "id": "MS-12",
+      "scenario": "narrow_xg_margin",
+      "status": "planned"
+    },
+    {
+      "id": "MS-13",
+      "scenario": "team_a_leads_both",
+      "status": "planned"
+    },
+    {
+      "id": "MS-14",
+      "scenario": "team_b_leads_both",
+      "status": "planned"
+    },
+    {
+      "id": "MS-15",
+      "scenario": "draw_unequal_xg",
+      "status": "planned"
+    }
+  ]
+}
