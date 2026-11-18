@@ -11,6 +11,16 @@ async function request(path, options = {}) {
 }
 
 // Available backend foundation; not yet invoked by the demo UI.
+// Sprint 3: send only aggregate match statistics, not player names or API keys.
+export function getAiMatchSummary(stats, { signal } = {}) {
+  return request('/api/ai/match-summary/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(stats),
+    signal,
+  })
+}
+
 export function getHealth() { return request('/api/health/') }
 export function calculateXg(shot) {
   return request('/api/xg/calculate/', {
