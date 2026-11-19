@@ -445,3 +445,106 @@ Local verification:
 - Playwright: 1 test passed.
 - Vite production build: passed.
 - npm audit: 0 vulnerabilities.
+
+
+## Sprint 3 — AI Match Summary
+
+### Overview
+
+The AI Match Summary feature uses a large language model (LLM) to explain soccer match statistics in simple language. It helps coaches, analysts, and fans understand goals, shots, and expected goals (xG).
+
+Expected goals (xG) estimates the quality of scoring chances. Missing xG values are treated as unknown, not zero.
+
+### AI Setup
+
+The AI feature is implemented in the Django backend under `football-xg-backend/api/ai_summary.py`.
+
+- Provider: OpenAI API
+- Default model: `gpt-4o-mini`
+- Endpoint: `POST /api/ai/match-summary/`
+- Environment variable: `OPENAI_API_KEY`
+- Optional model override: `OPENAI_MODEL`
+
+To configure live AI generation, set `OPENAI_API_KEY` in the backend environment and start the Django server. Never put the API key in frontend code or commit it to GitHub.
+
+The React frontend sends match statistics to the Django endpoint. The backend validates the request, contacts the AI service, validates the generated response, and returns the summary.
+
+The GitHub Pages demo hosts the frontend only. Live AI generation requires a separately running and accessible Django backend.
+
+### AI Inputs and Outputs
+
+The API accepts JSON containing a match identifier, a half selection (`all`, `1`, or `2`), and statistics for exactly two teams.
+
+Each team includes its name, total shots, goals, xG, number of shots with calculated xG, and number of shots missing xG.
+
+A successful response contains:
+
+```json
+{
+  "summary": "AI-generated match analysis.",
+  "is_placeholder": false
+}
+```
+
+The actual summary must contain 3–5 short sentences based on the supplied match statistics.
+
+### Prompt Versioning
+
+The initial documented prompt is stored in `prompts/match_summary_v1.txt`.
+
+The current backend prompt is defined as `SYSTEM_PROMPT` in `api/ai_summary.py`. The versioned prompt file documents the intended behavior; it is not automatically loaded by the backend.
+
+Future prompt changes should be reviewed and tested before release.
+
+### Fallback and Error Handling
+
+The application is designed to handle unavailable or invalid AI responses safely.
+
+- Invalid input returns HTTP 400.
+- Missing API configuration or an unavailable AI service returns HTTP 503.
+- Responses that fail backend accuracy checks are rejected.
+- The frontend displays: "AI summary is temporarily unavailable."
+
+The application must not present an unsuccessful AI response as verified match analysis.
+
+### AI Evaluation
+
+The AI feature should be evaluated for:
+
+1. **Accuracy:** All numerical claims match the supplied statistics.
+2. **Completeness:** Missing xG values are clearly disclosed.
+3. **Clarity:** The summary uses understandable language.
+4. **Consistency:** Similar inputs produce factually consistent explanations.
+5. **Safety:** Unsupported claims and malicious instructions are not followed.
+
+Backend validation checks the sentence count, numerical values, and disclosure of incomplete xG data. These checks reduce errors but do not guarantee that every written interpretation is correct.
+
+The existing backend API tests passed (9/9), and the frontend tests passed (33/33). Live OpenAI responses have not yet been tested with a configured API key.
+
+### Prompt-Injection Risk
+
+Prompt injection occurs when untrusted input contains instructions intended to manipulate the AI.
+
+For example, a team name might contain text telling the AI to ignore its rules or invent statistics.
+
+The system should treat match data as information, not instructions. Its prompt tells the AI to use only the provided JSON facts.
+
+Input validation, restricted output instructions, and response checks help reduce this risk. However, the current implementation does not establish complete protection against prompt injection.
+
+### AI-Use Disclosure
+
+The project includes AI-generated match summaries powered by an external language model when configured.
+
+AI-generated content is explanatory and should not replace the verified match statistics shown in the application.
+
+AI assistance was also used during feature development and documentation. Team members remain responsible for reviewing code, verifying claims, testing functionality, and ensuring the final submission accurately represents implemented features.
+
+### Sprint 3 Status
+
+- AI backend integration: implemented.
+- React AI summary component: implemented.
+- Automated frontend and backend tests: passed.
+- AI prompt v1: documented.
+- Live AI API testing: pending configuration.
+- Backend deployment: not yet verified.
+- Final demonstration video and submission links: pending.
