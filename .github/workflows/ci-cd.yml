@@ -152,7 +152,7 @@ jobs:
 
   deploy:
     name: Deploy
-    needs: test
+    needs: [test, eval]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
