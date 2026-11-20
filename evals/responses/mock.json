@@ -1,0 +1,187 @@
+{
+  "mode": "mock",
+  "provenance": "Synthetic controlled-language mock snapshots, not real-provider output; generated once for evaluator regression controls.",
+  "dataset_sha256": "fa2e61c8ccafa5f6e570087ddea7aba98b2549f7a1b5971e6652bb4fb64182fe",
+  "responses": {
+    "MS-01": {
+      "original": [
+        "Falcons scored 2 goals from 10 shots and recorded 0.800 supported-shot xG from 10 of 10 shots. Harbor scored 1 goals from 15 shots and recorded 1.900 supported-shot xG from 15 of 15 shots. The score winner was Falcons. Harbor had higher supported-shot xG. xG coverage is complete.",
+        "Falcons scored 2 goals from 10 shots and recorded 0.800 supported-shot xG from 10 of 10 shots. Harbor scored 1 goals from 15 shots and recorded 1.900 supported-shot xG from 15 of 15 shots. The score winner was Falcons. Harbor had higher supported-shot xG. xG coverage is complete.",
+        "Falcons scored 2 goals from 10 shots and recorded 0.800 supported-shot xG from 10 of 10 shots. Harbor scored 1 goals from 15 shots and recorded 1.900 supported-shot xG from 15 of 15 shots. The score winner was Falcons. Harbor had higher supported-shot xG. xG coverage is complete."
+      ],
+      "swapped": [
+        "Harbor scored 2 goals from 10 shots and recorded 0.800 supported-shot xG from 10 of 10 shots. Falcons scored 1 goals from 15 shots and recorded 1.900 supported-shot xG from 15 of 15 shots. The score winner was Harbor. Falcons had higher supported-shot xG. xG coverage is complete.",
+        "Harbor scored 2 goals from 10 shots and recorded 0.800 supported-shot xG from 10 of 10 shots. Falcons scored 1 goals from 15 shots and recorded 1.900 supported-shot xG from 15 of 15 shots. The score winner was Harbor. Falcons had higher supported-shot xG. xG coverage is complete.",
+        "Harbor scored 2 goals from 10 shots and recorded 0.800 supported-shot xG from 10 of 10 shots. Falcons scored 1 goals from 15 shots and recorded 1.900 supported-shot xG from 15 of 15 shots. The score winner was Harbor. Falcons had higher supported-shot xG. xG coverage is complete."
+      ]
+    },
+    "MS-02": {
+      "original": [
+        "Falcons scored 1 goals from 8 shots and recorded 1.200 supported-shot xG from 8 of 8 shots. Harbor scored 1 goals from 8 shots and recorded 1.200 supported-shot xG from 8 of 8 shots. The score was drawn. Supported-shot xG was even. xG coverage is complete.",
+        "Falcons scored 1 goals from 8 shots and recorded 1.200 supported-shot xG from 8 of 8 shots. Harbor scored 1 goals from 8 shots and recorded 1.200 supported-shot xG from 8 of 8 shots. The score was drawn. Supported-shot xG was even. xG coverage is complete.",
+        "Falcons scored 1 goals from 8 shots and recorded 1.200 supported-shot xG from 8 of 8 shots. Harbor scored 1 goals from 8 shots and recorded 1.200 supported-shot xG from 8 of 8 shots. The score was drawn. Supported-shot xG was even. xG coverage is complete."
+      ],
+      "swapped": [
+        "Harbor scored 1 goals from 8 shots and recorded 1.200 supported-shot xG from 8 of 8 shots. Falcons scored 1 goals from 8 shots and recorded 1.200 supported-shot xG from 8 of 8 shots. The score was drawn. Supported-shot xG was even. xG coverage is complete.",
+        "Harbor scored 1 goals from 8 shots and recorded 1.200 supported-shot xG from 8 of 8 shots. Falcons scored 1 goals from 8 shots and recorded 1.200 supported-shot xG from 8 of 8 shots. The score was drawn. Supported-shot xG was even. xG coverage is complete.",
+        "Harbor scored 1 goals from 8 shots and recorded 1.200 supported-shot xG from 8 of 8 shots. Falcons scored 1 goals from 8 shots and recorded 1.200 supported-shot xG from 8 of 8 shots. The score was drawn. Supported-shot xG was even. xG coverage is complete."
+      ]
+    },
+    "MS-03": {
+      "original": [
+        "Falcons scored 0 goals from 4 shots; its xG is unknown with 0 supported shots. Harbor scored 1 goals from 7 shots and recorded 0.900 supported-shot xG from 5 of 7 shots. The score winner was Harbor. The supported-shot xG comparison is unavailable. xG coverage is partial; totals do not represent every shot.",
+        "Falcons scored 0 goals from 4 shots; its xG is unknown with 0 supported shots. Harbor scored 1 goals from 7 shots and recorded 0.900 supported-shot xG from 5 of 7 shots. The score winner was Harbor. The supported-shot xG comparison is unavailable. xG coverage is partial; totals do not represent every shot.",
+        "Falcons scored 0 goals from 4 shots; its xG is unknown with 0 supported shots. Harbor scored 1 goals from 7 shots and recorded 0.900 supported-shot xG from 5 of 7 shots. The score winner was Harbor. The supported-shot xG comparison is unavailable. xG coverage is partial; totals do not represent every shot."
+      ],
+      "swapped": [
+        "Harbor scored 0 goals from 4 shots; its xG is unknown with 0 supported shots. Falcons scored 1 goals from 7 shots and recorded 0.900 supported-shot xG from 5 of 7 shots. The score winner was Falcons. The supported-shot xG comparison is unavailable. xG coverage is partial; totals do not represent every shot.",
+        "Harbor scored 0 goals from 4 shots; its xG is unknown with 0 supported shots. Falcons scored 1 goals from 7 shots and recorded 0.900 supported-shot xG from 5 of 7 shots. The score winner was Falcons. The supported-shot xG comparison is unavailable. xG coverage is partial; totals do not represent every shot.",
+        "Harbor scored 0 goals from 4 shots; its xG is unknown with 0 supported shots. Falcons scored 1 goals from 7 shots and recorded 0.900 supported-shot xG from 5 of 7 shots. The score winner was Falcons. The supported-shot xG comparison is unavailable. xG coverage is partial; totals do not represent every shot."
+      ]
+    },
+    "MS-04": {
+      "original": [
+        "Falcons scored 0 goals from 0 shots; its xG is unknown with 0 supported shots. Harbor scored 0 goals from 0 shots; its xG is unknown with 0 supported shots. The score was drawn. The supported-shot xG comparison is unavailable. xG coverage is complete.",
+        "Falcons scored 0 goals from 0 shots; its xG is unknown with 0 supported shots. Harbor scored 0 goals from 0 shots; its xG is unknown with 0 supported shots. The score was drawn. The supported-shot xG comparison is unavailable. xG coverage is complete.",
+        "Falcons scored 0 goals from 0 shots; its xG is unknown with 0 supported shots. Harbor scored 0 goals from 0 shots; its xG is unknown with 0 supported shots. The score was drawn. The supported-shot xG comparison is unavailable. xG coverage is complete."
+      ],
+      "swapped": [
+        "Harbor scored 0 goals from 0 shots; its xG is unknown with 0 supported shots. Falcons scored 0 goals from 0 shots; its xG is unknown with 0 supported shots. The score was drawn. The supported-shot xG comparison is unavailable. xG coverage is complete.",
+        "Harbor scored 0 goals from 0 shots; its xG is unknown with 0 supported shots. Falcons scored 0 goals from 0 shots; its xG is unknown with 0 supported shots. The score was drawn. The supported-shot xG comparison is unavailable. xG coverage is complete.",
+        "Harbor scored 0 goals from 0 shots; its xG is unknown with 0 supported shots. Falcons scored 0 goals from 0 shots; its xG is unknown with 0 supported shots. The score was drawn. The supported-shot xG comparison is unavailable. xG coverage is complete."
+      ]
+    },
+    "MS-05": {
+      "original": [
+        "Falcons scored 0 goals from 15 shots and recorded 2.800 supported-shot xG from 15 of 15 shots. Harbor scored 1 goals from 3 shots and recorded 0.300 supported-shot xG from 3 of 3 shots. The score winner was Harbor. Falcons had higher supported-shot xG. xG coverage is complete.",
+        "Falcons scored 0 goals from 15 shots and recorded 2.800 supported-shot xG from 15 of 15 shots. Harbor scored 1 goals from 3 shots and recorded 0.300 supported-shot xG from 3 of 3 shots. The score winner was Harbor. Falcons had higher supported-shot xG. xG coverage is complete.",
+        "Falcons scored 0 goals from 15 shots and recorded 2.800 supported-shot xG from 15 of 15 shots. Harbor scored 1 goals from 3 shots and recorded 0.300 supported-shot xG from 3 of 3 shots. The score winner was Harbor. Falcons had higher supported-shot xG. xG coverage is complete."
+      ],
+      "swapped": [
+        "Harbor scored 0 goals from 15 shots and recorded 2.800 supported-shot xG from 15 of 15 shots. Falcons scored 1 goals from 3 shots and recorded 0.300 supported-shot xG from 3 of 3 shots. The score winner was Falcons. Harbor had higher supported-shot xG. xG coverage is complete.",
+        "Harbor scored 0 goals from 15 shots and recorded 2.800 supported-shot xG from 15 of 15 shots. Falcons scored 1 goals from 3 shots and recorded 0.300 supported-shot xG from 3 of 3 shots. The score winner was Falcons. Harbor had higher supported-shot xG. xG coverage is complete.",
+        "Harbor scored 0 goals from 15 shots and recorded 2.800 supported-shot xG from 15 of 15 shots. Falcons scored 1 goals from 3 shots and recorded 0.300 supported-shot xG from 3 of 3 shots. The score winner was Falcons. Harbor had higher supported-shot xG. xG coverage is complete."
+      ]
+    },
+    "MS-06": {
+      "original": [
+        "Falcons scored 3 goals from 5 shots and recorded 0.500 supported-shot xG from 5 of 5 shots. Harbor scored 0 goals from 12 shots and recorded 1.800 supported-shot xG from 12 of 12 shots. The score winner was Falcons. Harbor had higher supported-shot xG. xG coverage is complete.",
+        "Falcons scored 3 goals from 5 shots and recorded 0.500 supported-shot xG from 5 of 5 shots. Harbor scored 0 goals from 12 shots and recorded 1.800 supported-shot xG from 12 of 12 shots. The score winner was Falcons. Harbor had higher supported-shot xG. xG coverage is complete.",
+        "Falcons scored 3 goals from 5 shots and recorded 0.500 supported-shot xG from 5 of 5 shots. Harbor scored 0 goals from 12 shots and recorded 1.800 supported-shot xG from 12 of 12 shots. The score winner was Falcons. Harbor had higher supported-shot xG. xG coverage is complete."
+      ],
+      "swapped": [
+        "Harbor scored 3 goals from 5 shots and recorded 0.500 supported-shot xG from 5 of 5 shots. Falcons scored 0 goals from 12 shots and recorded 1.800 supported-shot xG from 12 of 12 shots. The score winner was Harbor. Falcons had higher supported-shot xG. xG coverage is complete.",
+        "Harbor scored 3 goals from 5 shots and recorded 0.500 supported-shot xG from 5 of 5 shots. Falcons scored 0 goals from 12 shots and recorded 1.800 supported-shot xG from 12 of 12 shots. The score winner was Harbor. Falcons had higher supported-shot xG. xG coverage is complete.",
+        "Harbor scored 3 goals from 5 shots and recorded 0.500 supported-shot xG from 5 of 5 shots. Falcons scored 0 goals from 12 shots and recorded 1.800 supported-shot xG from 12 of 12 shots. The score winner was Harbor. Falcons had higher supported-shot xG. xG coverage is complete."
+      ]
+    },
+    "MS-07": {
+      "original": [
+        "Falcons scored 1 goals from 12 shots and recorded 1.400 supported-shot xG from 7 of 12 shots. Harbor scored 2 goals from 9 shots and recorded 0.900 supported-shot xG from 6 of 9 shots. The score winner was Harbor. Falcons had higher supported-shot xG. xG coverage is partial; totals do not represent every shot.",
+        "Falcons scored 1 goals from 12 shots and recorded 1.400 supported-shot xG from 7 of 12 shots. Harbor scored 2 goals from 9 shots and recorded 0.900 supported-shot xG from 6 of 9 shots. The score winner was Harbor. Falcons had higher supported-shot xG. xG coverage is partial; totals do not represent every shot.",
+        "Falcons scored 1 goals from 12 shots and recorded 1.400 supported-shot xG from 7 of 12 shots. Harbor scored 2 goals from 9 shots and recorded 0.900 supported-shot xG from 6 of 9 shots. The score winner was Harbor. Falcons had higher supported-shot xG. xG coverage is partial; totals do not represent every shot."
+      ],
+      "swapped": [
+        "Harbor scored 1 goals from 12 shots and recorded 1.400 supported-shot xG from 7 of 12 shots. Falcons scored 2 goals from 9 shots and recorded 0.900 supported-shot xG from 6 of 9 shots. The score winner was Falcons. Harbor had higher supported-shot xG. xG coverage is partial; totals do not represent every shot.",
+        "Harbor scored 1 goals from 12 shots and recorded 1.400 supported-shot xG from 7 of 12 shots. Falcons scored 2 goals from 9 shots and recorded 0.900 supported-shot xG from 6 of 9 shots. The score winner was Falcons. Harbor had higher supported-shot xG. xG coverage is partial; totals do not represent every shot.",
+        "Harbor scored 1 goals from 12 shots and recorded 1.400 supported-shot xG from 7 of 12 shots. Falcons scored 2 goals from 9 shots and recorded 0.900 supported-shot xG from 6 of 9 shots. The score winner was Falcons. Harbor had higher supported-shot xG. xG coverage is partial; totals do not represent every shot."
+      ]
+    },
+    "MS-08": {
+      "original": [
+        "Falcons scored 1 goals from 6 shots; its xG is unknown with 0 supported shots. Harbor scored 0 goals from 5 shots; its xG is unknown with 0 supported shots. The score winner was Falcons. The supported-shot xG comparison is unavailable. xG coverage is partial; totals do not represent every shot.",
+        "Falcons scored 1 goals from 6 shots; its xG is unknown with 0 supported shots. Harbor scored 0 goals from 5 shots; its xG is unknown with 0 supported shots. The score winner was Falcons. The supported-shot xG comparison is unavailable. xG coverage is partial; totals do not represent every shot.",
+        "Falcons scored 1 goals from 6 shots; its xG is unknown with 0 supported shots. Harbor scored 0 goals from 5 shots; its xG is unknown with 0 supported shots. The score winner was Falcons. The supported-shot xG comparison is unavailable. xG coverage is partial; totals do not represent every shot."
+      ],
+      "swapped": [
+        "Harbor scored 1 goals from 6 shots; its xG is unknown with 0 supported shots. Falcons scored 0 goals from 5 shots; its xG is unknown with 0 supported shots. The score winner was Harbor. The supported-shot xG comparison is unavailable. xG coverage is partial; totals do not represent every shot.",
+        "Harbor scored 1 goals from 6 shots; its xG is unknown with 0 supported shots. Falcons scored 0 goals from 5 shots; its xG is unknown with 0 supported shots. The score winner was Harbor. The supported-shot xG comparison is unavailable. xG coverage is partial; totals do not represent every shot.",
+        "Harbor scored 1 goals from 6 shots; its xG is unknown with 0 supported shots. Falcons scored 0 goals from 5 shots; its xG is unknown with 0 supported shots. The score winner was Harbor. The supported-shot xG comparison is unavailable. xG coverage is partial; totals do not represent every shot."
+      ]
+    },
+    "MS-09": {
+      "original": [
+        "Falcons scored 1 goals from 20 shots and recorded 1.900 supported-shot xG from 20 of 20 shots. Harbor scored 1 goals from 2 shots and recorded 0.200 supported-shot xG from 2 of 2 shots. The score was drawn. Falcons had higher supported-shot xG. xG coverage is complete.",
+        "Falcons scored 1 goals from 20 shots and recorded 1.900 supported-shot xG from 20 of 20 shots. Harbor scored 1 goals from 2 shots and recorded 0.200 supported-shot xG from 2 of 2 shots. The score was drawn. Falcons had higher supported-shot xG. xG coverage is complete.",
+        "Falcons scored 1 goals from 20 shots and recorded 1.900 supported-shot xG from 20 of 20 shots. Harbor scored 1 goals from 2 shots and recorded 0.200 supported-shot xG from 2 of 2 shots. The score was drawn. Falcons had higher supported-shot xG. xG coverage is complete."
+      ],
+      "swapped": [
+        "Harbor scored 1 goals from 20 shots and recorded 1.900 supported-shot xG from 20 of 20 shots. Falcons scored 1 goals from 2 shots and recorded 0.200 supported-shot xG from 2 of 2 shots. The score was drawn. Harbor had higher supported-shot xG. xG coverage is complete.",
+        "Harbor scored 1 goals from 20 shots and recorded 1.900 supported-shot xG from 20 of 20 shots. Falcons scored 1 goals from 2 shots and recorded 0.200 supported-shot xG from 2 of 2 shots. The score was drawn. Harbor had higher supported-shot xG. xG coverage is complete.",
+        "Harbor scored 1 goals from 20 shots and recorded 1.900 supported-shot xG from 20 of 20 shots. Falcons scored 1 goals from 2 shots and recorded 0.200 supported-shot xG from 2 of 2 shots. The score was drawn. Harbor had higher supported-shot xG. xG coverage is complete."
+      ]
+    },
+    "MS-10": {
+      "original": [
+        "Falcons scored 0 goals from 4 shots and recorded 0.000 supported-shot xG from 4 of 4 shots. Harbor scored 0 goals from 3 shots and recorded 0.000 supported-shot xG from 3 of 3 shots. The score was drawn. Supported-shot xG was even. xG coverage is complete.",
+        "Falcons scored 0 goals from 4 shots and recorded 0.000 supported-shot xG from 4 of 4 shots. Harbor scored 0 goals from 3 shots and recorded 0.000 supported-shot xG from 3 of 3 shots. The score was drawn. Supported-shot xG was even. xG coverage is complete.",
+        "Falcons scored 0 goals from 4 shots and recorded 0.000 supported-shot xG from 4 of 4 shots. Harbor scored 0 goals from 3 shots and recorded 0.000 supported-shot xG from 3 of 3 shots. The score was drawn. Supported-shot xG was even. xG coverage is complete."
+      ],
+      "swapped": [
+        "Harbor scored 0 goals from 4 shots and recorded 0.000 supported-shot xG from 4 of 4 shots. Falcons scored 0 goals from 3 shots and recorded 0.000 supported-shot xG from 3 of 3 shots. The score was drawn. Supported-shot xG was even. xG coverage is complete.",
+        "Harbor scored 0 goals from 4 shots and recorded 0.000 supported-shot xG from 4 of 4 shots. Falcons scored 0 goals from 3 shots and recorded 0.000 supported-shot xG from 3 of 3 shots. The score was drawn. Supported-shot xG was even. xG coverage is complete.",
+        "Harbor scored 0 goals from 4 shots and recorded 0.000 supported-shot xG from 4 of 4 shots. Falcons scored 0 goals from 3 shots and recorded 0.000 supported-shot xG from 3 of 3 shots. The score was drawn. Supported-shot xG was even. xG coverage is complete."
+      ]
+    },
+    "MS-11": {
+      "original": [
+        "Falcons scored 5 goals from 18 shots and recorded 3.100 supported-shot xG from 18 of 18 shots. Harbor scored 0 goals from 4 shots and recorded 0.400 supported-shot xG from 4 of 4 shots. The score winner was Falcons. Falcons had higher supported-shot xG. xG coverage is complete.",
+        "Falcons scored 5 goals from 18 shots and recorded 3.100 supported-shot xG from 18 of 18 shots. Harbor scored 0 goals from 4 shots and recorded 0.400 supported-shot xG from 4 of 4 shots. The score winner was Falcons. Falcons had higher supported-shot xG. xG coverage is complete.",
+        "Falcons scored 5 goals from 18 shots and recorded 3.100 supported-shot xG from 18 of 18 shots. Harbor scored 0 goals from 4 shots and recorded 0.400 supported-shot xG from 4 of 4 shots. The score winner was Falcons. Falcons had higher supported-shot xG. xG coverage is complete."
+      ],
+      "swapped": [
+        "Harbor scored 5 goals from 18 shots and recorded 3.100 supported-shot xG from 18 of 18 shots. Falcons scored 0 goals from 4 shots and recorded 0.400 supported-shot xG from 4 of 4 shots. The score winner was Harbor. Harbor had higher supported-shot xG. xG coverage is complete.",
+        "Harbor scored 5 goals from 18 shots and recorded 3.100 supported-shot xG from 18 of 18 shots. Falcons scored 0 goals from 4 shots and recorded 0.400 supported-shot xG from 4 of 4 shots. The score winner was Harbor. Harbor had higher supported-shot xG. xG coverage is complete.",
+        "Harbor scored 5 goals from 18 shots and recorded 3.100 supported-shot xG from 18 of 18 shots. Falcons scored 0 goals from 4 shots and recorded 0.400 supported-shot xG from 4 of 4 shots. The score winner was Harbor. Harbor had higher supported-shot xG. xG coverage is complete."
+      ]
+    },
+    "MS-12": {
+      "original": [
+        "Falcons scored 1 goals from 8 shots and recorded 1.201 supported-shot xG from 8 of 8 shots. Harbor scored 1 goals from 8 shots and recorded 1.200 supported-shot xG from 8 of 8 shots. The score was drawn. Supported-shot xG was even. xG coverage is complete.",
+        "Falcons scored 1 goals from 8 shots and recorded 1.201 supported-shot xG from 8 of 8 shots. Harbor scored 1 goals from 8 shots and recorded 1.200 supported-shot xG from 8 of 8 shots. The score was drawn. Supported-shot xG was even. xG coverage is complete.",
+        "Falcons scored 1 goals from 8 shots and recorded 1.201 supported-shot xG from 8 of 8 shots. Harbor scored 1 goals from 8 shots and recorded 1.200 supported-shot xG from 8 of 8 shots. The score was drawn. Supported-shot xG was even. xG coverage is complete."
+      ],
+      "swapped": [
+        "Harbor scored 1 goals from 8 shots and recorded 1.201 supported-shot xG from 8 of 8 shots. Falcons scored 1 goals from 8 shots and recorded 1.200 supported-shot xG from 8 of 8 shots. The score was drawn. Supported-shot xG was even. xG coverage is complete.",
+        "Harbor scored 1 goals from 8 shots and recorded 1.201 supported-shot xG from 8 of 8 shots. Falcons scored 1 goals from 8 shots and recorded 1.200 supported-shot xG from 8 of 8 shots. The score was drawn. Supported-shot xG was even. xG coverage is complete.",
+        "Harbor scored 1 goals from 8 shots and recorded 1.201 supported-shot xG from 8 of 8 shots. Falcons scored 1 goals from 8 shots and recorded 1.200 supported-shot xG from 8 of 8 shots. The score was drawn. Supported-shot xG was even. xG coverage is complete."
+      ]
+    },
+    "MS-13": {
+      "original": [
+        "Falcons scored 2 goals from 11 shots and recorded 1.800 supported-shot xG from 11 of 11 shots. Harbor scored 0 goals from 7 shots and recorded 0.600 supported-shot xG from 7 of 7 shots. The score winner was Falcons. Falcons had higher supported-shot xG. xG coverage is complete.",
+        "Falcons scored 2 goals from 11 shots and recorded 1.800 supported-shot xG from 11 of 11 shots. Harbor scored 0 goals from 7 shots and recorded 0.600 supported-shot xG from 7 of 7 shots. The score winner was Falcons. Falcons had higher supported-shot xG. xG coverage is complete.",
+        "Falcons scored 2 goals from 11 shots and recorded 1.800 supported-shot xG from 11 of 11 shots. Harbor scored 0 goals from 7 shots and recorded 0.600 supported-shot xG from 7 of 7 shots. The score winner was Falcons. Falcons had higher supported-shot xG. xG coverage is complete."
+      ],
+      "swapped": [
+        "Harbor scored 2 goals from 11 shots and recorded 1.800 supported-shot xG from 11 of 11 shots. Falcons scored 0 goals from 7 shots and recorded 0.600 supported-shot xG from 7 of 7 shots. The score winner was Harbor. Harbor had higher supported-shot xG. xG coverage is complete.",
+        "Harbor scored 2 goals from 11 shots and recorded 1.800 supported-shot xG from 11 of 11 shots. Falcons scored 0 goals from 7 shots and recorded 0.600 supported-shot xG from 7 of 7 shots. The score winner was Harbor. Harbor had higher supported-shot xG. xG coverage is complete.",
+        "Harbor scored 2 goals from 11 shots and recorded 1.800 supported-shot xG from 11 of 11 shots. Falcons scored 0 goals from 7 shots and recorded 0.600 supported-shot xG from 7 of 7 shots. The score winner was Harbor. Harbor had higher supported-shot xG. xG coverage is complete."
+      ]
+    },
+    "MS-14": {
+      "original": [
+        "Falcons scored 0 goals from 6 shots and recorded 0.400 supported-shot xG from 6 of 6 shots. Harbor scored 2 goals from 12 shots and recorded 2.000 supported-shot xG from 12 of 12 shots. The score winner was Harbor. Harbor had higher supported-shot xG. xG coverage is complete.",
+        "Falcons scored 0 goals from 6 shots and recorded 0.400 supported-shot xG from 6 of 6 shots. Harbor scored 2 goals from 12 shots and recorded 2.000 supported-shot xG from 12 of 12 shots. The score winner was Harbor. Harbor had higher supported-shot xG. xG coverage is complete.",
+        "Falcons scored 0 goals from 6 shots and recorded 0.400 supported-shot xG from 6 of 6 shots. Harbor scored 2 goals from 12 shots and recorded 2.000 supported-shot xG from 12 of 12 shots. The score winner was Harbor. Harbor had higher supported-shot xG. xG coverage is complete."
+      ],
+      "swapped": [
+        "Harbor scored 0 goals from 6 shots and recorded 0.400 supported-shot xG from 6 of 6 shots. Falcons scored 2 goals from 12 shots and recorded 2.000 supported-shot xG from 12 of 12 shots. The score winner was Falcons. Falcons had higher supported-shot xG. xG coverage is complete.",
+        "Harbor scored 0 goals from 6 shots and recorded 0.400 supported-shot xG from 6 of 6 shots. Falcons scored 2 goals from 12 shots and recorded 2.000 supported-shot xG from 12 of 12 shots. The score winner was Falcons. Falcons had higher supported-shot xG. xG coverage is complete.",
+        "Harbor scored 0 goals from 6 shots and recorded 0.400 supported-shot xG from 6 of 6 shots. Falcons scored 2 goals from 12 shots and recorded 2.000 supported-shot xG from 12 of 12 shots. The score winner was Falcons. Falcons had higher supported-shot xG. xG coverage is complete."
+      ]
+    },
+    "MS-15": {
+      "original": [
+        "Falcons scored 2 goals from 10 shots and recorded 1.900 supported-shot xG from 10 of 10 shots. Harbor scored 2 goals from 9 shots and recorded 0.800 supported-shot xG from 9 of 9 shots. The score was drawn. Falcons had higher supported-shot xG. xG coverage is complete.",
+        "Falcons scored 2 goals from 10 shots and recorded 1.900 supported-shot xG from 10 of 10 shots. Harbor scored 2 goals from 9 shots and recorded 0.800 supported-shot xG from 9 of 9 shots. The score was drawn. Falcons had higher supported-shot xG. xG coverage is complete.",
+        "Falcons scored 2 goals from 10 shots and recorded 1.900 supported-shot xG from 10 of 10 shots. Harbor scored 2 goals from 9 shots and recorded 0.800 supported-shot xG from 9 of 9 shots. The score was drawn. Falcons had higher supported-shot xG. xG coverage is complete."
+      ],
+      "swapped": [
+        "Harbor scored 2 goals from 10 shots and recorded 1.900 supported-shot xG from 10 of 10 shots. Falcons scored 2 goals from 9 shots and recorded 0.800 supported-shot xG from 9 of 9 shots. The score was drawn. Harbor had higher supported-shot xG. xG coverage is complete.",
+        "Harbor scored 2 goals from 10 shots and recorded 1.900 supported-shot xG from 10 of 10 shots. Falcons scored 2 goals from 9 shots and recorded 0.800 supported-shot xG from 9 of 9 shots. The score was drawn. Harbor had higher supported-shot xG. xG coverage is complete.",
+        "Harbor scored 2 goals from 10 shots and recorded 1.900 supported-shot xG from 10 of 10 shots. Falcons scored 2 goals from 9 shots and recorded 0.800 supported-shot xG from 9 of 9 shots. The score was drawn. Harbor had higher supported-shot xG. xG coverage is complete."
+      ]
+    }
+  }
+}

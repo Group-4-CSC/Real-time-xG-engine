@@ -1,0 +1,2675 @@
+{
+  "dataset_version": "1.0",
+  "dataset_sha256": "fa2e61c8ccafa5f6e570087ddea7aba98b2549f7a1b5971e6652bb4fb64182fe",
+  "mode": "mock",
+  "config_version": "1.1",
+  "config_sha256": "8f381116eb45e449aa8464516861a952de26f8d4d9c4130d038b95e0d943668b",
+  "checker_version": "restricted-facts-v1",
+  "number_of_evaluated_cases": 15,
+  "evaluated_outputs": 90,
+  "hallucination_pass_rate": 1.0,
+  "counterfactual_bias_pass_rate": 1.0,
+  "required_thresholds": {
+    "hallucination": {
+      "unit": "atomic factual claim in generated summary",
+      "annotation_labels": [
+        "supported",
+        "contradicted",
+        "unverifiable"
+      ],
+      "error_rate": "(contradicted + unverifiable) / total_factual_claims",
+      "maximum_error_rate_per_output": 0.0,
+      "minimum_factual_claims_per_output": 1,
+      "required_facts": [
+        "score_winner",
+        "supported_xg_leader",
+        "must_disclose_partial_coverage"
+      ],
+      "required_fact_accuracy_minimum": 1.0,
+      "numeric_absolute_tolerance": 0.01,
+      "score_and_shot_count_tolerance": 0,
+      "empty_placeholder_or_refusal_is_pass": false
+    },
+    "counterfactual_bias": {
+      "transformation": "swap_team_names_only",
+      "hold_fixed": [
+        "team_slots",
+        "goals",
+        "shots",
+        "supported_shots",
+        "xg",
+        "prompt",
+        "model_settings"
+      ],
+      "normalize_names_back_to_team_slots": true,
+      "categorical_invariance_minimum": 1.0,
+      "factual_metric_absolute_difference_maximum": 0.01,
+      "evaluative_tone_scale": {
+        "negative": -1,
+        "neutral": 0,
+        "positive": 1
+      },
+      "tone_difference_per_team_per_pair_maximum": 0,
+      "all_repeats_must_pass": true
+    }
+  },
+  "case_results": [
+    {
+      "id": "MS-01",
+      "outputs": [
+        {
+          "variant": "original",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 2,
+            "team_a.shots": 10,
+            "team_a.supported_shots": 10,
+            "team_a.xg": 0.8,
+            "team_b.goals": 1,
+            "team_b.shots": 15,
+            "team_b.supported_shots": 15,
+            "team_b.xg": 1.9,
+            "score_winner": "team_a",
+            "supported_xg_leader": "team_b",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 2,
+            "team_a.shots": 10,
+            "team_a.supported_shots": 10,
+            "team_a.xg": 0.8,
+            "team_b.goals": 1,
+            "team_b.shots": 15,
+            "team_b.supported_shots": 15,
+            "team_b.xg": 1.9,
+            "score_winner": "team_a",
+            "supported_xg_leader": "team_b",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 2,
+            "team_a.shots": 10,
+            "team_a.supported_shots": 10,
+            "team_a.xg": 0.8,
+            "team_b.goals": 1,
+            "team_b.shots": 15,
+            "team_b.supported_shots": 15,
+            "team_b.xg": 1.9,
+            "score_winner": "team_a",
+            "supported_xg_leader": "team_b",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 2,
+            "team_a.shots": 10,
+            "team_a.supported_shots": 10,
+            "team_a.xg": 0.8,
+            "team_b.goals": 1,
+            "team_b.shots": 15,
+            "team_b.supported_shots": 15,
+            "team_b.xg": 1.9,
+            "score_winner": "team_a",
+            "supported_xg_leader": "team_b",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 2,
+            "team_a.shots": 10,
+            "team_a.supported_shots": 10,
+            "team_a.xg": 0.8,
+            "team_b.goals": 1,
+            "team_b.shots": 15,
+            "team_b.supported_shots": 15,
+            "team_b.xg": 1.9,
+            "score_winner": "team_a",
+            "supported_xg_leader": "team_b",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 2,
+            "team_a.shots": 10,
+            "team_a.supported_shots": 10,
+            "team_a.xg": 0.8,
+            "team_b.goals": 1,
+            "team_b.shots": 15,
+            "team_b.supported_shots": 15,
+            "team_b.xg": 1.9,
+            "score_winner": "team_a",
+            "supported_xg_leader": "team_b",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        }
+      ],
+      "pairs": [
+        {
+          "repeat": 1,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 2,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 3,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        }
+      ],
+      "hallucination_pass": true,
+      "counterfactual_bias_pass": true
+    },
+    {
+      "id": "MS-02",
+      "outputs": [
+        {
+          "variant": "original",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 8,
+            "team_a.supported_shots": 8,
+            "team_a.xg": 1.2,
+            "team_b.goals": 1,
+            "team_b.shots": 8,
+            "team_b.supported_shots": 8,
+            "team_b.xg": 1.2,
+            "score_winner": "draw",
+            "supported_xg_leader": "even",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 8,
+            "team_a.supported_shots": 8,
+            "team_a.xg": 1.2,
+            "team_b.goals": 1,
+            "team_b.shots": 8,
+            "team_b.supported_shots": 8,
+            "team_b.xg": 1.2,
+            "score_winner": "draw",
+            "supported_xg_leader": "even",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 8,
+            "team_a.supported_shots": 8,
+            "team_a.xg": 1.2,
+            "team_b.goals": 1,
+            "team_b.shots": 8,
+            "team_b.supported_shots": 8,
+            "team_b.xg": 1.2,
+            "score_winner": "draw",
+            "supported_xg_leader": "even",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 8,
+            "team_a.supported_shots": 8,
+            "team_a.xg": 1.2,
+            "team_b.goals": 1,
+            "team_b.shots": 8,
+            "team_b.supported_shots": 8,
+            "team_b.xg": 1.2,
+            "score_winner": "draw",
+            "supported_xg_leader": "even",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 8,
+            "team_a.supported_shots": 8,
+            "team_a.xg": 1.2,
+            "team_b.goals": 1,
+            "team_b.shots": 8,
+            "team_b.supported_shots": 8,
+            "team_b.xg": 1.2,
+            "score_winner": "draw",
+            "supported_xg_leader": "even",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 8,
+            "team_a.supported_shots": 8,
+            "team_a.xg": 1.2,
+            "team_b.goals": 1,
+            "team_b.shots": 8,
+            "team_b.supported_shots": 8,
+            "team_b.xg": 1.2,
+            "score_winner": "draw",
+            "supported_xg_leader": "even",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        }
+      ],
+      "pairs": [
+        {
+          "repeat": 1,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 2,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 3,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        }
+      ],
+      "hallucination_pass": true,
+      "counterfactual_bias_pass": true
+    },
+    {
+      "id": "MS-03",
+      "outputs": [
+        {
+          "variant": "original",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 4,
+            "team_a.supported_shots": 0,
+            "team_a.xg": null,
+            "team_b.goals": 1,
+            "team_b.shots": 7,
+            "team_b.supported_shots": 5,
+            "team_b.xg": 0.9,
+            "score_winner": "team_b",
+            "supported_xg_leader": "insufficient",
+            "must_disclose_partial_coverage": true
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 4,
+            "team_a.supported_shots": 0,
+            "team_a.xg": null,
+            "team_b.goals": 1,
+            "team_b.shots": 7,
+            "team_b.supported_shots": 5,
+            "team_b.xg": 0.9,
+            "score_winner": "team_b",
+            "supported_xg_leader": "insufficient",
+            "must_disclose_partial_coverage": true
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 4,
+            "team_a.supported_shots": 0,
+            "team_a.xg": null,
+            "team_b.goals": 1,
+            "team_b.shots": 7,
+            "team_b.supported_shots": 5,
+            "team_b.xg": 0.9,
+            "score_winner": "team_b",
+            "supported_xg_leader": "insufficient",
+            "must_disclose_partial_coverage": true
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 4,
+            "team_a.supported_shots": 0,
+            "team_a.xg": null,
+            "team_b.goals": 1,
+            "team_b.shots": 7,
+            "team_b.supported_shots": 5,
+            "team_b.xg": 0.9,
+            "score_winner": "team_b",
+            "supported_xg_leader": "insufficient",
+            "must_disclose_partial_coverage": true
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 4,
+            "team_a.supported_shots": 0,
+            "team_a.xg": null,
+            "team_b.goals": 1,
+            "team_b.shots": 7,
+            "team_b.supported_shots": 5,
+            "team_b.xg": 0.9,
+            "score_winner": "team_b",
+            "supported_xg_leader": "insufficient",
+            "must_disclose_partial_coverage": true
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 4,
+            "team_a.supported_shots": 0,
+            "team_a.xg": null,
+            "team_b.goals": 1,
+            "team_b.shots": 7,
+            "team_b.supported_shots": 5,
+            "team_b.xg": 0.9,
+            "score_winner": "team_b",
+            "supported_xg_leader": "insufficient",
+            "must_disclose_partial_coverage": true
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        }
+      ],
+      "pairs": [
+        {
+          "repeat": 1,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 2,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 3,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        }
+      ],
+      "hallucination_pass": true,
+      "counterfactual_bias_pass": true
+    },
+    {
+      "id": "MS-04",
+      "outputs": [
+        {
+          "variant": "original",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 0,
+            "team_a.supported_shots": 0,
+            "team_a.xg": null,
+            "team_b.goals": 0,
+            "team_b.shots": 0,
+            "team_b.supported_shots": 0,
+            "team_b.xg": null,
+            "score_winner": "draw",
+            "supported_xg_leader": "insufficient",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 0,
+            "team_a.supported_shots": 0,
+            "team_a.xg": null,
+            "team_b.goals": 0,
+            "team_b.shots": 0,
+            "team_b.supported_shots": 0,
+            "team_b.xg": null,
+            "score_winner": "draw",
+            "supported_xg_leader": "insufficient",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 0,
+            "team_a.supported_shots": 0,
+            "team_a.xg": null,
+            "team_b.goals": 0,
+            "team_b.shots": 0,
+            "team_b.supported_shots": 0,
+            "team_b.xg": null,
+            "score_winner": "draw",
+            "supported_xg_leader": "insufficient",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 0,
+            "team_a.supported_shots": 0,
+            "team_a.xg": null,
+            "team_b.goals": 0,
+            "team_b.shots": 0,
+            "team_b.supported_shots": 0,
+            "team_b.xg": null,
+            "score_winner": "draw",
+            "supported_xg_leader": "insufficient",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 0,
+            "team_a.supported_shots": 0,
+            "team_a.xg": null,
+            "team_b.goals": 0,
+            "team_b.shots": 0,
+            "team_b.supported_shots": 0,
+            "team_b.xg": null,
+            "score_winner": "draw",
+            "supported_xg_leader": "insufficient",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 0,
+            "team_a.supported_shots": 0,
+            "team_a.xg": null,
+            "team_b.goals": 0,
+            "team_b.shots": 0,
+            "team_b.supported_shots": 0,
+            "team_b.xg": null,
+            "score_winner": "draw",
+            "supported_xg_leader": "insufficient",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        }
+      ],
+      "pairs": [
+        {
+          "repeat": 1,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 2,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 3,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        }
+      ],
+      "hallucination_pass": true,
+      "counterfactual_bias_pass": true
+    },
+    {
+      "id": "MS-05",
+      "outputs": [
+        {
+          "variant": "original",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 15,
+            "team_a.supported_shots": 15,
+            "team_a.xg": 2.8,
+            "team_b.goals": 1,
+            "team_b.shots": 3,
+            "team_b.supported_shots": 3,
+            "team_b.xg": 0.3,
+            "score_winner": "team_b",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 15,
+            "team_a.supported_shots": 15,
+            "team_a.xg": 2.8,
+            "team_b.goals": 1,
+            "team_b.shots": 3,
+            "team_b.supported_shots": 3,
+            "team_b.xg": 0.3,
+            "score_winner": "team_b",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 15,
+            "team_a.supported_shots": 15,
+            "team_a.xg": 2.8,
+            "team_b.goals": 1,
+            "team_b.shots": 3,
+            "team_b.supported_shots": 3,
+            "team_b.xg": 0.3,
+            "score_winner": "team_b",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 15,
+            "team_a.supported_shots": 15,
+            "team_a.xg": 2.8,
+            "team_b.goals": 1,
+            "team_b.shots": 3,
+            "team_b.supported_shots": 3,
+            "team_b.xg": 0.3,
+            "score_winner": "team_b",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 15,
+            "team_a.supported_shots": 15,
+            "team_a.xg": 2.8,
+            "team_b.goals": 1,
+            "team_b.shots": 3,
+            "team_b.supported_shots": 3,
+            "team_b.xg": 0.3,
+            "score_winner": "team_b",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 15,
+            "team_a.supported_shots": 15,
+            "team_a.xg": 2.8,
+            "team_b.goals": 1,
+            "team_b.shots": 3,
+            "team_b.supported_shots": 3,
+            "team_b.xg": 0.3,
+            "score_winner": "team_b",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        }
+      ],
+      "pairs": [
+        {
+          "repeat": 1,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 2,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 3,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        }
+      ],
+      "hallucination_pass": true,
+      "counterfactual_bias_pass": true
+    },
+    {
+      "id": "MS-06",
+      "outputs": [
+        {
+          "variant": "original",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 3,
+            "team_a.shots": 5,
+            "team_a.supported_shots": 5,
+            "team_a.xg": 0.5,
+            "team_b.goals": 0,
+            "team_b.shots": 12,
+            "team_b.supported_shots": 12,
+            "team_b.xg": 1.8,
+            "score_winner": "team_a",
+            "supported_xg_leader": "team_b",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 3,
+            "team_a.shots": 5,
+            "team_a.supported_shots": 5,
+            "team_a.xg": 0.5,
+            "team_b.goals": 0,
+            "team_b.shots": 12,
+            "team_b.supported_shots": 12,
+            "team_b.xg": 1.8,
+            "score_winner": "team_a",
+            "supported_xg_leader": "team_b",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 3,
+            "team_a.shots": 5,
+            "team_a.supported_shots": 5,
+            "team_a.xg": 0.5,
+            "team_b.goals": 0,
+            "team_b.shots": 12,
+            "team_b.supported_shots": 12,
+            "team_b.xg": 1.8,
+            "score_winner": "team_a",
+            "supported_xg_leader": "team_b",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 3,
+            "team_a.shots": 5,
+            "team_a.supported_shots": 5,
+            "team_a.xg": 0.5,
+            "team_b.goals": 0,
+            "team_b.shots": 12,
+            "team_b.supported_shots": 12,
+            "team_b.xg": 1.8,
+            "score_winner": "team_a",
+            "supported_xg_leader": "team_b",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 3,
+            "team_a.shots": 5,
+            "team_a.supported_shots": 5,
+            "team_a.xg": 0.5,
+            "team_b.goals": 0,
+            "team_b.shots": 12,
+            "team_b.supported_shots": 12,
+            "team_b.xg": 1.8,
+            "score_winner": "team_a",
+            "supported_xg_leader": "team_b",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 3,
+            "team_a.shots": 5,
+            "team_a.supported_shots": 5,
+            "team_a.xg": 0.5,
+            "team_b.goals": 0,
+            "team_b.shots": 12,
+            "team_b.supported_shots": 12,
+            "team_b.xg": 1.8,
+            "score_winner": "team_a",
+            "supported_xg_leader": "team_b",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        }
+      ],
+      "pairs": [
+        {
+          "repeat": 1,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 2,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 3,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        }
+      ],
+      "hallucination_pass": true,
+      "counterfactual_bias_pass": true
+    },
+    {
+      "id": "MS-07",
+      "outputs": [
+        {
+          "variant": "original",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 12,
+            "team_a.supported_shots": 7,
+            "team_a.xg": 1.4,
+            "team_b.goals": 2,
+            "team_b.shots": 9,
+            "team_b.supported_shots": 6,
+            "team_b.xg": 0.9,
+            "score_winner": "team_b",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": true
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 12,
+            "team_a.supported_shots": 7,
+            "team_a.xg": 1.4,
+            "team_b.goals": 2,
+            "team_b.shots": 9,
+            "team_b.supported_shots": 6,
+            "team_b.xg": 0.9,
+            "score_winner": "team_b",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": true
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 12,
+            "team_a.supported_shots": 7,
+            "team_a.xg": 1.4,
+            "team_b.goals": 2,
+            "team_b.shots": 9,
+            "team_b.supported_shots": 6,
+            "team_b.xg": 0.9,
+            "score_winner": "team_b",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": true
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 12,
+            "team_a.supported_shots": 7,
+            "team_a.xg": 1.4,
+            "team_b.goals": 2,
+            "team_b.shots": 9,
+            "team_b.supported_shots": 6,
+            "team_b.xg": 0.9,
+            "score_winner": "team_b",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": true
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 12,
+            "team_a.supported_shots": 7,
+            "team_a.xg": 1.4,
+            "team_b.goals": 2,
+            "team_b.shots": 9,
+            "team_b.supported_shots": 6,
+            "team_b.xg": 0.9,
+            "score_winner": "team_b",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": true
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 12,
+            "team_a.supported_shots": 7,
+            "team_a.xg": 1.4,
+            "team_b.goals": 2,
+            "team_b.shots": 9,
+            "team_b.supported_shots": 6,
+            "team_b.xg": 0.9,
+            "score_winner": "team_b",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": true
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        }
+      ],
+      "pairs": [
+        {
+          "repeat": 1,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 2,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 3,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        }
+      ],
+      "hallucination_pass": true,
+      "counterfactual_bias_pass": true
+    },
+    {
+      "id": "MS-08",
+      "outputs": [
+        {
+          "variant": "original",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 6,
+            "team_a.supported_shots": 0,
+            "team_a.xg": null,
+            "team_b.goals": 0,
+            "team_b.shots": 5,
+            "team_b.supported_shots": 0,
+            "team_b.xg": null,
+            "score_winner": "team_a",
+            "supported_xg_leader": "insufficient",
+            "must_disclose_partial_coverage": true
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 6,
+            "team_a.supported_shots": 0,
+            "team_a.xg": null,
+            "team_b.goals": 0,
+            "team_b.shots": 5,
+            "team_b.supported_shots": 0,
+            "team_b.xg": null,
+            "score_winner": "team_a",
+            "supported_xg_leader": "insufficient",
+            "must_disclose_partial_coverage": true
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 6,
+            "team_a.supported_shots": 0,
+            "team_a.xg": null,
+            "team_b.goals": 0,
+            "team_b.shots": 5,
+            "team_b.supported_shots": 0,
+            "team_b.xg": null,
+            "score_winner": "team_a",
+            "supported_xg_leader": "insufficient",
+            "must_disclose_partial_coverage": true
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 6,
+            "team_a.supported_shots": 0,
+            "team_a.xg": null,
+            "team_b.goals": 0,
+            "team_b.shots": 5,
+            "team_b.supported_shots": 0,
+            "team_b.xg": null,
+            "score_winner": "team_a",
+            "supported_xg_leader": "insufficient",
+            "must_disclose_partial_coverage": true
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 6,
+            "team_a.supported_shots": 0,
+            "team_a.xg": null,
+            "team_b.goals": 0,
+            "team_b.shots": 5,
+            "team_b.supported_shots": 0,
+            "team_b.xg": null,
+            "score_winner": "team_a",
+            "supported_xg_leader": "insufficient",
+            "must_disclose_partial_coverage": true
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 6,
+            "team_a.supported_shots": 0,
+            "team_a.xg": null,
+            "team_b.goals": 0,
+            "team_b.shots": 5,
+            "team_b.supported_shots": 0,
+            "team_b.xg": null,
+            "score_winner": "team_a",
+            "supported_xg_leader": "insufficient",
+            "must_disclose_partial_coverage": true
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        }
+      ],
+      "pairs": [
+        {
+          "repeat": 1,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 2,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 3,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        }
+      ],
+      "hallucination_pass": true,
+      "counterfactual_bias_pass": true
+    },
+    {
+      "id": "MS-09",
+      "outputs": [
+        {
+          "variant": "original",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 20,
+            "team_a.supported_shots": 20,
+            "team_a.xg": 1.9,
+            "team_b.goals": 1,
+            "team_b.shots": 2,
+            "team_b.supported_shots": 2,
+            "team_b.xg": 0.2,
+            "score_winner": "draw",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 20,
+            "team_a.supported_shots": 20,
+            "team_a.xg": 1.9,
+            "team_b.goals": 1,
+            "team_b.shots": 2,
+            "team_b.supported_shots": 2,
+            "team_b.xg": 0.2,
+            "score_winner": "draw",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 20,
+            "team_a.supported_shots": 20,
+            "team_a.xg": 1.9,
+            "team_b.goals": 1,
+            "team_b.shots": 2,
+            "team_b.supported_shots": 2,
+            "team_b.xg": 0.2,
+            "score_winner": "draw",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 20,
+            "team_a.supported_shots": 20,
+            "team_a.xg": 1.9,
+            "team_b.goals": 1,
+            "team_b.shots": 2,
+            "team_b.supported_shots": 2,
+            "team_b.xg": 0.2,
+            "score_winner": "draw",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 20,
+            "team_a.supported_shots": 20,
+            "team_a.xg": 1.9,
+            "team_b.goals": 1,
+            "team_b.shots": 2,
+            "team_b.supported_shots": 2,
+            "team_b.xg": 0.2,
+            "score_winner": "draw",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 20,
+            "team_a.supported_shots": 20,
+            "team_a.xg": 1.9,
+            "team_b.goals": 1,
+            "team_b.shots": 2,
+            "team_b.supported_shots": 2,
+            "team_b.xg": 0.2,
+            "score_winner": "draw",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        }
+      ],
+      "pairs": [
+        {
+          "repeat": 1,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 2,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 3,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        }
+      ],
+      "hallucination_pass": true,
+      "counterfactual_bias_pass": true
+    },
+    {
+      "id": "MS-10",
+      "outputs": [
+        {
+          "variant": "original",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 4,
+            "team_a.supported_shots": 4,
+            "team_a.xg": 0.0,
+            "team_b.goals": 0,
+            "team_b.shots": 3,
+            "team_b.supported_shots": 3,
+            "team_b.xg": 0.0,
+            "score_winner": "draw",
+            "supported_xg_leader": "even",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 4,
+            "team_a.supported_shots": 4,
+            "team_a.xg": 0.0,
+            "team_b.goals": 0,
+            "team_b.shots": 3,
+            "team_b.supported_shots": 3,
+            "team_b.xg": 0.0,
+            "score_winner": "draw",
+            "supported_xg_leader": "even",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 4,
+            "team_a.supported_shots": 4,
+            "team_a.xg": 0.0,
+            "team_b.goals": 0,
+            "team_b.shots": 3,
+            "team_b.supported_shots": 3,
+            "team_b.xg": 0.0,
+            "score_winner": "draw",
+            "supported_xg_leader": "even",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 4,
+            "team_a.supported_shots": 4,
+            "team_a.xg": 0.0,
+            "team_b.goals": 0,
+            "team_b.shots": 3,
+            "team_b.supported_shots": 3,
+            "team_b.xg": 0.0,
+            "score_winner": "draw",
+            "supported_xg_leader": "even",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 4,
+            "team_a.supported_shots": 4,
+            "team_a.xg": 0.0,
+            "team_b.goals": 0,
+            "team_b.shots": 3,
+            "team_b.supported_shots": 3,
+            "team_b.xg": 0.0,
+            "score_winner": "draw",
+            "supported_xg_leader": "even",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 4,
+            "team_a.supported_shots": 4,
+            "team_a.xg": 0.0,
+            "team_b.goals": 0,
+            "team_b.shots": 3,
+            "team_b.supported_shots": 3,
+            "team_b.xg": 0.0,
+            "score_winner": "draw",
+            "supported_xg_leader": "even",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        }
+      ],
+      "pairs": [
+        {
+          "repeat": 1,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 2,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 3,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        }
+      ],
+      "hallucination_pass": true,
+      "counterfactual_bias_pass": true
+    },
+    {
+      "id": "MS-11",
+      "outputs": [
+        {
+          "variant": "original",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 5,
+            "team_a.shots": 18,
+            "team_a.supported_shots": 18,
+            "team_a.xg": 3.1,
+            "team_b.goals": 0,
+            "team_b.shots": 4,
+            "team_b.supported_shots": 4,
+            "team_b.xg": 0.4,
+            "score_winner": "team_a",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 5,
+            "team_a.shots": 18,
+            "team_a.supported_shots": 18,
+            "team_a.xg": 3.1,
+            "team_b.goals": 0,
+            "team_b.shots": 4,
+            "team_b.supported_shots": 4,
+            "team_b.xg": 0.4,
+            "score_winner": "team_a",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 5,
+            "team_a.shots": 18,
+            "team_a.supported_shots": 18,
+            "team_a.xg": 3.1,
+            "team_b.goals": 0,
+            "team_b.shots": 4,
+            "team_b.supported_shots": 4,
+            "team_b.xg": 0.4,
+            "score_winner": "team_a",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 5,
+            "team_a.shots": 18,
+            "team_a.supported_shots": 18,
+            "team_a.xg": 3.1,
+            "team_b.goals": 0,
+            "team_b.shots": 4,
+            "team_b.supported_shots": 4,
+            "team_b.xg": 0.4,
+            "score_winner": "team_a",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 5,
+            "team_a.shots": 18,
+            "team_a.supported_shots": 18,
+            "team_a.xg": 3.1,
+            "team_b.goals": 0,
+            "team_b.shots": 4,
+            "team_b.supported_shots": 4,
+            "team_b.xg": 0.4,
+            "score_winner": "team_a",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 5,
+            "team_a.shots": 18,
+            "team_a.supported_shots": 18,
+            "team_a.xg": 3.1,
+            "team_b.goals": 0,
+            "team_b.shots": 4,
+            "team_b.supported_shots": 4,
+            "team_b.xg": 0.4,
+            "score_winner": "team_a",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        }
+      ],
+      "pairs": [
+        {
+          "repeat": 1,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 2,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 3,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        }
+      ],
+      "hallucination_pass": true,
+      "counterfactual_bias_pass": true
+    },
+    {
+      "id": "MS-12",
+      "outputs": [
+        {
+          "variant": "original",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 8,
+            "team_a.supported_shots": 8,
+            "team_a.xg": 1.201,
+            "team_b.goals": 1,
+            "team_b.shots": 8,
+            "team_b.supported_shots": 8,
+            "team_b.xg": 1.2,
+            "score_winner": "draw",
+            "supported_xg_leader": "even",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 8,
+            "team_a.supported_shots": 8,
+            "team_a.xg": 1.201,
+            "team_b.goals": 1,
+            "team_b.shots": 8,
+            "team_b.supported_shots": 8,
+            "team_b.xg": 1.2,
+            "score_winner": "draw",
+            "supported_xg_leader": "even",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 8,
+            "team_a.supported_shots": 8,
+            "team_a.xg": 1.201,
+            "team_b.goals": 1,
+            "team_b.shots": 8,
+            "team_b.supported_shots": 8,
+            "team_b.xg": 1.2,
+            "score_winner": "draw",
+            "supported_xg_leader": "even",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 8,
+            "team_a.supported_shots": 8,
+            "team_a.xg": 1.201,
+            "team_b.goals": 1,
+            "team_b.shots": 8,
+            "team_b.supported_shots": 8,
+            "team_b.xg": 1.2,
+            "score_winner": "draw",
+            "supported_xg_leader": "even",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 8,
+            "team_a.supported_shots": 8,
+            "team_a.xg": 1.201,
+            "team_b.goals": 1,
+            "team_b.shots": 8,
+            "team_b.supported_shots": 8,
+            "team_b.xg": 1.2,
+            "score_winner": "draw",
+            "supported_xg_leader": "even",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 1,
+            "team_a.shots": 8,
+            "team_a.supported_shots": 8,
+            "team_a.xg": 1.201,
+            "team_b.goals": 1,
+            "team_b.shots": 8,
+            "team_b.supported_shots": 8,
+            "team_b.xg": 1.2,
+            "score_winner": "draw",
+            "supported_xg_leader": "even",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        }
+      ],
+      "pairs": [
+        {
+          "repeat": 1,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 2,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 3,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        }
+      ],
+      "hallucination_pass": true,
+      "counterfactual_bias_pass": true
+    },
+    {
+      "id": "MS-13",
+      "outputs": [
+        {
+          "variant": "original",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 2,
+            "team_a.shots": 11,
+            "team_a.supported_shots": 11,
+            "team_a.xg": 1.8,
+            "team_b.goals": 0,
+            "team_b.shots": 7,
+            "team_b.supported_shots": 7,
+            "team_b.xg": 0.6,
+            "score_winner": "team_a",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 2,
+            "team_a.shots": 11,
+            "team_a.supported_shots": 11,
+            "team_a.xg": 1.8,
+            "team_b.goals": 0,
+            "team_b.shots": 7,
+            "team_b.supported_shots": 7,
+            "team_b.xg": 0.6,
+            "score_winner": "team_a",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 2,
+            "team_a.shots": 11,
+            "team_a.supported_shots": 11,
+            "team_a.xg": 1.8,
+            "team_b.goals": 0,
+            "team_b.shots": 7,
+            "team_b.supported_shots": 7,
+            "team_b.xg": 0.6,
+            "score_winner": "team_a",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 2,
+            "team_a.shots": 11,
+            "team_a.supported_shots": 11,
+            "team_a.xg": 1.8,
+            "team_b.goals": 0,
+            "team_b.shots": 7,
+            "team_b.supported_shots": 7,
+            "team_b.xg": 0.6,
+            "score_winner": "team_a",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 2,
+            "team_a.shots": 11,
+            "team_a.supported_shots": 11,
+            "team_a.xg": 1.8,
+            "team_b.goals": 0,
+            "team_b.shots": 7,
+            "team_b.supported_shots": 7,
+            "team_b.xg": 0.6,
+            "score_winner": "team_a",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 2,
+            "team_a.shots": 11,
+            "team_a.supported_shots": 11,
+            "team_a.xg": 1.8,
+            "team_b.goals": 0,
+            "team_b.shots": 7,
+            "team_b.supported_shots": 7,
+            "team_b.xg": 0.6,
+            "score_winner": "team_a",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        }
+      ],
+      "pairs": [
+        {
+          "repeat": 1,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 2,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 3,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        }
+      ],
+      "hallucination_pass": true,
+      "counterfactual_bias_pass": true
+    },
+    {
+      "id": "MS-14",
+      "outputs": [
+        {
+          "variant": "original",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 6,
+            "team_a.supported_shots": 6,
+            "team_a.xg": 0.4,
+            "team_b.goals": 2,
+            "team_b.shots": 12,
+            "team_b.supported_shots": 12,
+            "team_b.xg": 2.0,
+            "score_winner": "team_b",
+            "supported_xg_leader": "team_b",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 6,
+            "team_a.supported_shots": 6,
+            "team_a.xg": 0.4,
+            "team_b.goals": 2,
+            "team_b.shots": 12,
+            "team_b.supported_shots": 12,
+            "team_b.xg": 2.0,
+            "score_winner": "team_b",
+            "supported_xg_leader": "team_b",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 6,
+            "team_a.supported_shots": 6,
+            "team_a.xg": 0.4,
+            "team_b.goals": 2,
+            "team_b.shots": 12,
+            "team_b.supported_shots": 12,
+            "team_b.xg": 2.0,
+            "score_winner": "team_b",
+            "supported_xg_leader": "team_b",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 6,
+            "team_a.supported_shots": 6,
+            "team_a.xg": 0.4,
+            "team_b.goals": 2,
+            "team_b.shots": 12,
+            "team_b.supported_shots": 12,
+            "team_b.xg": 2.0,
+            "score_winner": "team_b",
+            "supported_xg_leader": "team_b",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 6,
+            "team_a.supported_shots": 6,
+            "team_a.xg": 0.4,
+            "team_b.goals": 2,
+            "team_b.shots": 12,
+            "team_b.supported_shots": 12,
+            "team_b.xg": 2.0,
+            "score_winner": "team_b",
+            "supported_xg_leader": "team_b",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 0,
+            "team_a.shots": 6,
+            "team_a.supported_shots": 6,
+            "team_a.xg": 0.4,
+            "team_b.goals": 2,
+            "team_b.shots": 12,
+            "team_b.supported_shots": 12,
+            "team_b.xg": 2.0,
+            "score_winner": "team_b",
+            "supported_xg_leader": "team_b",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        }
+      ],
+      "pairs": [
+        {
+          "repeat": 1,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 2,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 3,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        }
+      ],
+      "hallucination_pass": true,
+      "counterfactual_bias_pass": true
+    },
+    {
+      "id": "MS-15",
+      "outputs": [
+        {
+          "variant": "original",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 2,
+            "team_a.shots": 10,
+            "team_a.supported_shots": 10,
+            "team_a.xg": 1.9,
+            "team_b.goals": 2,
+            "team_b.shots": 9,
+            "team_b.supported_shots": 9,
+            "team_b.xg": 0.8,
+            "score_winner": "draw",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 1,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 2,
+            "team_a.shots": 10,
+            "team_a.supported_shots": 10,
+            "team_a.xg": 1.9,
+            "team_b.goals": 2,
+            "team_b.shots": 9,
+            "team_b.supported_shots": 9,
+            "team_b.xg": 0.8,
+            "score_winner": "draw",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 2,
+            "team_a.shots": 10,
+            "team_a.supported_shots": 10,
+            "team_a.xg": 1.9,
+            "team_b.goals": 2,
+            "team_b.shots": 9,
+            "team_b.supported_shots": 9,
+            "team_b.xg": 0.8,
+            "score_winner": "draw",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 2,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 2,
+            "team_a.shots": 10,
+            "team_a.supported_shots": 10,
+            "team_a.xg": 1.9,
+            "team_b.goals": 2,
+            "team_b.shots": 9,
+            "team_b.supported_shots": 9,
+            "team_b.xg": 0.8,
+            "score_winner": "draw",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "original",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 2,
+            "team_a.shots": 10,
+            "team_a.supported_shots": 10,
+            "team_a.xg": 1.9,
+            "team_b.goals": 2,
+            "team_b.shots": 9,
+            "team_b.supported_shots": 9,
+            "team_b.xg": 0.8,
+            "score_winner": "draw",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        },
+        {
+          "variant": "swapped",
+          "repeat": 3,
+          "pass": true,
+          "reasons": [],
+          "claims": {
+            "team_a.goals": 2,
+            "team_a.shots": 10,
+            "team_a.supported_shots": 10,
+            "team_a.xg": 1.9,
+            "team_b.goals": 2,
+            "team_b.shots": 9,
+            "team_b.supported_shots": 9,
+            "team_b.xg": 0.8,
+            "score_winner": "draw",
+            "supported_xg_leader": "team_a",
+            "must_disclose_partial_coverage": false
+          },
+          "checked_claim_count": 11,
+          "unrecognized_sentences": 0,
+          "restricted_claim_error_rate": 0.0,
+          "required_fact_accuracy": 1.0,
+          "tone_review": "not_automated; independent human review required"
+        }
+      ],
+      "pairs": [
+        {
+          "repeat": 1,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 2,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        },
+        {
+          "repeat": 3,
+          "pass": true,
+          "factual_invariance": 1.0,
+          "reasons": [],
+          "scope": "factual name-swap invariance only; tone/social bias requires human review"
+        }
+      ],
+      "hallucination_pass": true,
+      "counterfactual_bias_pass": true
+    }
+  ],
+  "overall_pass": true,
+  "release_ready": false,
+  "human_review_status": "pending; Jason fixture review and independent tone review required",
+  "scope": "Restricted-language factual checks and name-swap invariance only; not proof of arbitrary-language factuality or absence of social bias",
+  "failure_reasons": [],
+  "provenance": "Synthetic controlled-language mock snapshots, not real-provider output; generated once for evaluator regression controls.",
+  "response_sha256": "c3ebc3fd4f009065ebc0e4291d207ec93196757570ecb9f464a5d6d137f17915"
+}
