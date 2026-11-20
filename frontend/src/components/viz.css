@@ -53,3 +53,10 @@
 .viz-wide table td:not(:first-child), .viz-layout table td:not(:nth-child(2)) { white-space: nowrap }
 .viz-cell { align-items: flex-start }
 .viz-cell .viz-swatch { margin-top: 5px; flex: none }
+
+/* Sprint 3: AI summary source label and retry control */
+.ai-summary-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ai-summary-heading h2{margin:0}
+.ai-summary-label{display:inline-block;padding:5px 10px;border-radius:999px;border:1px solid #b9cee3;background:#eff6fd;color:#164a70;font-size:12px;font-weight:700}
+.ai-summary-fallback{border-color:#decfa6;background:#fff8e7;color:#705317}
+.ai-summary-heading + p{line-height:1.65;margin-top:14px}
