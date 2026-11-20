@@ -50,9 +50,20 @@ def validate_dataset(data):
 def load_dataset(path=ROOT / 'golden/examples.json', *, require_complete=False):
     def reject_constant(value):
         raise ValueError(f'Non-JSON numeric constant: {value}')
-    data = validate_dataset(json.loads(Path(path).read_text(encoding='utf-8'), parse_constant=reject_constant))
+    def unique(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError(f'Duplicate JSON key: {key}')
+            result[key] = value
+        return result
+    data = validate_dataset(json.loads(Path(path).read_text(encoding='utf-8'),
+                                      parse_constant=reject_constant, object_pairs_hook=unique))
     plan = json.loads((ROOT / 'golden/coverage-plan.json').read_text(encoding='utf-8'))
     planned = {case['id'] for case in plan['cases']}
+    if (plan['target_original_examples'] < 15 or len(planned) < 15
+            or len(planned) != len(plan['cases'])):
+        raise ValueError('Coverage plan must contain at least 15 distinct case IDs')
     actual = {example['id'] for example in data['examples']}
     if not actual <= planned:
         raise ValueError('Example IDs must belong to the coverage plan')

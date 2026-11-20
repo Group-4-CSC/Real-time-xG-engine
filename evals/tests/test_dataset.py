@@ -11,17 +11,16 @@ class GoldenDatasetTests(unittest.TestCase):
     def setUp(self):
         self.data = load_dataset()
 
-    def test_representative_examples_load(self):
-        self.assertEqual(len(self.data['examples']), 3)
+    def test_complete_golden_set_loads(self):
+        self.assertEqual(len(self.data['examples']), 15)
         self.assertEqual(self.data['examples'][2]['expected']['supported_xg_leader'], 'insufficient')
 
-    def test_coverage_plan_has_fifteen_distinct_slots(self):
+    def test_coverage_plan_has_fifteen_populated_slots(self):
         plan = json.loads((ROOT / 'golden/coverage-plan.json').read_text())
         self.assertEqual(plan['target_original_examples'], 15)
         self.assertEqual(len({c['id'] for c in plan['cases']}), 15)
-        self.assertEqual(sum(c['status'] == 'draft_example' for c in plan['cases']), 3)
-        with self.assertRaisesRegex(ValueError, 'incomplete'):
-            load_dataset(require_complete=True)
+        self.assertEqual(sum(c['status'] == 'populated_pending_jason_review' for c in plan['cases']), 15)
+        self.assertEqual(len(load_dataset(require_complete=True)['examples']), 15)
 
     def test_missing_field_and_unknown_field_are_rejected(self):
         for mode in ('missing', 'extra'):
