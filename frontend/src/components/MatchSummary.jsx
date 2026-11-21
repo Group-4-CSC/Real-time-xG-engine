@@ -99,7 +99,28 @@ export default function MatchSummary({ shots, homeTeam, onOpenShotMap, onBack })
       <label>Half<select value={half} onChange={e => setHalf(e.target.value)}>{HALF_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}</select></label>
     </div></div>
 
-    <AIMatchSummary />
+    <AIMatchSummary
+  matchId={currentMatch}
+  half={half}
+  teams={[
+    {
+      name: home,
+      shots: h.shots,
+      goals: h.goals,
+      xg: h.xg,
+      xg_calculated_shots: h.calculated,
+      xg_missing_shots: h.shots - h.calculated
+    },
+    {
+      name: away,
+      shots: a.shots,
+      goals: a.goals,
+      xg: a.xg,
+      xg_calculated_shots: a.calculated,
+      xg_missing_shots: a.shots - a.calculated
+    }
+  ]}
+/>
 
     <section className="card viz-score" aria-label="Final score">
       <div><div className="team"><i className="viz-swatch" style={{ background: colors[home] }} />{home}</div><div className="goals">{full.home.goals}</div></div>
