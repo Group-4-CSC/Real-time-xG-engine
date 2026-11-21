@@ -2,6 +2,7 @@
 """AI match summary: only computed statistics enter the prompt."""
 
 import json
+import math
 import os
 import re
 
@@ -19,6 +20,14 @@ class TeamStatsSerializer(serializers.Serializer):
     xg = serializers.FloatField(min_value=0, allow_null=True)
     xg_calculated_shots = serializers.IntegerField(min_value=0)
     xg_missing_shots = serializers.IntegerField(min_value=0)
+
+    def validate_name(self, value):
+        if re.search(r"[\x00-\x1f\x7f]", value):
+            raise serializers.ValidationError(
+                "Team names cannot contain control characters."
+            )
+
+        return value
 
     def validate(self, value):
         if value["goals"] > value["shots"]:
@@ -51,6 +60,14 @@ class TeamStatsSerializer(serializers.Serializer):
                 "No calculated shots: xG must be null."
             )
 
+        if value["xg"] is not None and (
+            not math.isfinite(value["xg"])
+            or value["xg"] > value["xg_calculated_shots"]
+        ):
+            raise serializers.ValidationError(
+                "xG must be finite and no larger than calculated shots."
+            )
+
         return value
 
 
@@ -71,7 +88,7 @@ class SummaryInputSerializer(serializers.Serializer):
 PROMPT_PATH = (
     Path(__file__).resolve().parents[2]
     / "prompts"
-    / "match_summary_v1.txt"
+    / "match_summary_v2.txt"
 )
 
 
@@ -92,128 +109,122 @@ def load_system_prompt():
         ) from exc
 
 
-def _allowed_numbers(stats):
-    allowed = set()
-
-    for team in stats["teams"]:
-        for key in (
-            "shots",
-            "goals",
-            "xg_calculated_shots",
-            "xg_missing_shots",
-        ):
-            allowed.add(str(team[key]))
-
-        if team["xg"] is not None:
-            allowed.add(str(team["xg"]))
-            allowed.add(f'{team["xg"]:.2f}')
-
-    return allowed
-
-
-def _validate_team_attribution(summary, stats):
-    """Check explicit team-specific numerical claims.
-
-    This is a limited validator, not a complete
-    natural-language fact checker. Complex claims
-    still require evaluator or human review.
-    """
-
-    for team in stats["teams"]:
-        name = re.escape(team["name"])
-
-        patterns = {
-            "goals": [
-                rf"(?<!\w){name}\s+(?:scored|recorded|had)\s+(\d+)\s+goals?\b",
-            ],
-            "shots": [
-                rf"(?<!\w){name}\s+(?:recorded|had|attempted|took)\s+(\d+)\s+shots?\b",
-                rf"(?<!\w){name}\s+scored\s+\d+\s+goals?\s+from\s+(\d+)\s+shots?\b",
-            ],
-            "xg": [
-                rf"(?<!\w){name}\s+(?:recorded|had|generated)\s+(\d+(?:\.\d+)?)\s+xg\b",
-            ],
-        }
-
-        for metric, metric_patterns in patterns.items():
-            expected = team[metric]
-
-            for pattern in metric_patterns:
-                for match in re.finditer(
-                    pattern,
-                    summary,
-                    re.I,
-                ):
-                    reported = float(match.group(1))
-
-                    if expected is None:
-                        raise ValueError(
-                            "Summary reports an unavailable statistic."
-                        )
-
-                    allowed = {float(expected)}
-
-                    if metric == "xg":
-                        allowed.add(
-                            float(f"{expected:.2f}")
-                        )
-
-                    if reported not in allowed:
-                        raise ValueError(
-                            f"Incorrect {metric} attributed to "
-                            f"{team['name']}."
-                        )
+def _provider_input(stats):
+    """Replace user-controlled identifiers with fixed, semantic-free slots."""
+    return {
+        "half": stats["half"],
+        "teams": [
+            {
+                "name": f"team_{chr(ord('a') + index)}",
+                "shots": team["shots"],
+                "goals": team["goals"],
+                "xg": team["xg"],
+                "xg_calculated_shots": team["xg_calculated_shots"],
+                "xg_missing_shots": team["xg_missing_shots"],
+            }
+            for index, team in enumerate(stats["teams"])
+        ],
+    }
 
 
-def validate_summary(summary, stats):
-    if not isinstance(summary, str) or not summary.strip():
-        raise ValueError(
-            "AI summary is empty or invalid."
+def _expected_assessment(stats):
+    first, second = stats["teams"]
+    if first["goals"] == second["goals"]:
+        score_winner = "draw"
+    else:
+        score_winner = (
+            "team_a" if first["goals"] > second["goals"] else "team_b"
         )
 
-    sentences = [
-        sentence.strip()
-        for sentence in re.split(
-            r"(?<=[.!?])\s+",
-            summary.strip(),
-        )
-        if sentence.strip()
-    ]
+    if first["xg"] is None or second["xg"] is None:
+        xg_leader = "insufficient"
+    elif math.isclose(
+        first["xg"],
+        second["xg"],
+        rel_tol=0,
+        abs_tol=0.01,
+    ):
+        xg_leader = "even"
+    else:
+        xg_leader = "team_a" if first["xg"] > second["xg"] else "team_b"
 
-    if not 3 <= len(sentences) <= 5:
-        raise ValueError(
-            "Summary must contain 3–5 sentences."
-        )
-
-    numbers = re.findall(
-        r"(?<![\w])\d+(?:\.\d+)?(?![\w])",
-        summary,
+    coverage = (
+        "partial"
+        if any(team["xg_missing_shots"] > 0 for team in stats["teams"])
+        else "complete"
     )
+    return {
+        "score_winner": score_winner,
+        "xg_leader": xg_leader,
+        "coverage": coverage,
+    }
 
-    if any(
-        number not in _allowed_numbers(stats)
-        for number in numbers
-    ):
+
+def _validate_provider_assessment(content, stats):
+    try:
+        assessment = json.loads(content)
+    except (json.JSONDecodeError, TypeError) as exc:
+        raise ValueError("AI assessment is not valid JSON.") from exc
+
+    expected = _expected_assessment(stats)
+    if assessment != expected:
         raise ValueError(
-            "Summary contains an unprovided number."
+            "AI assessment does not match the validated match statistics."
         )
 
-    if any(
-        team["xg_missing_shots"] > 0
-        for team in stats["teams"]
-    ):
-        if not re.search(
-            r"partial|incomplete|missing|not all",
-            summary,
-            re.I,
-        ):
-            raise ValueError(
-                "Summary must disclose incomplete xG."
+    return assessment
+
+
+def _render_summary(stats, assessment):
+    sentences = []
+    names = {
+        "team_a": stats["teams"][0]["name"],
+        "team_b": stats["teams"][1]["name"],
+    }
+
+    for slot, team in zip(("team_a", "team_b"), stats["teams"]):
+        name = names[slot]
+        if team["xg"] is None:
+            sentences.append(
+                f"{name} scored {team['goals']} goals from "
+                f"{team['shots']} shots; its xG is unknown with "
+                f"{team['xg_calculated_shots']} supported shots."
+            )
+        else:
+            sentences.append(
+                f"{name} scored {team['goals']} goals from "
+                f"{team['shots']} shots and recorded {team['xg']:.3f} "
+                f"supported-shot xG from {team['xg_calculated_shots']} "
+                f"of {team['shots']} shots."
             )
 
-    _validate_team_attribution(summary, stats)
+    if assessment["score_winner"] == "draw":
+        sentences.append("The score was drawn.")
+    else:
+        sentences.append(
+            f"The score winner was {names[assessment['score_winner']]}."
+        )
 
-    return summary.strip()
+    if assessment["xg_leader"] == "even":
+        sentences.append("Supported-shot xG was even.")
+    elif assessment["xg_leader"] == "insufficient":
+        sentences.append(
+            "The supported-shot xG comparison is unavailable."
+        )
+    else:
+        sentences.append(
+            f"{names[assessment['xg_leader']]} had higher "
+            "supported-shot xG."
+        )
+
+    if assessment["coverage"] == "partial":
+        sentences.append(
+            "xG coverage is partial; totals do not represent every shot."
+        )
+    else:
+        sentences.append("xG coverage is complete.")
+
+    return " ".join(sentences)
 
 
 def generate_summary(stats):
@@ -229,6 +240,7 @@ def generate_summary(stats):
     payload = {
         "model": model,
         "temperature": 0,
+        "response_format": {"type": "json_object"},
         "messages": [
             {
                 "role": "system",
@@ -237,7 +249,7 @@ def generate_summary(stats):
             {
                 "role": "user",
                 "content": json.dumps(
-                    stats,
+                    _provider_input(stats),
                     separators=(",", ":"),
                 ),
             },
@@ -271,9 +283,9 @@ def generate_summary(stats):
         ) from exc
 
     try:
-        summary = data["choices"][0]["message"]["content"]
-
-        return validate_summary(summary, stats)
+        content = data["choices"][0]["message"]["content"]
+        assessment = _validate_provider_assessment(content, stats)
+        return _render_summary(stats, assessment)
 
     except (
         KeyError,

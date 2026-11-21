@@ -22,8 +22,9 @@ but is not a substitute for the text evaluator.
 
 The committed response snapshot is explicitly **mock**: simple synthetic prose
 controls, not real-provider output. The original three examples were preserved;
-twelve were added according to the existing coverage plan. All 15 still await
-Jason's independent fixture review. Green mock results establish that these
+twelve were added according to the existing coverage plan. Jason's independent
+fixture and prompt-injection review is recorded in
+`golden/ISSUE_63_REVIEW.md`. Green mock results establish that these
 controlled responses pass the tested checks, not that an LLM is accurate/fair.
 Three identical mock repeats test completeness and aggregation; they are not
 independent samples or evidence of provider stability.
@@ -136,8 +137,8 @@ annotations are implemented. That is a limitation, not a measured provider defec
 
 Rory must run `python -m evals.run_evals` with hard failures and make Deploy depend
 on Eval. His PR's informational completeness check and Test-only Deploy dependency
-are not sufficient. Jason still owns prompt-injection evaluation/risk assessment
-in #63; no attack outcome was invented here. Human fixture/tone approval, broader
+are not sufficient. Issue #63 now records a mocked prompt-injection assessment and its concrete
+result. No live attack outcome is claimed. Independent tone review, broader
 language coverage, and an explicit live-provider baseline remain outstanding.
 
 Codex assisted with implementation, mock fixtures, tests and documentation. Results

@@ -37,15 +37,21 @@ Set `MONGODB_URI` and `MONGODB_DATABASE` in `.env` to the values shared by the d
 	```
 
 	The backend calls `Analytics.xg_model.compute_xg(shot)` directly. The current analytics model is an untrained, uncalibrated heuristic; its estimates should not be interpreted as validated probabilities. The `shot` passed to the model contains `x`, `y`, `body_part`, and `outcome`; `statsbomb_xg` is accepted as a reference value but excluded from the model input. The response contains an xG value between 0 and 1 and `xg_status: "computed"`. Unsupported shots return `{"xg": null, "xg_status": "unsupported"}`; the frontend should use the `unsupported` status rather than inventing a separate `outside_model` status, and the backend does not convert them to zero. Coordinates must be between 0 and 100; `body_part` must be `left_foot`, `right_foot`, `head`, or `other`; and `outcome` must be `goal`, `saved`, `blocked`, `off_target`, or `post`. Invalid requests return HTTP 400. Running `pip install -r requirements.txt` from `football-xg-backend` installs the repository's Analytics package in editable mode.
+- `POST /api/ai/match-summary/` accepts two validated teams and returns AI-assisted match prose. User-controlled names and match identifiers are excluded from the provider prompt; the provider receives fixed `team_a`/`team_b` slots and numeric statistics only. The provider must return exact structured score, xG, and coverage classifications. The backend checks them against independently computed results and renders prose locally. Invalid provider data falls back to a deterministic statistics-only summary.
 - Django admin is available at `/admin/` after creating a superuser with `python manage.py createsuperuser`.
 
-Both API endpoints are currently public. Authentication and role-based access are still to be agreed and implemented.
+All API endpoints are currently public. Authentication and role-based access are still to be agreed and implemented.
 
 ## Tests
 
 ```powershell
 python manage.py test api
 ```
+
+Prompt-injection coverage is mocked and verifies that suspicious display names do
+not enter provider input and that attacker-directed provider prose is rejected.
+It does not establish that a real provider is resistant to other indirect
+prompt-injection techniques.
 
 ## Team contracts to confirm
 

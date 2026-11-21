@@ -384,7 +384,7 @@ xG Insights is a client-server web application with a layered backend.
 **API endpoints:**
 - `GET /api/health/` checks that the API is running. Built.
 - `POST /api/xg/calculate/` validates a shot and returns its xG. Built.
-- `GET /api/ai/match-summary/` returns the match summary text. Placeholder text for now; the LLM call is planned.
+- `POST /api/ai/match-summary/` validates match statistics and returns AI-assisted summary text or a deterministic fallback.
 - `GET /api/matches/<id>/` returns a match with its shots. Planned.
 - CSV upload endpoint that validates, calculates xG, and stores shots. Planned. For now, CSV files are validated and previewed in the browser only.
 
@@ -402,7 +402,7 @@ The project uses four categories of test. Each can be run from the command line.
 - Run: `py -m unittest discover -s Analytics -p "test_*.py"`
 - Examples: a shot at the penalty spot gives a distance of 11.0 m and an angle of about 36.8 degrees; a shot outside the box returns `None`, not 0; `x = 101` raises an error; the same shot as a goal or a save gets the same xG.
 
-**2. Integration tests.** Check the API together with the analytics code: input validation, status codes, and xG returned or null. There are 9 API tests; see the current validation above.
+**2. Integration tests.** Check the API together with the analytics code: input validation, status codes, xG, AI fallback behavior, and prompt-injection boundaries. There are 33 API tests; see the current validation above.
 - Run: `cd football-xg-backend` then `python manage.py test api`
 - Examples: `POST /api/xg/calculate/` with `x = 101` returns HTTP 400; a valid in-box shot returns HTTP 200 with an `xg` between 0 and 1.
 
@@ -486,13 +486,16 @@ A successful response contains:
 }
 ```
 
-The actual summary must contain 3–5 short sentences based on the supplied match statistics.
+The provider receives fixed `team_a`/`team_b` identifiers and numeric statistics,
+not the submitted display names or `match_id`. It returns exact structured
+classifications, which the backend checks against the validated statistics
+before rendering the five-sentence summary locally.
 
 ### Prompt Versioning
 
-The initial documented prompt is stored in `prompts/match_summary_v1.txt`.
+The current structured prompt is stored in `prompts/match_summary_v2.txt`.
 
-The current backend prompt is defined as `SYSTEM_PROMPT` in `api/ai_summary.py`. The versioned prompt file documents the intended behavior; it is not automatically loaded by the backend.
+The backend loads the versioned prompt file at runtime.
 
 Future prompt changes should be reviewed and tested before release.
 
@@ -501,9 +504,9 @@ Future prompt changes should be reviewed and tested before release.
 The application is designed to handle unavailable or invalid AI responses safely.
 
 - Invalid input returns HTTP 400.
-- Missing API configuration or an unavailable AI service returns HTTP 503.
-- Responses that fail backend accuracy checks are rejected.
-- The frontend displays: "AI summary is temporarily unavailable."
+- Missing API configuration or an unavailable AI service returns HTTP 200
+  with a deterministic fallback and `source: "fallback"`.
+- Invalid structured responses are rejected before local prose is generated.
 
 The application must not present an unsuccessful AI response as verified match analysis.
 
@@ -517,9 +520,13 @@ The AI feature should be evaluated for:
 4. **Consistency:** Similar inputs produce factually consistent explanations.
 5. **Safety:** Unsupported claims and malicious instructions are not followed.
 
-Backend validation checks the sentence count, numerical values, and disclosure of incomplete xG data. These checks reduce errors but do not guarantee that every written interpretation is correct.
+Backend validation checks the exact structured score, xG, and coverage
+classifications; numeric prose is generated locally. These checks reduce errors
+but do not automate tone, fairness, or all natural-language interpretation.
 
-The existing backend API tests passed (9/9), and the frontend tests passed (33/33). Live OpenAI responses have not yet been tested with a configured API key.
+The current backend API tests passed (33/33), and the frontend tests passed
+(33/33). Automated provider cases are mocked; live OpenAI responses have not
+been tested for prompt-injection resistance.
 
 ### Prompt-Injection Risk
 
@@ -527,9 +534,15 @@ Prompt injection occurs when untrusted input contains instructions intended to m
 
 For example, a team name might contain text telling the AI to ignore its rules or invent statistics.
 
-The system should treat match data as information, not instructions. Its prompt tells the AI to use only the provided JSON facts.
+The backend treats display names as local display data and does not send them or
+the match identifier to the provider. The provider sees only fixed slots and
+validated numbers, and may return structured classifications only.
 
-Input validation, restricted output instructions, and response checks help reduce this risk. However, the current implementation does not establish complete protection against prompt injection.
+Issue #63 includes a mocked malicious-name test and a mocked attacker-directed
+provider-output test. These demonstrate that this input channel and arbitrary
+provider prose are rejected, not that a real provider is universally resistant.
+Remaining deployment, rate-limit, frontend escaping, and live-provider risks
+are documented in `evals/golden/ISSUE_63_REVIEW.md`.
 
 ### AI-Use Disclosure
 
@@ -544,7 +557,7 @@ AI assistance was also used during feature development and documentation. Team m
 - AI backend integration: implemented.
 - React AI summary component: implemented.
 - Automated frontend and backend tests: passed.
-- AI prompt v1: documented.
+- AI prompt v2: loaded and documented.
 - Live AI API testing: pending configuration.
 - Backend deployment: not yet verified.
 - Final demonstration video and submission links: pending.
@@ -559,12 +572,14 @@ AI assistance was also used during feature development and documentation. Team m
 - Responses identify their source as either AI or fallback.
 
 ### Versioned Prompt
-- The backend loads its system prompt directly from prompts/match_summary_v1.txt.
+- The backend loads its system prompt directly from prompts/match_summary_v2.txt.
 - Automated testing confirms that the versioned prompt is included in the provider request.
 
 ### Testing and Verification
-- All 29 Django backend tests passed.
-- Tested missing API keys, network errors, timeouts, malformed JSON, empty responses, hallucinated statistics, and incorrect team attribution.
+- All 33 Django backend tests passed.
+- Tested missing API keys, network errors, timeouts, malformed JSON, empty
+  responses, hallucinated statistics, incorrect team attribution, suspicious
+  team names, and attacker-directed provider output.
 - All AI provider requests in automated tests are mocked.
 
 ### Frontend and Backend Integration
