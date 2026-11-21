@@ -1,0 +1,635 @@
+{
+  "schema_version": "1.0",
+  "examples": [
+    {
+      "id": "MS-01",
+      "source": "synthetic",
+      "tags": [
+        "score_xg_disagreement"
+      ],
+      "input": {
+        "team_a": {
+          "name": "Falcons",
+          "goals": 2,
+          "shots": 10,
+          "supported_shots": 10,
+          "xg": 0.8
+        },
+        "team_b": {
+          "name": "Harbor",
+          "goals": 1,
+          "shots": 15,
+          "supported_shots": 15,
+          "xg": 1.9
+        }
+      },
+      "reference_summary": "Falcons won 2\u20131, while Harbor had higher supported-shot xG, 1.90 to 0.80. The result and estimated chance quality differ.",
+      "expected": {
+        "score_winner": "team_a",
+        "supported_xg_leader": "team_b",
+        "must_disclose_partial_coverage": false,
+        "forbidden_claims": [
+          "Invented scorers, minutes, injuries, possession, tactics, or player attributes",
+          "Missing xG treated as zero",
+          "An xG estimate presented as a certain result"
+        ]
+      },
+      "counterfactual": {
+        "transformation": "swap_team_names_only",
+        "invariant_fields": [
+          "score_winner",
+          "supported_xg_leader",
+          "must_disclose_partial_coverage"
+        ]
+      }
+    },
+    {
+      "id": "MS-02",
+      "source": "synthetic",
+      "tags": [
+        "equal_score_equal_xg"
+      ],
+      "input": {
+        "team_a": {
+          "name": "Falcons",
+          "goals": 1,
+          "shots": 8,
+          "supported_shots": 8,
+          "xg": 1.2
+        },
+        "team_b": {
+          "name": "Harbor",
+          "goals": 1,
+          "shots": 8,
+          "supported_shots": 8,
+          "xg": 1.2
+        }
+      },
+      "reference_summary": "The match ended 1\u20131. Both teams recorded 1.20 supported-shot xG, so neither led on that measure.",
+      "expected": {
+        "score_winner": "draw",
+        "supported_xg_leader": "even",
+        "must_disclose_partial_coverage": false,
+        "forbidden_claims": [
+          "Invented scorers, minutes, injuries, possession, tactics, or player attributes",
+          "Missing xG treated as zero",
+          "An xG estimate presented as a certain result"
+        ]
+      },
+      "counterfactual": {
+        "transformation": "swap_team_names_only",
+        "invariant_fields": [
+          "score_winner",
+          "supported_xg_leader",
+          "must_disclose_partial_coverage"
+        ]
+      }
+    },
+    {
+      "id": "MS-03",
+      "source": "synthetic",
+      "tags": [
+        "missing_xg_partial_coverage"
+      ],
+      "input": {
+        "team_a": {
+          "name": "Falcons",
+          "goals": 0,
+          "shots": 4,
+          "supported_shots": 0,
+          "xg": null
+        },
+        "team_b": {
+          "name": "Harbor",
+          "goals": 1,
+          "shots": 7,
+          "supported_shots": 5,
+          "xg": 0.9
+        }
+      },
+      "reference_summary": "Harbor won 1\u20130. Harbor recorded 0.90 xG from five of seven shots. Falcons have no supported-shot xG available; it is missing, not zero. Coverage is partial and a two-team xG comparison is unavailable.",
+      "expected": {
+        "score_winner": "team_b",
+        "supported_xg_leader": "insufficient",
+        "must_disclose_partial_coverage": true,
+        "forbidden_claims": [
+          "Invented scorers, minutes, injuries, possession, tactics, or player attributes",
+          "Missing xG treated as zero",
+          "An xG estimate presented as a certain result"
+        ]
+      },
+      "counterfactual": {
+        "transformation": "swap_team_names_only",
+        "invariant_fields": [
+          "score_winner",
+          "supported_xg_leader",
+          "must_disclose_partial_coverage"
+        ]
+      }
+    },
+    {
+      "id": "MS-04",
+      "source": "synthetic",
+      "tags": [
+        "zero_shots_both"
+      ],
+      "input": {
+        "team_a": {
+          "name": "Falcons",
+          "goals": 0,
+          "shots": 0,
+          "supported_shots": 0,
+          "xg": null
+        },
+        "team_b": {
+          "name": "Harbor",
+          "goals": 0,
+          "shots": 0,
+          "supported_shots": 0,
+          "xg": null
+        }
+      },
+      "reference_summary": "Falcons scored 0 goals and Harbor scored 0. Supported-shot xG is unavailable for comparison. Coverage is complete.",
+      "expected": {
+        "score_winner": "draw",
+        "supported_xg_leader": "insufficient",
+        "must_disclose_partial_coverage": false,
+        "forbidden_claims": [
+          "Invented scorers, minutes, injuries, possession, tactics, or player attributes",
+          "Missing xG treated as zero",
+          "An xG estimate presented as a certain result"
+        ]
+      },
+      "counterfactual": {
+        "transformation": "swap_team_names_only",
+        "invariant_fields": [
+          "score_winner",
+          "supported_xg_leader",
+          "must_disclose_partial_coverage"
+        ]
+      }
+    },
+    {
+      "id": "MS-05",
+      "source": "synthetic",
+      "tags": [
+        "high_xg_low_score"
+      ],
+      "input": {
+        "team_a": {
+          "name": "Falcons",
+          "goals": 0,
+          "shots": 15,
+          "supported_shots": 15,
+          "xg": 2.8
+        },
+        "team_b": {
+          "name": "Harbor",
+          "goals": 1,
+          "shots": 3,
+          "supported_shots": 3,
+          "xg": 0.3
+        }
+      },
+      "reference_summary": "Falcons scored 0 goals and Harbor scored 1. Supported-shot xG is 2.8 for Falcons and 0.3 for Harbor. Coverage is complete.",
+      "expected": {
+        "score_winner": "team_b",
+        "supported_xg_leader": "team_a",
+        "must_disclose_partial_coverage": false,
+        "forbidden_claims": [
+          "Invented scorers, minutes, injuries, possession, tactics, or player attributes",
+          "Missing xG treated as zero",
+          "An xG estimate presented as a certain result"
+        ]
+      },
+      "counterfactual": {
+        "transformation": "swap_team_names_only",
+        "invariant_fields": [
+          "score_winner",
+          "supported_xg_leader",
+          "must_disclose_partial_coverage"
+        ]
+      }
+    },
+    {
+      "id": "MS-06",
+      "source": "synthetic",
+      "tags": [
+        "low_xg_high_score"
+      ],
+      "input": {
+        "team_a": {
+          "name": "Falcons",
+          "goals": 3,
+          "shots": 5,
+          "supported_shots": 5,
+          "xg": 0.5
+        },
+        "team_b": {
+          "name": "Harbor",
+          "goals": 0,
+          "shots": 12,
+          "supported_shots": 12,
+          "xg": 1.8
+        }
+      },
+      "reference_summary": "Falcons scored 3 goals and Harbor scored 0. Supported-shot xG is 0.5 for Falcons and 1.8 for Harbor. Coverage is complete.",
+      "expected": {
+        "score_winner": "team_a",
+        "supported_xg_leader": "team_b",
+        "must_disclose_partial_coverage": false,
+        "forbidden_claims": [
+          "Invented scorers, minutes, injuries, possession, tactics, or player attributes",
+          "Missing xG treated as zero",
+          "An xG estimate presented as a certain result"
+        ]
+      },
+      "counterfactual": {
+        "transformation": "swap_team_names_only",
+        "invariant_fields": [
+          "score_winner",
+          "supported_xg_leader",
+          "must_disclose_partial_coverage"
+        ]
+      }
+    },
+    {
+      "id": "MS-07",
+      "source": "synthetic",
+      "tags": [
+        "partial_coverage_both"
+      ],
+      "input": {
+        "team_a": {
+          "name": "Falcons",
+          "goals": 1,
+          "shots": 12,
+          "supported_shots": 7,
+          "xg": 1.4
+        },
+        "team_b": {
+          "name": "Harbor",
+          "goals": 2,
+          "shots": 9,
+          "supported_shots": 6,
+          "xg": 0.9
+        }
+      },
+      "reference_summary": "Falcons scored 1 goals and Harbor scored 2. Supported-shot xG is 1.4 for Falcons and 0.9 for Harbor. Coverage is partial; missing xG is unknown, not zero.",
+      "expected": {
+        "score_winner": "team_b",
+        "supported_xg_leader": "team_a",
+        "must_disclose_partial_coverage": true,
+        "forbidden_claims": [
+          "Invented scorers, minutes, injuries, possession, tactics, or player attributes",
+          "Missing xG treated as zero",
+          "An xG estimate presented as a certain result"
+        ]
+      },
+      "counterfactual": {
+        "transformation": "swap_team_names_only",
+        "invariant_fields": [
+          "score_winner",
+          "supported_xg_leader",
+          "must_disclose_partial_coverage"
+        ]
+      }
+    },
+    {
+      "id": "MS-08",
+      "source": "synthetic",
+      "tags": [
+        "all_shots_unsupported"
+      ],
+      "input": {
+        "team_a": {
+          "name": "Falcons",
+          "goals": 1,
+          "shots": 6,
+          "supported_shots": 0,
+          "xg": null
+        },
+        "team_b": {
+          "name": "Harbor",
+          "goals": 0,
+          "shots": 5,
+          "supported_shots": 0,
+          "xg": null
+        }
+      },
+      "reference_summary": "Falcons scored 1 goals and Harbor scored 0. Supported-shot xG is unavailable for comparison. Coverage is partial; missing xG is unknown, not zero.",
+      "expected": {
+        "score_winner": "team_a",
+        "supported_xg_leader": "insufficient",
+        "must_disclose_partial_coverage": true,
+        "forbidden_claims": [
+          "Invented scorers, minutes, injuries, possession, tactics, or player attributes",
+          "Missing xG treated as zero",
+          "An xG estimate presented as a certain result"
+        ]
+      },
+      "counterfactual": {
+        "transformation": "swap_team_names_only",
+        "invariant_fields": [
+          "score_winner",
+          "supported_xg_leader",
+          "must_disclose_partial_coverage"
+        ]
+      }
+    },
+    {
+      "id": "MS-09",
+      "source": "synthetic",
+      "tags": [
+        "asymmetric_shot_counts"
+      ],
+      "input": {
+        "team_a": {
+          "name": "Falcons",
+          "goals": 1,
+          "shots": 20,
+          "supported_shots": 20,
+          "xg": 1.9
+        },
+        "team_b": {
+          "name": "Harbor",
+          "goals": 1,
+          "shots": 2,
+          "supported_shots": 2,
+          "xg": 0.2
+        }
+      },
+      "reference_summary": "Falcons scored 1 goals and Harbor scored 1. Supported-shot xG is 1.9 for Falcons and 0.2 for Harbor. Coverage is complete.",
+      "expected": {
+        "score_winner": "draw",
+        "supported_xg_leader": "team_a",
+        "must_disclose_partial_coverage": false,
+        "forbidden_claims": [
+          "Invented scorers, minutes, injuries, possession, tactics, or player attributes",
+          "Missing xG treated as zero",
+          "An xG estimate presented as a certain result"
+        ]
+      },
+      "counterfactual": {
+        "transformation": "swap_team_names_only",
+        "invariant_fields": [
+          "score_winner",
+          "supported_xg_leader",
+          "must_disclose_partial_coverage"
+        ]
+      }
+    },
+    {
+      "id": "MS-10",
+      "source": "synthetic",
+      "tags": [
+        "zero_xg_supported_shots"
+      ],
+      "input": {
+        "team_a": {
+          "name": "Falcons",
+          "goals": 0,
+          "shots": 4,
+          "supported_shots": 4,
+          "xg": 0.0
+        },
+        "team_b": {
+          "name": "Harbor",
+          "goals": 0,
+          "shots": 3,
+          "supported_shots": 3,
+          "xg": 0.0
+        }
+      },
+      "reference_summary": "Falcons scored 0 goals and Harbor scored 0. Supported-shot xG is 0.0 for Falcons and 0.0 for Harbor. Coverage is complete.",
+      "expected": {
+        "score_winner": "draw",
+        "supported_xg_leader": "even",
+        "must_disclose_partial_coverage": false,
+        "forbidden_claims": [
+          "Invented scorers, minutes, injuries, possession, tactics, or player attributes",
+          "Missing xG treated as zero",
+          "An xG estimate presented as a certain result"
+        ]
+      },
+      "counterfactual": {
+        "transformation": "swap_team_names_only",
+        "invariant_fields": [
+          "score_winner",
+          "supported_xg_leader",
+          "must_disclose_partial_coverage"
+        ]
+      }
+    },
+    {
+      "id": "MS-11",
+      "source": "synthetic",
+      "tags": [
+        "large_score_margin"
+      ],
+      "input": {
+        "team_a": {
+          "name": "Falcons",
+          "goals": 5,
+          "shots": 18,
+          "supported_shots": 18,
+          "xg": 3.1
+        },
+        "team_b": {
+          "name": "Harbor",
+          "goals": 0,
+          "shots": 4,
+          "supported_shots": 4,
+          "xg": 0.4
+        }
+      },
+      "reference_summary": "Falcons scored 5 goals and Harbor scored 0. Supported-shot xG is 3.1 for Falcons and 0.4 for Harbor. Coverage is complete.",
+      "expected": {
+        "score_winner": "team_a",
+        "supported_xg_leader": "team_a",
+        "must_disclose_partial_coverage": false,
+        "forbidden_claims": [
+          "Invented scorers, minutes, injuries, possession, tactics, or player attributes",
+          "Missing xG treated as zero",
+          "An xG estimate presented as a certain result"
+        ]
+      },
+      "counterfactual": {
+        "transformation": "swap_team_names_only",
+        "invariant_fields": [
+          "score_winner",
+          "supported_xg_leader",
+          "must_disclose_partial_coverage"
+        ]
+      }
+    },
+    {
+      "id": "MS-12",
+      "source": "synthetic",
+      "tags": [
+        "narrow_xg_margin"
+      ],
+      "input": {
+        "team_a": {
+          "name": "Falcons",
+          "goals": 1,
+          "shots": 8,
+          "supported_shots": 8,
+          "xg": 1.201
+        },
+        "team_b": {
+          "name": "Harbor",
+          "goals": 1,
+          "shots": 8,
+          "supported_shots": 8,
+          "xg": 1.2
+        }
+      },
+      "reference_summary": "Falcons scored 1 goals and Harbor scored 1. Supported-shot xG is 1.201 for Falcons and 1.2 for Harbor. Coverage is complete.",
+      "expected": {
+        "score_winner": "draw",
+        "supported_xg_leader": "even",
+        "must_disclose_partial_coverage": false,
+        "forbidden_claims": [
+          "Invented scorers, minutes, injuries, possession, tactics, or player attributes",
+          "Missing xG treated as zero",
+          "An xG estimate presented as a certain result"
+        ]
+      },
+      "counterfactual": {
+        "transformation": "swap_team_names_only",
+        "invariant_fields": [
+          "score_winner",
+          "supported_xg_leader",
+          "must_disclose_partial_coverage"
+        ]
+      }
+    },
+    {
+      "id": "MS-13",
+      "source": "synthetic",
+      "tags": [
+        "team_a_leads_both"
+      ],
+      "input": {
+        "team_a": {
+          "name": "Falcons",
+          "goals": 2,
+          "shots": 11,
+          "supported_shots": 11,
+          "xg": 1.8
+        },
+        "team_b": {
+          "name": "Harbor",
+          "goals": 0,
+          "shots": 7,
+          "supported_shots": 7,
+          "xg": 0.6
+        }
+      },
+      "reference_summary": "Falcons scored 2 goals and Harbor scored 0. Supported-shot xG is 1.8 for Falcons and 0.6 for Harbor. Coverage is complete.",
+      "expected": {
+        "score_winner": "team_a",
+        "supported_xg_leader": "team_a",
+        "must_disclose_partial_coverage": false,
+        "forbidden_claims": [
+          "Invented scorers, minutes, injuries, possession, tactics, or player attributes",
+          "Missing xG treated as zero",
+          "An xG estimate presented as a certain result"
+        ]
+      },
+      "counterfactual": {
+        "transformation": "swap_team_names_only",
+        "invariant_fields": [
+          "score_winner",
+          "supported_xg_leader",
+          "must_disclose_partial_coverage"
+        ]
+      }
+    },
+    {
+      "id": "MS-14",
+      "source": "synthetic",
+      "tags": [
+        "team_b_leads_both"
+      ],
+      "input": {
+        "team_a": {
+          "name": "Falcons",
+          "goals": 0,
+          "shots": 6,
+          "supported_shots": 6,
+          "xg": 0.4
+        },
+        "team_b": {
+          "name": "Harbor",
+          "goals": 2,
+          "shots": 12,
+          "supported_shots": 12,
+          "xg": 2.0
+        }
+      },
+      "reference_summary": "Falcons scored 0 goals and Harbor scored 2. Supported-shot xG is 0.4 for Falcons and 2.0 for Harbor. Coverage is complete.",
+      "expected": {
+        "score_winner": "team_b",
+        "supported_xg_leader": "team_b",
+        "must_disclose_partial_coverage": false,
+        "forbidden_claims": [
+          "Invented scorers, minutes, injuries, possession, tactics, or player attributes",
+          "Missing xG treated as zero",
+          "An xG estimate presented as a certain result"
+        ]
+      },
+      "counterfactual": {
+        "transformation": "swap_team_names_only",
+        "invariant_fields": [
+          "score_winner",
+          "supported_xg_leader",
+          "must_disclose_partial_coverage"
+        ]
+      }
+    },
+    {
+      "id": "MS-15",
+      "source": "synthetic",
+      "tags": [
+        "draw_unequal_xg"
+      ],
+      "input": {
+        "team_a": {
+          "name": "Falcons",
+          "goals": 2,
+          "shots": 10,
+          "supported_shots": 10,
+          "xg": 1.9
+        },
+        "team_b": {
+          "name": "Harbor",
+          "goals": 2,
+          "shots": 9,
+          "supported_shots": 9,
+          "xg": 0.8
+        }
+      },
+      "reference_summary": "Falcons scored 2 goals and Harbor scored 2. Supported-shot xG is 1.9 for Falcons and 0.8 for Harbor. Coverage is complete.",
+      "expected": {
+        "score_winner": "draw",
+        "supported_xg_leader": "team_a",
+        "must_disclose_partial_coverage": false,
+        "forbidden_claims": [
+          "Invented scorers, minutes, injuries, possession, tactics, or player attributes",
+          "Missing xG treated as zero",
+          "An xG estimate presented as a certain result"
+        ]
+      },
+      "counterfactual": {
+        "transformation": "swap_team_names_only",
+        "invariant_fields": [
+          "score_winner",
+          "supported_xg_leader",
+          "must_disclose_partial_coverage"
+        ]
+      }
+    }
+  ]
+}
