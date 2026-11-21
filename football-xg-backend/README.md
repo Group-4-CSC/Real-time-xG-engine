@@ -37,9 +37,14 @@ Set `MONGODB_URI` and `MONGODB_DATABASE` in `.env` to the values shared by the d
 	```
 
 	The backend calls `Analytics.xg_model.compute_xg(shot)` directly. The current analytics model is an untrained, uncalibrated heuristic; its estimates should not be interpreted as validated probabilities. The `shot` passed to the model contains `x`, `y`, `body_part`, and `outcome`; `statsbomb_xg` is accepted as a reference value but excluded from the model input. The response contains an xG value between 0 and 1 and `xg_status: "computed"`. Unsupported shots return `{"xg": null, "xg_status": "unsupported"}`; the frontend should use the `unsupported` status rather than inventing a separate `outside_model` status, and the backend does not convert them to zero. Coordinates must be between 0 and 100; `body_part` must be `left_foot`, `right_foot`, `head`, or `other`; and `outcome` must be `goal`, `saved`, `blocked`, `off_target`, or `post`. Invalid requests return HTTP 400. Running `pip install -r requirements.txt` from `football-xg-backend` installs the repository's Analytics package in editable mode.
+- `POST /api/match-summary/` accepts the validated, computed numeric fields `home_score`, `away_score`, `home_shots`, `away_shots`, `home_xg`, and `away_xg`. It returns `{"summary": "...", "summary_status": "generated"}` after validating the provider's JSON, exact echoed facts, and derived score/shot/xG comparisons. A missing key, timeout, provider error, or invalid provider output returns HTTP 200 with `{"summary": null, "summary_status": "unavailable"}` so the client can show its fallback state without treating it as an application error. Team names and arbitrary text are not accepted or sent to the provider.
 - Django admin is available at `/admin/` after creating a superuser with `python manage.py createsuperuser`.
 
-Both API endpoints are currently public. Authentication and role-based access are still to be agreed and implemented.
+All API endpoints are currently public. Authentication and role-based access are still to be agreed and implemented.
+
+## AI provider configuration
+
+Set `OPENAI_API_KEY` in the server environment or deployment platform. For GitHub Actions, store it as a repository or environment secret and map it to the job environment; do not put a key in source control. `OPENAI_MODEL`, `OPENAI_API_URL`, and `OPENAI_TIMEOUT_SECONDS` are optional overrides documented in `.env.example`.
 
 ## Tests
 

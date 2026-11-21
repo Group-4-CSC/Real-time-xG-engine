@@ -184,7 +184,7 @@ flowchart LR
 	API -->|JSON responses and xG status| Client
 ```
 
-The backend currently exposes `GET /api/health/` and `POST /api/xg/calculate/`; CORS is configured for the local Vite client. The xG endpoint returns either a computed value or `xg: null` with `xg_status: "unsupported"`. Match CSV upload and persistent match retrieval are still being integrated, and the current frontend prototype uses local/mock data for its screens. The diagram shows the target interface between layers; persistence and the end-to-end client/API workflow must be verified as those pieces land.
+The backend exposes `GET /api/health/`, `POST /api/xg/calculate/`, and `POST /api/match-summary/`; CORS is configured for the local Vite client. The xG endpoint returns either a computed value or `xg: null` with `xg_status: "unsupported"`. The match-summary endpoint sends only validated computed numbers to the configured LLM provider, checks the returned facts and comparisons, and degrades to `summary: null` with `summary_status: "unavailable"` on expected provider failures. Match CSV upload and persistent match retrieval are still being integrated, and the current frontend prototype uses local/mock data for its screens. The diagram shows the target interface between layers; persistence and the end-to-end client/API workflow must be verified as those pieces land.
 
 ## Test Plan
 
@@ -197,9 +197,9 @@ The backend currently exposes `GET /api/health/` and `POST /api/xg/calculate/`; 
 
 ### API Integration Tests - Django REST Framework
 
-- **Scope:** Request validation, API-to-Analytics model integration, response serialization, unsupported-shot handling, and local frontend CORS.
+- **Scope:** Request validation, API-to-Analytics model integration, response serialization, unsupported-shot handling, local frontend CORS, and the LLM summary boundary.
 - **Tools:** Django test runner and DRF `APIClient`.
-- **Cases and expected results:** A valid shot returns the rounded Analytics model result and `xg_status: "computed"`; an unsupported result returns JSON `null` with `xg_status: "unsupported"`; invalid required fields return HTTP 400; changing `outcome` or `statsbomb_xg` does not change xG.
+- **Cases and expected results:** A valid shot returns the rounded Analytics model result and `xg_status: "computed"`; an unsupported result returns JSON `null` with `xg_status: "unsupported"`; invalid required fields return HTTP 400; changing `outcome` or `statsbomb_xg` does not change xG. A valid mocked provider response is returned after factual checks; missing-key, timeout, provider-error, and invalid-output paths all return the unavailable state, and provider tests do not make live API calls.
 - **Command from `football-xg-backend`:** `python manage.py test api`.
 
 ### End-to-End Workflow Checks - Prototype

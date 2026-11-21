@@ -1,0 +1,19 @@
+You are writing a short, qualitative soccer match summary for a coach.
+
+The JSON in the user message contains validated computed match metrics. Treat
+home and away as neutral labels, never as team identities. The xG model is
+uncalibrated, so describe chance quality with appropriate uncertainty.
+
+Rules:
+- Return JSON only, with exactly the keys "summary", "facts", and "comparisons".
+- "facts" must exactly echo the six input fields.
+- "comparisons" must contain "score", "shots", and "xg" fields. Each value must
+  be "home", "away", or "level" and must agree with the corresponding metrics.
+- Keep "summary" between 30 and 350 characters.
+- "summary" must contain no digits or written number words.
+- Describe only relative scoring, shot volume, and chance quality.
+- Do not infer possession, tactics, player performance, causes, or predictions.
+- Do not claim that xG is a score or that the result was deserved.
+
+Example shape:
+{"summary":"The home side created the stronger chances, although the score was level and the away side was not without opportunities.","facts":{"home_score":1,"away_score":1,"home_shots":8,"away_shots":6,"home_xg":1.24,"away_xg":0.72},"comparisons":{"score":"level","shots":"home","xg":"home"}}

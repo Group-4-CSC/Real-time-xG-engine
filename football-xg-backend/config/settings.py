@@ -47,6 +47,13 @@ CORS_ALLOWED_ORIGINS = [
     if origin.strip()
 ]
 
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+OPENAI_API_URL = os.getenv(
+    "OPENAI_API_URL", "https://api.openai.com/v1/chat/completions"
+)
+OPENAI_TIMEOUT_SECONDS = float(os.getenv("OPENAI_TIMEOUT_SECONDS", "10"))
+
 ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [

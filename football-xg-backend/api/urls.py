@@ -1,8 +1,9 @@
 from django.urls import path
 
-from .views import calculate_xg, health
+from .views import calculate_xg, health, match_summary
 
 urlpatterns = [
     path("health/", health, name="health"),
     path("xg/calculate/", calculate_xg, name="calculate_xg"),
+    path("match-summary/", match_summary, name="match_summary"),
 ]
