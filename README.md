@@ -548,3 +548,32 @@ AI assistance was also used during feature development and documentation. Team m
 - Live AI API testing: pending configuration.
 - Backend deployment: not yet verified.
 - Final demonstration video and submission links: pending.
+
+
+## Sprint 3 – AI Match Summary Backend Improvements
+
+### Backend Reliability
+- Added a deterministic fallback when the AI provider is unavailable or returns invalid content.
+- Fallback responses use only validated match statistics.
+- Missing xG values are treated as unknown, not zero.
+- Responses identify their source as either AI or fallback.
+
+### Versioned Prompt
+- The backend loads its system prompt directly from prompts/match_summary_v1.txt.
+- Automated testing confirms that the versioned prompt is included in the provider request.
+
+### Testing and Verification
+- All 29 Django backend tests passed.
+- Tested missing API keys, network errors, timeouts, malformed JSON, empty responses, hallucinated statistics, and incorrect team attribution.
+- All AI provider requests in automated tests are mocked.
+
+### Frontend and Backend Integration
+- Successfully tested the React frontend with the local Django backend.
+- Confirmed HTTP 200 responses from the AI match summary endpoint.
+- Verified that the frontend displays the statistics-only fallback with an appropriate label.
+- GitHub Pages hosts the frontend only.
+
+### Known Limitations
+- Team-specific validation detects common incorrect numerical claims but is not a complete natural-language fact checker.
+- Complex claims still require evaluator or human review.
+- Live AI provider success has not yet been verified using a valid API key.
